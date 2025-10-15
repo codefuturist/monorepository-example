@@ -1,0 +1,21 @@
+{
+  "name": "@monorepository-example/package-b",
+  "version": "1.0.0",
+  "description": "Package B - Utilities",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "echo 'Building package-b...'",
+    "test": "echo 'Testing package-b...'",
+    "lint": "echo 'Linting package-b...'",
+    "release": "release-it"
+  },
+  "keywords": [
+    "example",
+    "package-b"
+  ],
+  "license": "MIT"
+}

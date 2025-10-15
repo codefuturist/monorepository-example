@@ -1,0 +1,78 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'              # Root monorepo releases (e.g., v1.0.0)
+      - 'package-*@v*.*.*'    # Individual package releases (e.g., package-a@v1.0.0)
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build packages
+        run: npm run build
+
+      - name: Extract tag info
+        id: tag_info
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          
+          if [[ $TAG == package-*@v* ]]; then
+            PACKAGE_NAME=$(echo $TAG | cut -d'@' -f1)
+            VERSION=$(echo $TAG | cut -d'@' -f2)
+            echo "package=$PACKAGE_NAME" >> $GITHUB_OUTPUT
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "is_package=true" >> $GITHUB_OUTPUT
+          else
+            echo "version=$TAG" >> $GITHUB_OUTPUT
+            echo "is_package=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag_info.outputs.tag }}
+          name: ${{ steps.tag_info.outputs.tag }}
+          body: |
+            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/${{ steps.tag_info.outputs.tag }}/CHANGELOG.md) for details.
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to npm (if configured)
+        if: steps.tag_info.outputs.is_package == 'true'
+        run: |
+          PACKAGE=${{ steps.tag_info.outputs.package }}
+          echo "Publishing $PACKAGE..."
+          # Uncomment when ready to publish to npm
+          # echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+          # npm publish --workspace=$PACKAGE
+        continue-on-error: true

@@ -1,0 +1,27 @@
+{
+  "name": "monorepository-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Example monorepo with automated releases using release-it",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "npm run test --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "release": "release-it",
+    "release:dry": "release-it --dry-run",
+    "release:package-a": "npm run release --workspace=packages/package-a",
+    "release:package-b": "npm run release --workspace=packages/package-b",
+    "release:package-c": "npm run release --workspace=packages/package-c"
+  },
+  "devDependencies": {
+    "release-it": "^17.0.0",
+    "@release-it/conventional-changelog": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

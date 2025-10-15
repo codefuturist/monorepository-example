@@ -1,0 +1,21 @@
+{
+  "name": "@monorepository-example/package-a",
+  "version": "1.0.0",
+  "description": "Package A - Core functionality",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "echo 'Building package-a...'",
+    "test": "echo 'Testing package-a...'",
+    "lint": "echo 'Linting package-a...'",
+    "release": "release-it"
+  },
+  "keywords": [
+    "example",
+    "package-a"
+  ],
+  "license": "MIT"
+}
