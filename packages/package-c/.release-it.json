@@ -13,6 +13,9 @@
   "npm": {
     "publish": false
   },
+  "hooks": {
+    "after:git:release": "bash ../../scripts/git-flow-merge.sh ${version}"
+  },
   "plugins": {
     "@release-it/conventional-changelog": {
       "preset": "angular",

@@ -20,7 +20,8 @@
   },
   "hooks": {
     "before:init": [],
-    "after:bump": []
+    "after:bump": [],
+    "after:git:release": "bash scripts/git-flow-merge.sh ${version}"
   },
   "plugins": {
     "@release-it/conventional-changelog": {
