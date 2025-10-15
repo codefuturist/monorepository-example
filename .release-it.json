@@ -6,11 +6,14 @@
     "requireBranch": false,
     "requireCleanWorkingDir": false,
     "requireUpstream": false,
-    "push": false
+    "push": true,
+    "pushRepo": "origin"
   },
   "github": {
-    "release": false,
-    "skipChecks": true
+    "release": true,
+    "releaseName": "Release ${version}",
+    "autoGenerate": true,
+    "tokenRef": "GITHUB_TOKEN"
   },
   "npm": {
     "publish": false
