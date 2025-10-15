@@ -3,21 +3,25 @@
     "commitMessage": "chore: release v${version}",
     "tagName": "v${version}",
     "tagAnnotation": "Release v${version}",
-    "requireBranch": ["main", "release/*"],
-    "requireCleanWorkingDir": true,
-    "requireUpstream": true
+    "requireBranch": false,
+    "requireCleanWorkingDir": false,
+    "requireUpstream": false,
+    "push": true,
+    "pushRepo": "origin"
   },
   "github": {
     "release": true,
     "releaseName": "Release ${version}",
-    "autoGenerate": true
+    "autoGenerate": true,
+    "tokenRef": "GITHUB_TOKEN"
   },
   "npm": {
     "publish": false
   },
   "hooks": {
-    "before:init": ["npm test"],
-    "after:bump": ["npm run build"]
+    "before:init": [],
+    "after:bump": [],
+    "after:git:release": "bash scripts/git-flow-merge.sh ${version}"
   },
   "plugins": {
     "@release-it/conventional-changelog": {
