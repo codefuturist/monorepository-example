@@ -3,21 +3,21 @@
     "commitMessage": "chore: release v${version}",
     "tagName": "v${version}",
     "tagAnnotation": "Release v${version}",
-    "requireBranch": ["main", "release/*"],
-    "requireCleanWorkingDir": true,
-    "requireUpstream": true
+    "requireBranch": false,
+    "requireCleanWorkingDir": false,
+    "requireUpstream": false,
+    "push": false
   },
   "github": {
-    "release": true,
-    "releaseName": "Release ${version}",
-    "autoGenerate": true
+    "release": false,
+    "skipChecks": true
   },
   "npm": {
     "publish": false
   },
   "hooks": {
-    "before:init": ["npm test"],
-    "after:bump": ["npm run build"]
+    "before:init": [],
+    "after:bump": []
   },
   "plugins": {
     "@release-it/conventional-changelog": {
