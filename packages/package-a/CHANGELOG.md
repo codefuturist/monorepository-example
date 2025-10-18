@@ -1,3 +1,9 @@
+# 1.2.1 (2025-10-18)
+
+### Bug Fixes
+
+- **workflows:** restrict Python Release workflow to only trigger for Python packages
+
 # 1.2.0 (2025-10-18)
 
 ### Features

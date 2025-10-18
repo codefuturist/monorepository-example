@@ -1,6 +1,6 @@
 {
   "name": "@monorepository-example/package-a",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "description": "Package A - Core functionality",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
