@@ -28,6 +28,7 @@ declare -a TARGETS=(
     "darwin:amd64:x86_64-apple-darwin"
     "darwin:arm64:aarch64-apple-darwin"
     "windows:amd64:x86_64-pc-windows-msvc"
+    "windows:arm64:aarch64-pc-windows-msvc"
 )
 
 echo ""

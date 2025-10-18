@@ -33,8 +33,15 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
         TARGET="x86_64-apple-darwin"
     fi
     EXT=""
-elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
-    TARGET="x86_64-pc-windows-msvc"
+elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" || "$OSTYPE" == "cygwin" ]]; then
+    ARCH=$(uname -m)
+    if [[ "$ARCH" == "x86_64" || "$ARCH" == "AMD64" ]]; then
+        TARGET="x86_64-pc-windows-msvc"
+    elif [[ "$ARCH" == "aarch64" || "$ARCH" == "ARM64" ]]; then
+        TARGET="aarch64-pc-windows-msvc"
+    else
+        TARGET="x86_64-pc-windows-msvc"
+    fi
     EXT=".exe"
 else
     TARGET="unknown"

@@ -1,0 +1,176 @@
+name: Java Binaries
+
+on:
+    push:
+        tags:
+            - "package-h@v*.*.*"
+
+permissions:
+    contents: write
+
+jobs:
+    build-binaries:
+        name: Build Java JAR (${{ matrix.target }})
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                include:
+                    - os: ubuntu-latest
+                      target: x86_64-unknown-linux-gnu
+                    - os: ubuntu-latest
+                      target: aarch64-unknown-linux-gnu
+                    - os: macos-13
+                      target: x86_64-apple-darwin
+                    - os: macos-latest
+                      target: aarch64-apple-darwin
+                    - os: windows-latest
+                      target: x86_64-pc-windows-msvc
+                    - os: windows-latest
+                      target: aarch64-pc-windows-msvc
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Java
+              uses: actions/setup-java@v4
+              with:
+                  java-version: '17'
+                  distribution: 'temurin'
+
+            - name: Extract version
+              id: version
+              shell: bash
+              run: echo "VERSION=${GITHUB_REF#refs/tags/package-h@v}" >> $GITHUB_OUTPUT
+
+            - name: Build with Maven
+              shell: bash
+              run: |
+                  cd packages/package-h
+                  mvn clean package -DskipTests
+
+            - name: Test JAR
+              shell: bash
+              run: |
+                  cd packages/package-h
+                  java -jar target/package-h.jar
+
+            - name: Create release artifacts
+              shell: bash
+              run: |
+                  cd packages/package-h
+                  mkdir -p release
+                  
+                  # Universal JAR (works on all platforms)
+                  cp target/package-h.jar release/package-h-universal.jar
+                  
+                  # Platform-tagged JAR for organization
+                  cp target/package-h.jar release/package-h-${{ matrix.target }}.jar
+                  
+                  # Create checksums
+                  cd release
+                  if command -v sha256sum &> /dev/null; then
+                    sha256sum package-h-${{ matrix.target }}.jar > package-h-${{ matrix.target }}.jar.sha256
+                  else
+                    shasum -a 256 package-h-${{ matrix.target }}.jar > package-h-${{ matrix.target }}.jar.sha256
+                  fi
+
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: package-h-${{ matrix.target }}
+                  path: |
+                      packages/package-h/release/package-h-${{ matrix.target }}*
+
+    publish:
+        name: Publish Java Package
+        needs: build-binaries
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Java
+              uses: actions/setup-java@v4
+              with:
+                  java-version: '17'
+                  distribution: 'temurin'
+
+            - name: Extract version
+              id: version
+              run: echo "VERSION=${GITHUB_REF#refs/tags/package-h@v}" >> $GITHUB_OUTPUT
+
+            - name: Build universal JAR
+              run: |
+                  cd packages/package-h
+                  mvn clean package -DskipTests
+                  mkdir -p ../../universal-release
+                  cp target/package-h.jar ../../universal-release/package-h-universal.jar
+                  cd ../../universal-release
+                  sha256sum package-h-universal.jar > package-h-universal.jar.sha256
+                  tar -czf package-h-universal.tar.gz package-h-universal.jar
+                  sha256sum package-h-universal.tar.gz > package-h-universal.tar.gz.sha256
+
+            - name: Download all artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  path: dist/
+
+            - name: Organize release files
+              run: |
+                  mkdir -p release
+                  find dist -type f -exec mv {} release/ \;
+                  mv universal-release/* release/ 2>/dev/null || true
+                  ls -lh release/
+
+            - name: Create GitHub Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: ${{ github.ref_name }}
+                  name: package-h v${{ steps.version.outputs.VERSION }}
+                  body: |
+                      ## Package H v${{ steps.version.outputs.VERSION }}
+                      
+                      Java JSON Utilities
+                      
+                      ### Features
+                      - JSON parsing and formatting
+                      - Colored console output
+                      - Object serialization
+                      
+                      ### Downloads
+                      
+                      **Universal JAR** (Recommended - works on all platforms with JDK 17+):
+                      - `package-h-universal.jar`
+                      
+                      **Platform-Tagged JARs** (same JAR, tagged for organization):
+                      
+                      | Platform | Architecture | File |
+                      |----------|--------------|------|
+                      | Linux | x86_64 | `package-h-x86_64-unknown-linux-gnu.jar` |
+                      | Linux | aarch64 | `package-h-aarch64-unknown-linux-gnu.jar` |
+                      | macOS | x86_64 (Intel) | `package-h-x86_64-apple-darwin.jar` |
+                      | macOS | aarch64 (Apple Silicon) | `package-h-aarch64-apple-darwin.jar` |
+                      | Windows | x86_64 | `package-h-x86_64-pc-windows-msvc.jar` |
+                      | Windows | aarch64 (ARM64) | `package-h-aarch64-pc-windows-msvc.jar` |
+                      
+                      ### Verification
+                      
+                      ```bash
+                      sha256sum -c package-h-universal.jar.sha256
+                      ```
+                      
+                      ### Requirements
+                      - Java 17 or higher
+                      
+                      ### Usage
+                      ```bash
+                      java -jar package-h-universal.jar
+                      ```
+                  files: |
+                      release/*
+                  draft: false
+                  prerelease: false
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

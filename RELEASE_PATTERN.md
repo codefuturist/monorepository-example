@@ -20,10 +20,11 @@ We use **Rust-style target triples** for consistency:
 | Platform | Architecture | Target Triple |
 |----------|--------------|---------------|
 | Linux | x86_64 | `x86_64-unknown-linux-gnu` |
-| Linux | aarch64 | `aarch64-unknown-linux-gnu` |
+| Linux | aarch64 (ARM64) | `aarch64-unknown-linux-gnu` |
 | macOS | x86_64 (Intel) | `x86_64-apple-darwin` |
 | macOS | aarch64 (Apple Silicon) | `aarch64-apple-darwin` |
 | Windows | x86_64 | `x86_64-pc-windows-msvc` |
+| Windows | aarch64 (ARM64) | `aarch64-pc-windows-msvc` |
 | Java | Universal | `universal` (platform-independent) |
 
 ## 📦 Artifact Types

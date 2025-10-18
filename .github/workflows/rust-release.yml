@@ -17,12 +17,16 @@ jobs:
                 include:
                     - os: ubuntu-latest
                       target: x86_64-unknown-linux-gnu
+                    - os: ubuntu-latest
+                      target: aarch64-unknown-linux-gnu
                     - os: macos-13
                       target: x86_64-apple-darwin
                     - os: macos-latest
                       target: aarch64-apple-darwin
                     - os: windows-latest
                       target: x86_64-pc-windows-msvc
+                    - os: windows-latest
+                      target: aarch64-pc-windows-msvc
 
         steps:
             - name: Checkout code
@@ -109,9 +113,11 @@ jobs:
                       | Platform | Architecture | Archive |
                       |----------|--------------|---------|
                       | Linux | x86_64 | `package-e-x86_64-unknown-linux-gnu.tar.gz` |
+                      | Linux | aarch64 | `package-e-aarch64-unknown-linux-gnu.tar.gz` |
                       | macOS | x86_64 (Intel) | `package-e-x86_64-apple-darwin.tar.gz` |
                       | macOS | aarch64 (Apple Silicon) | `package-e-aarch64-apple-darwin.tar.gz` |
                       | Windows | x86_64 | `package-e-x86_64-pc-windows-msvc.zip` |
+                      | Windows | aarch64 (ARM64) | `package-e-aarch64-pc-windows-msvc.zip` |
                       
                       ### Verification
                       
