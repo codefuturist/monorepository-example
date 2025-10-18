@@ -5,6 +5,7 @@ This directory contains reusable build scripts for different programming languag
 ## Available Scripts
 
 ### C++ (CMake)
+
 **File:** `cpp-cmake-build.sh`
 
 Builds C++ projects using CMake with cross-platform support.
@@ -179,9 +180,93 @@ VERSION="2.0.0" ENTRY_POINT="app.py" ./python-pyinstaller-build.sh
 
 ---
 
+### Java (Maven)
+
+**File:** `java-maven-build.sh`
+
+Builds Java projects using Maven. Creates platform-independent JARs with optional platform tagging.
+
+**Usage in monorepo:**
+```bash
+# In package directory
+export VERSION="1.0.0"
+export PACKAGE_NAME="my-package"
+export JAR_NAME="my-package.jar"
+source ../../scripts/build/java-maven-build.sh
+```
+
+**Standalone usage:**
+```bash
+# Copy script to your project
+cp scripts/build/java-maven-build.sh ~/my-java-app/
+cd ~/my-java-app
+
+# Run with defaults
+./java-maven-build.sh
+
+# Or override configuration
+VERSION="2.0.0" MAVEN_ARGS="-Dmaven.test.skip=true" ./java-maven-build.sh
+```
+
+**Configuration:**
+- `VERSION` - Project version (default: `1.0.0`)
+- `PACKAGE_NAME` - Package name (default: `my-java-app`)
+- `RELEASE_DIR` - Output directory (default: `release`)
+- `MAVEN_ARGS` - Maven arguments (default: `-DskipTests`)
+- `MAVEN_GOALS` - Maven goals (default: `clean package`)
+- `JAR_NAME` - JAR filename in target/ (default: `$PACKAGE_NAME.jar`)
+- `CREATE_UNIVERSAL` - Create universal JAR (default: `true`)
+- `CREATE_PLATFORM_TAGGED` - Create platform-tagged JAR (default: `true`)
+
+**Note:** Java JARs are platform-independent. Platform tagging is for organizational purposes only.
+
+---
+
+### Swift (SPM)
+
+**File:** `swift-spm-build.sh`
+
+Builds Swift projects using Swift Package Manager. macOS only (requires Xcode/Swift toolchain).
+
+**Usage in monorepo:**
+```bash
+# In package directory
+export VERSION="1.0.0"
+export PACKAGE_NAME="my-package"
+export CREATE_UNIVERSAL="true"  # Optional: create universal binary
+source ../../scripts/build/swift-spm-build.sh
+```
+
+**Standalone usage:**
+```bash
+# Copy script to your project
+cp scripts/build/swift-spm-build.sh ~/my-swift-app/
+cd ~/my-swift-app
+
+# Run with defaults
+./swift-spm-build.sh
+
+# Create universal binary (arm64 + x86_64)
+CREATE_UNIVERSAL="true" ./swift-spm-build.sh
+```
+
+**Configuration:**
+- `VERSION` - Project version (default: `1.0.0`)
+- `PACKAGE_NAME` - Package name (default: `my-swift-app`)
+- `RELEASE_DIR` - Output directory (default: `release`)
+- `BUILD_CONFIG` - Build configuration (default: `release`)
+- `SWIFT_FLAGS` - Additional Swift flags (default: empty)
+- `CREATE_UNIVERSAL` - Create universal binary for arm64 + x86_64 (default: `false`)
+
+**Platform Requirements:**
+- macOS only (requires Xcode 12.2+ or Swift toolchain)
+- For universal binaries, requires Xcode 12.2+
+
+---
+
 ## Platform Support
 
-All scripts support the following platforms:
+Most scripts support the following platforms:
 
 | Platform | Architecture | Target Triple |
 |----------|-------------|---------------|
@@ -192,12 +277,19 @@ All scripts support the following platforms:
 | Windows | x86_64 | `x86_64-pc-windows-msvc` |
 | Windows | ARM64 | `aarch64-pc-windows-msvc` |
 
+**Platform-Specific Notes:**
+- **Java**: Platform-independent JARs, tagged as `universal-java` or with build platform
+- **Swift**: macOS only (requires Xcode/Swift toolchain), can create universal binaries (arm64 + x86_64)
+
 ## Output Format
 
 All scripts produce consistent output:
 
 ### Binaries
 - `{package-name}-{target-triple}` (Unix)
+- `{package-name}-{target-triple}.exe` (Windows)
+- `{package-name}-universal.jar` (Java - platform-independent)
+- `{package-name}-universal-apple-darwin` (Swift - universal binary)
 - `{package-name}-{target-triple}.exe` (Windows)
 
 ### Archives
