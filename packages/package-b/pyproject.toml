@@ -23,7 +23,12 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 
-dependencies = []
+dependencies = [
+    "rich>=13.0.0",
+]
+
+[project.scripts]
+package-b = "package_b.__main__:main"
 
 [project.optional-dependencies]
 dev = [

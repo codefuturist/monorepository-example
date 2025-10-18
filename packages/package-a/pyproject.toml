@@ -23,7 +23,12 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 
-dependencies = []
+dependencies = [
+    "colorama>=0.4.6",
+]
+
+[project.scripts]
+package-a = "package_a.__main__:main"
 
 [project.optional-dependencies]
 dev = [

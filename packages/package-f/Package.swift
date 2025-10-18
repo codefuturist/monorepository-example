@@ -12,10 +12,24 @@ let package = Package(
             name: "PackageF",
             targets: ["PackageF"]
         ),
+        .executable(
+            name: "package-f",
+            targets: ["PackageFCLI"]
+        ),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/onevcat/Rainbow.git", from: "4.0.0"),
     ],
     targets: [
         .target(
             name: "PackageF"
+        ),
+        .executableTarget(
+            name: "PackageFCLI",
+            dependencies: [
+                "PackageF",
+                .product(name: "Rainbow", package: "Rainbow")
+            ]
         ),
         .testTarget(
             name: "PackageFTests",
