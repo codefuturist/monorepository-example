@@ -2,7 +2,7 @@
 
 import pytest
 
-from src.math_helpers import divide_precise, percentage
+from package_c.math_helpers import divide_precise, percentage
 
 
 class TestDividePrecise:

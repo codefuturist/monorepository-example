@@ -1,6 +1,6 @@
 """Tests for string utilities."""
 
-from src.strings import kebab_case, truncate
+from package_b.strings import kebab_case, truncate
 
 
 class TestTruncate:

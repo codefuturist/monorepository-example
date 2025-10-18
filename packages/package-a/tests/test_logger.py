@@ -4,7 +4,7 @@ import logging
 import tempfile
 from pathlib import Path
 
-from src.logger import setup_logger
+from package_a.logger import setup_logger
 
 
 class TestSetupLogger:
