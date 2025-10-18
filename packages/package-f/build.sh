@@ -7,8 +7,11 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
+VERSION="1.0.0"
+PACKAGE_NAME="package-f"
+
 echo "======================================"
-echo "Building package-f executables"
+echo "Building $PACKAGE_NAME v$VERSION"
 echo "======================================"
 
 # Check if running on macOS
@@ -18,29 +21,47 @@ if [[ "$OSTYPE" != "darwin"* ]]; then
     exit 1
 fi
 
-echo "Platform: macOS"
+# Detect architecture
+ARCH=$(uname -m)
+if [[ "$ARCH" == "arm64" ]]; then
+    TARGET="aarch64-apple-darwin"
+else
+    TARGET="x86_64-apple-darwin"
+fi
+
+echo "Platform: $TARGET"
 echo ""
 
 # Build release binary
 echo "Building release binary..."
 swift build -c release
 
-# Create dist directory
-DIST_DIR="dist"
-mkdir -p "$DIST_DIR"
+# Create release directory
+RELEASE_DIR="release"
+mkdir -p "$RELEASE_DIR"
 
-# Copy binary to dist
+# Copy binary with proper naming
 BINARY_PATH=$(swift build -c release --show-bin-path)/package-f
-cp "$BINARY_PATH" "$DIST_DIR/package-f-macos"
-chmod +x "$DIST_DIR/package-f-macos"
+BINARY_NAME="${PACKAGE_NAME}-${TARGET}"
+cp "$BINARY_PATH" "$RELEASE_DIR/$BINARY_NAME"
+chmod +x "$RELEASE_DIR/$BINARY_NAME"
+
+# Create archives and checksums
+cd "$RELEASE_DIR"
+tar -czf "${PACKAGE_NAME}-${TARGET}.tar.gz" "$BINARY_NAME"
+shasum -a 256 "${PACKAGE_NAME}-${TARGET}.tar.gz" > "${PACKAGE_NAME}-${TARGET}.tar.gz.sha256"
+shasum -a 256 "$BINARY_NAME" > "${BINARY_NAME}.sha256"
+
+cd "$SCRIPT_DIR"
 
 echo ""
 echo "✓ Build completed successfully!"
 echo ""
-echo "Binary location: $DIST_DIR/package-f-macos"
+echo "Release artifacts in: $RELEASE_DIR/"
+ls -lh "$RELEASE_DIR"
 echo ""
-echo "To test: ./$DIST_DIR/package-f-macos"
+echo "To test: ./$RELEASE_DIR/$BINARY_NAME"
 echo ""
-echo "Note: Swift executables are currently macOS-only"
-echo "For iOS deployment, use Xcode to build for iOS targets"
+echo "Note: Swift executables are macOS-only"
+echo "For universal binary, use: swift build -c release --arch arm64 --arch x86_64"
 echo ""

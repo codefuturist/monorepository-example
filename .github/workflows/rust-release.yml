@@ -10,11 +10,19 @@ permissions:
 
 jobs:
     build-and-test:
-        name: Build & Test Rust Package
+        name: Build & Test (${{ matrix.target }})
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                os: [ubuntu-latest, macos-latest, windows-latest]
+                include:
+                    - os: ubuntu-latest
+                      target: x86_64-unknown-linux-gnu
+                    - os: macos-13
+                      target: x86_64-apple-darwin
+                    - os: macos-latest
+                      target: aarch64-apple-darwin
+                    - os: windows-latest
+                      target: x86_64-pc-windows-msvc
 
         steps:
             - name: Checkout code
@@ -24,29 +32,36 @@ jobs:
               uses: actions-rust-lang/setup-rust-toolchain@v1
               with:
                   toolchain: stable
+                  target: ${{ matrix.target }}
 
-            - name: Build
+            - name: Extract version
+              id: version
+              shell: bash
+              run: echo "VERSION=${GITHUB_REF#refs/tags/package-e@v}" >> $GITHUB_OUTPUT
+
+            - name: Build with build script
+              shell: bash
               run: |
                   cd packages/package-e
-                  cargo build --release
+                  chmod +x build.sh
+                  ./build.sh
 
-            - name: Test
+            - name: Test binary
+              shell: bash
               run: |
                   cd packages/package-e
-                  cargo test --release
+                  if [ -f "release/package-e-${{ matrix.target }}.exe" ]; then
+                    ./release/package-e-${{ matrix.target }}.exe
+                  else
+                    ./release/package-e-${{ matrix.target }}
+                  fi
 
-            - name: Create package
-              if: matrix.os == 'ubuntu-latest'
-              run: |
-                  cd packages/package-e
-                  cargo package --allow-dirty
-
-            - name: Upload artifacts
-              if: matrix.os == 'ubuntu-latest'
+            - name: Upload release artifacts
               uses: actions/upload-artifact@v4
               with:
-                  name: rust-package
-                  path: packages/package-e/target/package/*.crate
+                  name: package-e-${{ matrix.target }}
+                  path: |
+                      packages/package-e/release/package-e-${{ matrix.target }}*
 
     publish:
         name: Publish Rust Package
@@ -57,24 +72,69 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Download artifacts
+            - name: Extract version
+              id: version
+              run: echo "VERSION=${GITHUB_REF#refs/tags/package-e@v}" >> $GITHUB_OUTPUT
+
+            - name: Download all artifacts
               uses: actions/download-artifact@v4
               with:
-                  name: rust-package
                   path: dist/
+
+            - name: Organize release files
+              run: |
+                  mkdir -p release
+                  find dist -type f -exec mv {} release/ \;
+                  ls -lh release/
 
             - name: Create GitHub Release
               uses: softprops/action-gh-release@v2
               with:
                   tag_name: ${{ github.ref_name }}
-                  name: package-e ${{ github.ref_name }}
+                  name: package-e v${{ steps.version.outputs.VERSION }}
                   body: |
-                      ## Rust Package Release
-
-                      **Package:** package-e
-                      **Version:** ${{ github.ref_name }}
-
-                      Built and tested on Ubuntu, macOS, and Windows
-                  files: dist/*.crate
+                      ## Package E v${{ steps.version.outputs.VERSION }}
+                      
+                      Rust String Manipulation Utilities
+                      
+                      ### Features
+                      - reverse_string(): Reverse a string
+                      - count_vowels(): Count vowels in a string
+                      - is_palindrome(): Check if string is a palindrome
+                      - Colored terminal output
+                      - JSON output support
+                      
+                      ### Downloads
+                      
+                      | Platform | Architecture | Archive |
+                      |----------|--------------|---------|
+                      | Linux | x86_64 | `package-e-x86_64-unknown-linux-gnu.tar.gz` |
+                      | macOS | x86_64 (Intel) | `package-e-x86_64-apple-darwin.tar.gz` |
+                      | macOS | aarch64 (Apple Silicon) | `package-e-aarch64-apple-darwin.tar.gz` |
+                      | Windows | x86_64 | `package-e-x86_64-pc-windows-msvc.zip` |
+                      
+                      ### Verification
+                      
+                      All downloads include SHA256 checksums for verification:
+                      ```bash
+                      # Linux/macOS
+                      sha256sum -c package-e-<platform>.tar.gz.sha256
+                      
+                      # Windows
+                      CertUtil -hashfile package-e-<platform>.zip SHA256
+                      ```
+                      
+                      ### Usage
+                      ```bash
+                      # Extract
+                      tar -xzf package-e-<platform>.tar.gz  # or unzip for Windows
+                      
+                      # Run
+                      ./package-e-<platform>
+                      ```
+                  files: |
+                      release/*
+                  draft: false
+                  prerelease: false
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

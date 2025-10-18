@@ -10,42 +10,31 @@ permissions:
 
 jobs:
     build-and-test:
-        name: Build & Test Go Package
+        name: Build & Test (${{ matrix.target }})
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                os: [ubuntu-latest, macos-latest, windows-latest]
-                go-version: ['1.21', '1.22']
-
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
-            - name: Setup Go
-              uses: actions/setup-go@v5
-              with:
-                  go-version: ${{ matrix.go-version }}
-
-            - name: Build
-              run: |
-                  cd packages/package-g
-                  go build -v ./...
-
-            - name: Test
-              run: |
-                  cd packages/package-g
-                  go test -v -race -coverprofile=coverage.out ./...
-
-            - name: Test Coverage
-              if: matrix.os == 'ubuntu-latest' && matrix.go-version == '1.22'
-              run: |
-                  cd packages/package-g
-                  go tool cover -func=coverage.out
-
-    publish:
-        name: Publish Go Package
-        needs: build-and-test
-        runs-on: ubuntu-latest
+                include:
+                    - os: ubuntu-latest
+                      target: x86_64-unknown-linux-gnu
+                      goos: linux
+                      goarch: amd64
+                    - os: ubuntu-latest
+                      target: aarch64-unknown-linux-gnu
+                      goos: linux
+                      goarch: arm64
+                    - os: macos-13
+                      target: x86_64-apple-darwin
+                      goos: darwin
+                      goarch: amd64
+                    - os: macos-latest
+                      target: aarch64-apple-darwin
+                      goos: darwin
+                      goarch: arm64
+                    - os: windows-latest
+                      target: x86_64-pc-windows-msvc
+                      goos: windows
+                      goarch: amd64
 
         steps:
             - name: Checkout code
@@ -56,32 +45,105 @@ jobs:
               with:
                   go-version: '1.22'
 
-            - name: Create source archive
+            - name: Extract version
+              id: version
+              shell: bash
+              run: echo "VERSION=${GITHUB_REF#refs/tags/package-g@v}" >> $GITHUB_OUTPUT
+
+            - name: Test
               run: |
                   cd packages/package-g
-                  tar -czf package-g-${{ github.ref_name }}-source.tar.gz \
-                      *.go \
-                      go.mod \
-                      README.md
+                  go test -v -race -coverprofile=coverage.out ./...
+
+            - name: Build with script
+              shell: bash
+              run: |
+                  cd packages/package-g
+                  chmod +x build.sh
+                  ./build.sh
+
+            - name: Upload release artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: package-g-${{ matrix.target }}
+                  path: |
+                      packages/package-g/release/package-g-${{ matrix.target }}*
+
+    publish:
+        name: Publish Go Package
+        needs: build-and-test
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Extract version
+              id: version
+              run: echo "VERSION=${GITHUB_REF#refs/tags/package-g@v}" >> $GITHUB_OUTPUT
+
+            - name: Download all artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  path: dist/
+
+            - name: Organize release files
+              run: |
+                  mkdir -p release
+                  find dist -type f -exec mv {} release/ \;
+                  ls -lh release/
 
             - name: Create GitHub Release
               uses: softprops/action-gh-release@v2
               with:
                   tag_name: ${{ github.ref_name }}
-                  name: package-g ${{ github.ref_name }}
+                  name: package-g v${{ steps.version.outputs.VERSION }}
                   body: |
-                      ## Go Package Release
-
-                      **Package:** package-g
-                      **Version:** ${{ github.ref_name }}
-
-                      Built and tested with Go 1.21 and 1.22 on Ubuntu, macOS, and Windows
-
-                      ### Installation
-
+                      ## Package G v${{ steps.version.outputs.VERSION }}
+                      
+                      Go HTTP Utilities
+                      
+                      ### Features
+                      - HTTPClient: HTTP client with configurable timeout
+                      - BuildURL(): Construct URLs with query parameters
+                      - ParseQueryString(): Parse URL query strings
+                      - Colored table output
+                      
+                      ### Downloads
+                      
+                      | Platform | Architecture | Archive |
+                      |----------|--------------|---------|
+                      | Linux | x86_64 | `package-g-x86_64-unknown-linux-gnu.tar.gz` |
+                      | Linux | aarch64 | `package-g-aarch64-unknown-linux-gnu.tar.gz` |
+                      | macOS | x86_64 (Intel) | `package-g-x86_64-apple-darwin.tar.gz` |
+                      | macOS | aarch64 (Apple Silicon) | `package-g-aarch64-apple-darwin.tar.gz` |
+                      | Windows | x86_64 | `package-g-x86_64-pc-windows-msvc.zip` |
+                      
+                      ### Verification
+                      
+                      Verify integrity with SHA256 checksums:
                       ```bash
-                      go get github.com/codefuturist/monorepository-example/packages/package-g@${{ github.ref_name }}
+                      sha256sum -c package-g-<platform>.tar.gz.sha256
                       ```
-                  files: packages/package-g/*.tar.gz
+                      
+                      ### Installation
+                      ```bash
+                      # Linux/macOS
+                      tar -xzf package-g-<platform>.tar.gz
+                      sudo mv package-g-<platform> /usr/local/bin/package-g
+                      
+                      # Windows
+                      unzip package-g-<platform>.zip
+                      # Add to PATH
+                      ```
+                      
+                      ### Usage
+                      ```bash
+                      package-g-<platform>
+                      ```
+                  files: |
+                      release/*
+                  draft: false
+                  prerelease: false
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

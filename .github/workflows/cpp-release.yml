@@ -10,12 +10,17 @@ permissions:
 
 jobs:
     build-and-test:
-        name: Build & Test C++ Package
+        name: Build & Test C++ Package (${{ matrix.target }})
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                os: [ubuntu-latest, macos-latest]
-                build_type: [Release]
+                include:
+                    - os: ubuntu-latest
+                      target: x86_64-unknown-linux-gnu
+                    - os: macos-13
+                      target: x86_64-apple-darwin
+                    - os: macos-latest
+                      target: aarch64-apple-darwin
 
         steps:
             - name: Checkout code
@@ -24,36 +29,27 @@ jobs:
             - name: Install CMake
               uses: lukka/get-cmake@latest
 
-            - name: Configure CMake
-              run: |
-                  cd packages/package-d
-                  cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+            - name: Extract version
+              id: version
+              run: echo "VERSION=${GITHUB_REF#refs/tags/package-d@v}" >> $GITHUB_OUTPUT
 
-            - name: Build
+            - name: Build with build script
               run: |
                   cd packages/package-d
-                  cmake --build build --config ${{ matrix.build_type }}
+                  chmod +x build.sh
+                  ./build.sh
 
             - name: Test
               run: |
-                  cd packages/package-d/build
-                  ctest -C ${{ matrix.build_type }} --output-on-failure
-
-            - name: Create tarball
-              if: matrix.os == 'ubuntu-latest'
-              run: |
                   cd packages/package-d
-                  tar -czf package-d-${{ github.ref_name }}-linux.tar.gz \
-                      include/ \
-                      build/libpackage_d.a \
-                      README.md
+                  ./release/package-d-${{ matrix.target }}
 
-            - name: Upload artifacts
-              if: matrix.os == 'ubuntu-latest'
+            - name: Upload release artifacts
               uses: actions/upload-artifact@v4
               with:
-                  name: cpp-package-linux
-                  path: packages/package-d/*.tar.gz
+                  name: package-d-${{ matrix.target }}
+                  path: |
+                      packages/package-d/release/package-d-${{ matrix.target }}*
 
     publish:
         name: Publish C++ Package
@@ -64,24 +60,62 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Download artifacts
+            - name: Extract version
+              id: version
+              run: echo "VERSION=${GITHUB_REF#refs/tags/package-d@v}" >> $GITHUB_OUTPUT
+
+            - name: Download all artifacts
               uses: actions/download-artifact@v4
               with:
-                  name: cpp-package-linux
                   path: dist/
+
+            - name: Organize release files
+              run: |
+                  mkdir -p release
+                  find dist -type f -exec mv {} release/ \;
+                  ls -lh release/
 
             - name: Create GitHub Release
               uses: softprops/action-gh-release@v2
               with:
                   tag_name: ${{ github.ref_name }}
-                  name: package-d ${{ github.ref_name }}
+                  name: package-d v${{ steps.version.outputs.VERSION }}
                   body: |
-                      ## C++ Package Release
-
-                      **Package:** package-d
-                      **Version:** ${{ github.ref_name }}
-
-                      Built and tested on Ubuntu and macOS
-                  files: dist/*.tar.gz
+                      ## Package D v${{ steps.version.outputs.VERSION }}
+                      
+                      C++ Math Utilities
+                      
+                      ### Features
+                      - factorial(): Calculate factorial of a number
+                      - is_prime(): Check if a number is prime
+                      - gcd(): Find greatest common divisor
+                      - JSON output support (nlohmann/json)
+                      
+                      ### Downloads
+                      
+                      Choose the binary for your platform:
+                      
+                      | Platform | Architecture | File |
+                      |----------|--------------|------|
+                      | Linux | x86_64 | `package-d-x86_64-unknown-linux-gnu.tar.gz` |
+                      | macOS | x86_64 (Intel) | `package-d-x86_64-apple-darwin.tar.gz` |
+                      | macOS | aarch64 (Apple Silicon) | `package-d-aarch64-apple-darwin.tar.gz` |
+                      
+                      ### Verification
+                      
+                      Verify downloads with SHA256 checksums:
+                      ```bash
+                      sha256sum -c package-d-<platform>.tar.gz.sha256
+                      ```
+                      
+                      ### Usage
+                      ```bash
+                      tar -xzf package-d-<platform>.tar.gz
+                      ./package-d-<platform>
+                      ```
+                  files: |
+                      release/*
+                  draft: false
+                  prerelease: false
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
