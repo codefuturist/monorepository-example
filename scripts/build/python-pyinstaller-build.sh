@@ -1,34 +1,46 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Package A Build Script
+# REUSABLE PYTHON BUILD SCRIPT (PyInstaller)
+# ==============================================================================
+# This script can be used in any Python project with minimal configuration.
+# Just update the CONFIGURATION section below.
+#
+# USAGE:
+#   Copy this script to your project root and customize the CONFIGURATION section.
+#   Or source this script and override variables before calling it.
 # ==============================================================================
 
 set -e
 
-# Package configuration
-export VERSION="1.2.0"
-export PACKAGE_NAME="package-a"
-export ENTRY_POINT="src/package_a/__main__.py"
-export RELEASE_DIR="release"
-export PYINSTALLER_NAME="$PACKAGE_NAME"
-export PYINSTALLER_FLAGS="--onefile"
-export PYINSTALLER_DATA=(
-    "--add-data src/package_a:package_a"
-    "--collect-all colorama"
-)
-export BUILD_DEPS="pyinstaller colorama"
+# ==============================================================================
+# CONFIGURATION - UPDATE THESE VALUES FOR YOUR PROJECT
+# ==============================================================================
+VERSION="${VERSION:-1.0.0}"                                    # Project version
+PACKAGE_NAME="${PACKAGE_NAME:-my-python-app}"                  # Package name (used for output files)
+ENTRY_POINT="${ENTRY_POINT:-src/main.py}"                      # Main entry point file
+RELEASE_DIR="${RELEASE_DIR:-release}"                          # Where final artifacts are stored
 
-# Use shared build script
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SHARED_SCRIPT="$SCRIPT_DIR/../../scripts/build/python-pyinstaller-build.sh"
+# PyInstaller configuration
+PYINSTALLER_NAME="${PYINSTALLER_NAME:-$PACKAGE_NAME}"          # Name of the built executable
+PYINSTALLER_FLAGS="${PYINSTALLER_FLAGS:---onefile}"            # PyInstaller flags (--onefile, --windowed, etc.)
 
-if [[ -f "$SHARED_SCRIPT" ]]; then
-    source "$SHARED_SCRIPT"
-else
-    echo "Error: Shared build script not found at $SHARED_SCRIPT"
-    exit 1
+# Dependencies to collect (space-separated)
+# Format: "--add-data source:dest" or "--collect-all package"
+if [[ -z "${PYINSTALLER_DATA[*]}" ]]; then
+    PYINSTALLER_DATA=()  # Default: no additional data files
 fi
 
+# Runtime dependencies to install before building
+BUILD_DEPS="${BUILD_DEPS:-pyinstaller}"
+
+# ==============================================================================
+# IMPLEMENTATION - REUSABLE ACROSS ALL PYTHON PROJECTS
+# ==============================================================================
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
+echo "======================================"
 echo "Building $PACKAGE_NAME v$VERSION"
 echo "======================================"
 
