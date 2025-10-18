@@ -4,7 +4,8 @@ on:
   push:
     tags:
       - 'v*.*.*'              # Root monorepo releases (e.g., v1.0.0)
-      - 'package-*@v*.*.*'    # Individual package releases (e.g., package-a@v1.0.0)
+      - 'package-[abc]@v*.*.*'  # Python packages only (a, b, c)
+      # Note: package-d through package-i have dedicated release workflows
 
 permissions:
   contents: write
