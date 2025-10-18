@@ -1,5 +1,14 @@
 
 
+# 1.2.0 (2025-10-18)
+
+### Features
+
+* **package-a:** add comprehensive Python package structure
+* **package-a:** add pytest test suite with 6 test classes
+* **package-a:** add modern pyproject.toml configuration
+* **package-a:** add GitHub Actions CI/CD workflows
+
 # 1.1.0 (2025-10-15)
 
 
