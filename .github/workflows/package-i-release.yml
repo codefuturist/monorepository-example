@@ -1,0 +1,169 @@
+name: Rust Package I Release
+
+on:
+    push:
+        tags:
+            - "package-i@v*.*.*"
+
+permissions:
+    contents: write
+
+jobs:
+    build-and-test:
+        name: Build & Test (${{ matrix.target }})
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                include:
+                    - os: ubuntu-latest
+                      target: x86_64-unknown-linux-gnu
+                    - os: ubuntu-latest
+                      target: aarch64-unknown-linux-gnu
+                    - os: macos-13
+                      target: x86_64-apple-darwin
+                    - os: macos-latest
+                      target: aarch64-apple-darwin
+                    - os: windows-latest
+                      target: x86_64-pc-windows-msvc
+                    - os: windows-latest
+                      target: aarch64-pc-windows-msvc
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Rust
+              uses: actions-rust-lang/setup-rust-toolchain@v1
+              with:
+                  toolchain: stable
+                  target: ${{ matrix.target }}
+
+            - name: Extract version
+              id: version
+              shell: bash
+              run: echo "VERSION=${GITHUB_REF#refs/tags/package-i@v}" >> $GITHUB_OUTPUT
+
+            - name: Build with build script
+              shell: bash
+              run: |
+                  cd packages/package-i
+                  chmod +x build.sh
+                  ./build.sh
+
+            - name: Test binary
+              shell: bash
+              run: |
+                  cd packages/package-i
+                  if [ -f "release/package-i-${{ matrix.target }}.exe" ]; then
+                    ./release/package-i-${{ matrix.target }}.exe demo
+                  else
+                    ./release/package-i-${{ matrix.target }} demo
+                  fi
+
+            - name: Upload release artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: package-i-${{ matrix.target }}
+                  path: |
+                      packages/package-i/release/package-i-${{ matrix.target }}*
+
+    publish:
+        name: Publish Rust Package I
+        needs: build-and-test
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Extract version
+              id: version
+              run: echo "VERSION=${GITHUB_REF#refs/tags/package-i@v}" >> $GITHUB_OUTPUT
+
+            - name: Download all artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  path: dist/
+
+            - name: Organize release files
+              run: |
+                  mkdir -p release
+                  find dist -type f -exec mv {} release/ \;
+                  ls -lh release/
+
+            - name: Create GitHub Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: ${{ github.ref_name }}
+                  name: package-i v${{ steps.version.outputs.VERSION }}
+                  body: |
+                      ## Package I v${{ steps.version.outputs.VERSION }}
+                      
+                      Rust Data Processing CLI Utilities
+                      
+                      ### Features
+                      - 📊 **Statistical Analysis**: Calculate average, median, min, max
+                      - 📝 **Word Frequency**: Analyze word occurrence in text
+                      - 📧 **Email Validation**: Validate email address format
+                      - 👤 **User Management**: Create and manage user data with JSON support
+                      - 🎨 **Colored Output**: Beautiful terminal output
+                      - 🚀 **CLI Interface**: Powerful command-line interface with subcommands
+                      
+                      ### Downloads
+                      
+                      | Platform | Architecture | Archive |
+                      |----------|--------------|---------|
+                      | Linux | x86_64 | `package-i-x86_64-unknown-linux-gnu.tar.gz` |
+                      | Linux | aarch64 (ARM64) | `package-i-aarch64-unknown-linux-gnu.tar.gz` |
+                      | macOS | x86_64 (Intel) | `package-i-x86_64-apple-darwin.tar.gz` |
+                      | macOS | aarch64 (Apple Silicon) | `package-i-aarch64-apple-darwin.tar.gz` |
+                      | Windows | x86_64 | `package-i-x86_64-pc-windows-msvc.zip` |
+                      | Windows | aarch64 (ARM64) | `package-i-aarch64-pc-windows-msvc.zip` |
+                      
+                      ### Verification
+                      
+                      All downloads include SHA256 checksums for verification:
+                      ```bash
+                      # Linux/macOS
+                      sha256sum -c package-i-<platform>.tar.gz.sha256
+                      
+                      # Windows
+                      CertUtil -hashfile package-i-<platform>.zip SHA256
+                      ```
+                      
+                      ### Usage
+                      
+                      ```bash
+                      # Extract
+                      tar -xzf package-i-<platform>.tar.gz  # or unzip for Windows
+                      
+                      # Run demo
+                      ./package-i-<platform> demo
+                      
+                      # Statistical analysis
+                      ./package-i-<platform> stats --numbers 10,20,30,40,50
+                      
+                      # Word frequency analysis
+                      ./package-i-<platform> frequency --text "your text here"
+                      
+                      # Email validation
+                      ./package-i-<platform> email --address user@example.com
+                      
+                      # User management
+                      ./package-i-<platform> user --id 1 --name "John" --email john@example.com
+                      
+                      # Help
+                      ./package-i-<platform> --help
+                      ```
+                      
+                      ### Dependencies
+                      - serde + serde_json: JSON serialization
+                      - colored: Terminal colors
+                      - clap: CLI argument parsing
+                      - anyhow: Error handling
+                  files: |
+                      release/*
+                  draft: false
+                  prerelease: false
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
