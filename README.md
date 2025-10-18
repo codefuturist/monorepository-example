@@ -2,7 +2,7 @@
 
 Example monorepo demonstrating automated CD using `release-it`, GitHub Actions, and Git Flow.
 
-> **🚀 NEW HERE?** Start with **[GETTING_STARTED.md](./GETTING_STARTED.md)** for a 5-minute setup!
+> **🚀 NEW HERE?** Start with **[MONOREPO_RELEASE_GUIDE.md](./MONOREPO_RELEASE_GUIDE.md)** - The complete practical reference!
 >
 > **📚 DOCUMENTATION INDEX:** See **[INDEX.md](./INDEX.md)** for all available guides.
 
@@ -86,6 +86,7 @@ git push origin release/v1.1.0
 ### 5. Tag Triggers GitHub Action
 
 When you push a tag (e.g., `v1.1.0`), the GitHub Action automatically:
+
 - ✅ Runs tests
 - 🏗️ Builds packages
 - 📦 Creates GitHub release
@@ -137,6 +138,7 @@ Use these prefixes for automatic changelog generation:
 - `perf:` - Performance improvement
 
 **Examples:**
+
 ```bash
 git commit -m "feat(package-a): add authentication"
 git commit -m "fix(package-b): resolve memory leak"
@@ -165,6 +167,7 @@ npm run lint             # Lint all packages
 ## 🎯 Versioning Strategy
 
 This monorepo uses **independent versioning**:
+
 - Root releases: `v1.0.0`
 - Package releases: `package-a@v1.0.0`
 
