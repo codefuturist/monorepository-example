@@ -79,6 +79,7 @@ jobs:
               with:
                   toolchain: stable # CONFIGURATION: Can be 'stable', 'beta', 'nightly', or specific version
                   target: ${{ matrix.target }}
+                  cache-workspaces: ${{ env.PACKAGES_DIR }}/${{ inputs.package-name }}
 
             - name: Extract version
               id: version
