@@ -44,7 +44,8 @@ Repository = "https://github.com/codefuturist/monorepository-example.git"
 "Bug Tracker" = "https://github.com/codefuturist/monorepository-example/issues"
 
 [tool.setuptools]
-packages = ["src"]
+package-dir = {"" = "src"}
+packages = ["package_b"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

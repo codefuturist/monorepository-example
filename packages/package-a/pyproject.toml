@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "package-a"
-version = "1.1.0"
+version = "1.2.0"
 description = "Core functionality package"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -44,7 +44,8 @@ Repository = "https://github.com/codefuturist/monorepository-example.git"
 "Bug Tracker" = "https://github.com/codefuturist/monorepository-example/issues"
 
 [tool.setuptools]
-packages = ["src"]
+package-dir = {"" = "src"}
+packages = ["package_a"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
