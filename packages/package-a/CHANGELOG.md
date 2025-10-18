@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.3] - 2025-10-18
+### Fixed
+- Windows virtual environment activation in build scripts
+
 ## [1.2.2] - 2025-10-18
 ### Fixed
 - Package dependencies sync for CI workflows
