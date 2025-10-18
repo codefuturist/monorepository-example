@@ -5,6 +5,7 @@ All notable changes to package-i will be documented in this file.
 ## [1.0.0] - 2025-10-18
 
 ### Added
+
 - Initial release of package-i
 - Statistical analysis utilities (average, median, min, max)
 - Word frequency analysis
@@ -17,6 +18,7 @@ All notable changes to package-i will be documented in this file.
 - Native binary builds with Starship-style release pattern
 
 ### Features
+
 - **Statistics**: Calculate average, median, min, max from numbers
 - **Word Frequency**: Analyze word occurrence in text
 - **Email Validation**: Simple email format validation
@@ -24,6 +26,7 @@ All notable changes to package-i will be documented in this file.
 - **Demo Mode**: Interactive demonstration of all features
 
 ### Dependencies
+
 - serde + serde_json: JSON serialization
 - colored: Terminal color output
 - clap: Command-line argument parsing

@@ -17,26 +17,28 @@ package-name-<platform-triple>[.exe].sha256
 
 We use **Rust-style target triples** for consistency:
 
-| Platform | Architecture | Target Triple |
-|----------|--------------|---------------|
-| Linux | x86_64 | `x86_64-unknown-linux-gnu` |
-| Linux | aarch64 (ARM64) | `aarch64-unknown-linux-gnu` |
-| macOS | x86_64 (Intel) | `x86_64-apple-darwin` |
-| macOS | aarch64 (Apple Silicon) | `aarch64-apple-darwin` |
-| Windows | x86_64 | `x86_64-pc-windows-msvc` |
-| Windows | aarch64 (ARM64) | `aarch64-pc-windows-msvc` |
-| Java | Universal | `universal` (platform-independent) |
+| Platform | Architecture            | Target Triple                      |
+| -------- | ----------------------- | ---------------------------------- |
+| Linux    | x86_64                  | `x86_64-unknown-linux-gnu`         |
+| Linux    | aarch64 (ARM64)         | `aarch64-unknown-linux-gnu`        |
+| macOS    | x86_64 (Intel)          | `x86_64-apple-darwin`              |
+| macOS    | aarch64 (Apple Silicon) | `aarch64-apple-darwin`             |
+| Windows  | x86_64                  | `x86_64-pc-windows-msvc`           |
+| Windows  | aarch64 (ARM64)         | `aarch64-pc-windows-msvc`          |
+| Java     | Universal               | `universal` (platform-independent) |
 
 ## 📦 Artifact Types
 
 ### For each platform, we generate:
 
 1. **Binary Executable**
+
    - Name: `package-name-<platform-triple>[.exe]`
    - Example: `package-g-x86_64-apple-darwin`
    - Windows: `package-g-x86_64-pc-windows-msvc.exe`
 
 2. **Compressed Archive**
+
    - Unix/Linux/macOS: `package-name-<platform-triple>.tar.gz`
    - Windows: `package-name-<platform-triple>.zip`
    - Example: `package-g-x86_64-apple-darwin.tar.gz`
@@ -90,6 +92,7 @@ cd packages/package-g
 ```
 
 Output:
+
 ```
 Release artifacts in: release/
 package-g-x86_64-apple-darwin
@@ -142,11 +145,13 @@ jobs:
 Users can verify downloads using SHA256 checksums:
 
 ### Linux/macOS
+
 ```bash
 sha256sum -c package-name-<platform>.tar.gz.sha256
 ```
 
 ### Windows (PowerShell)
+
 ```powershell
 CertUtil -hashfile package-name-<platform>.zip SHA256
 ```
@@ -155,16 +160,16 @@ Or compare with `.sha256` file contents manually.
 
 ## 📊 Per-Package Support
 
-| Package | Python | C++ | Rust | Swift | Go | Java |
-|---------|--------|-----|------|-------|----|----|
-| **package-a** | ✅ | - | - | - | - | - |
-| **package-b** | ✅ | - | - | - | - | - |
-| **package-c** | ✅ | - | - | - | - | - |
-| **package-d** | - | ✅ | - | - | - | - |
-| **package-e** | - | - | ✅ | - | - | - |
-| **package-f** | - | - | - | ✅ | - | - |
-| **package-g** | - | - | - | - | ✅ | - |
-| **package-h** | - | - | - | - | - | ✅ |
+| Package       | Python | C++ | Rust | Swift | Go  | Java |
+| ------------- | ------ | --- | ---- | ----- | --- | ---- |
+| **package-a** | ✅     | -   | -    | -     | -   | -    |
+| **package-b** | ✅     | -   | -    | -     | -   | -    |
+| **package-c** | ✅     | -   | -    | -     | -   | -    |
+| **package-d** | -      | ✅  | -    | -     | -   | -    |
+| **package-e** | -      | -   | ✅   | -     | -   | -    |
+| **package-f** | -      | -   | -    | ✅    | -   | -    |
+| **package-g** | -      | -   | -    | -     | ✅  | -    |
+| **package-h** | -      | -   | -    | -     | -   | ✅   |
 
 ### Platform Coverage
 
@@ -188,13 +193,13 @@ Or compare with `.sha256` file contents manually.
 
 Each GitHub release includes a detailed table:
 
-| Platform | Architecture | Archive |
-|----------|--------------|---------|
-| Linux | x86_64 | `package-g-x86_64-unknown-linux-gnu.tar.gz` |
-| Linux | aarch64 | `package-g-aarch64-unknown-linux-gnu.tar.gz` |
-| macOS | x86_64 (Intel) | `package-g-x86_64-apple-darwin.tar.gz` |
-| macOS | aarch64 (Apple Silicon) | `package-g-aarch64-apple-darwin.tar.gz` |
-| Windows | x86_64 | `package-g-x86_64-pc-windows-msvc.zip` |
+| Platform | Architecture            | Archive                                      |
+| -------- | ----------------------- | -------------------------------------------- |
+| Linux    | x86_64                  | `package-g-x86_64-unknown-linux-gnu.tar.gz`  |
+| Linux    | aarch64                 | `package-g-aarch64-unknown-linux-gnu.tar.gz` |
+| macOS    | x86_64 (Intel)          | `package-g-x86_64-apple-darwin.tar.gz`       |
+| macOS    | aarch64 (Apple Silicon) | `package-g-aarch64-apple-darwin.tar.gz`      |
+| Windows  | x86_64                  | `package-g-x86_64-pc-windows-msvc.zip`       |
 
 ## 🚀 Quick Start for Users
 

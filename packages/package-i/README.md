@@ -5,7 +5,7 @@ Rust CLI utilities for data processing with colored terminal output.
 ## Features
 
 - 📊 **Statistical Analysis**: Calculate average, median, min, max from numbers
-- 📝 **Word Frequency**: Analyze word occurrence in text  
+- 📝 **Word Frequency**: Analyze word occurrence in text
 - 📧 **Email Validation**: Simple email format validation
 - 👤 **User Management**: Create and display user information with JSON support
 - 🎨 **Colored Output**: Beautiful terminal output with colors
@@ -46,6 +46,7 @@ package-i stats --numbers 10,20,30,40,50
 ```
 
 Output:
+
 ```
 Statistical Analysis
 ==================================================
@@ -65,6 +66,7 @@ package-i frequency --text "rust is awesome rust makes systems programming fun"
 ```
 
 Output:
+
 ```
 Word Frequency Analysis
 ==================================================
@@ -84,6 +86,7 @@ package-i email --address user@example.com
 ```
 
 Output:
+
 ```
 Email Validation
 ==================================================
@@ -100,6 +103,7 @@ package-i user --id 1 --name "John Doe" --email john@example.com --active true
 ```
 
 Output:
+
 ```
 User Information:
   ID: 1
@@ -160,6 +164,7 @@ chmod +x build.sh
 ## Platform Support
 
 Native binaries for:
+
 - Linux (x86_64, aarch64)
 - macOS (x86_64 Intel, aarch64 Apple Silicon)
 - Windows (x86_64, aarch64 ARM64)

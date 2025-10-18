@@ -89,16 +89,19 @@ The JAR will be created in `target/package-h-1.0.0.jar`.
 This package follows Git Flow and uses tag-based releases:
 
 1. **Create a release branch:**
+
    ```bash
    git flow release start package-h-1.0.0
    ```
 
 2. **Finish the release:**
+
    ```bash
    git flow release finish package-h-1.0.0
    ```
 
 3. **Push the tag to trigger the release:**
+
    ```bash
    git push origin package-h@v1.0.0
    ```
@@ -110,6 +113,7 @@ This package follows Git Flow and uses tag-based releases:
    ```
 
 The GitHub Actions workflow will:
+
 - Build the project on Ubuntu, macOS, and Windows
 - Test with Java 17 and 21
 - Create a JAR artifact

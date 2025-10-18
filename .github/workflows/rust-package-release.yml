@@ -4,19 +4,19 @@ on:
     workflow_call:
         inputs:
             package-name:
-                description: 'Name of the Rust package (e.g., package-e)'
+                description: "Name of the Rust package (e.g., package-e)"
                 required: true
                 type: string
             package-description:
-                description: 'Short description of the package'
+                description: "Short description of the package"
                 required: true
                 type: string
             package-features:
-                description: 'Markdown list of package features'
+                description: "Markdown list of package features"
                 required: true
                 type: string
             usage-examples:
-                description: 'Markdown usage examples (optional)'
+                description: "Markdown usage examples (optional)"
                 required: false
                 type: string
                 default: |
@@ -121,14 +121,14 @@ jobs:
                   name: ${{ inputs.package-name }} v${{ steps.version.outputs.VERSION }}
                   body: |
                       ## ${{ inputs.package-name }} v${{ steps.version.outputs.VERSION }}
-                      
+
                       ${{ inputs.package-description }}
-                      
+
                       ### Features
                       ${{ inputs.package-features }}
-                      
+
                       ### Downloads
-                      
+
                       | Platform | Architecture | Archive |
                       |----------|--------------|---------|
                       | Linux | x86_64 | `${{ inputs.package-name }}-x86_64-unknown-linux-gnu.tar.gz` |
@@ -137,20 +137,20 @@ jobs:
                       | macOS | aarch64 (Apple Silicon) | `${{ inputs.package-name }}-aarch64-apple-darwin.tar.gz` |
                       | Windows | x86_64 | `${{ inputs.package-name }}-x86_64-pc-windows-msvc.zip` |
                       | Windows | aarch64 (ARM64) | `${{ inputs.package-name }}-aarch64-pc-windows-msvc.zip` |
-                      
+
                       ### Verification
-                      
+
                       All downloads include SHA256 checksums for verification:
                       ```bash
                       # Linux/macOS
                       sha256sum -c ${{ inputs.package-name }}-<platform>.tar.gz.sha256
-                      
+
                       # Windows
                       CertUtil -hashfile ${{ inputs.package-name }}-<platform>.zip SHA256
                       ```
-                      
+
                       ### Usage
-                      
+
                       ${{ inputs.usage-examples }}
                   files: |
                       release/*

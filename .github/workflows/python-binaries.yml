@@ -52,7 +52,7 @@ jobs:
             - name: Setup Python
               uses: actions/setup-python@v5
               with:
-                  python-version: '3.12'
+                  python-version: "3.12"
 
             - name: Extract package info
               id: pkg_info
@@ -138,11 +138,11 @@ jobs:
                   name: ${{ steps.pkg_info.outputs.package }} v${{ steps.pkg_info.outputs.version }}
                   body: |
                       ## ${{ steps.pkg_info.outputs.package }} v${{ steps.pkg_info.outputs.version }}
-                      
+
                       Python standalone binaries for multiple platforms.
-                      
+
                       ### Downloads
-                      
+
                       | Platform | Architecture | Archive |
                       |----------|--------------|---------|
                       | Linux | x86_64 | `${{ steps.pkg_info.outputs.package }}-x86_64-unknown-linux-gnu.tar.gz` |
@@ -150,29 +150,29 @@ jobs:
                       | macOS | aarch64 (Apple Silicon) | `${{ steps.pkg_info.outputs.package }}-aarch64-apple-darwin.tar.gz` |
                       | Windows | x86_64 | `${{ steps.pkg_info.outputs.package }}-x86_64-pc-windows-msvc.zip` |
                       | Windows | aarch64 (ARM64) | `${{ steps.pkg_info.outputs.package }}-aarch64-pc-windows-msvc.zip` |
-                      
+
                       ### Verification
-                      
+
                       All downloads include SHA256 checksums:
                       ```bash
                       # Linux/macOS
                       sha256sum -c ${{ steps.pkg_info.outputs.package }}-<platform>.tar.gz.sha256
-                      
+
                       # Windows
                       CertUtil -hashfile ${{ steps.pkg_info.outputs.package }}-<platform>.zip SHA256
                       ```
-                      
+
                       ### Installation
                       ```bash
                       # Linux/macOS
                       tar -xzf ${{ steps.pkg_info.outputs.package }}-<platform>.tar.gz
                       sudo mv ${{ steps.pkg_info.outputs.package }}-<platform> /usr/local/bin/${{ steps.pkg_info.outputs.package }}
-                      
+
                       # Windows
                       unzip ${{ steps.pkg_info.outputs.package }}-<platform>.zip
                       # Add to PATH
                       ```
-                      
+
                       ### Usage
                       ```bash
                       ${{ steps.pkg_info.outputs.package }}-<platform>

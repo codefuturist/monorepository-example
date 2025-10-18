@@ -79,36 +79,36 @@ jobs:
                   name: package-f v${{ steps.version.outputs.VERSION }}
                   body: |
                       ## Package F v${{ steps.version.outputs.VERSION }}
-                      
+
                       Swift File I/O Utilities
-                      
+
                       ### Features
                       - read_file(): Read file contents
                       - write_file(): Write content to file
                       - file_exists(): Check if file exists
                       - Colored terminal output
-                      
+
                       ### Downloads
-                      
+
                       **Note:** Swift binaries are macOS-only
-                      
+
                       | Platform | Architecture | Archive |
                       |----------|--------------|---------|
                       | macOS | x86_64 (Intel) | `package-f-x86_64-apple-darwin.tar.gz` |
                       | macOS | aarch64 (Apple Silicon) | `package-f-aarch64-apple-darwin.tar.gz` |
-                      
+
                       ### Verification
-                      
+
                       ```bash
                       sha256sum -c package-f-<platform>.tar.gz.sha256
                       ```
-                      
+
                       ### Installation
                       ```bash
                       tar -xzf package-f-<platform>.tar.gz
                       sudo mv package-f-<platform> /usr/local/bin/package-f
                       ```
-                      
+
                       ### Usage
                       ```bash
                       package-f

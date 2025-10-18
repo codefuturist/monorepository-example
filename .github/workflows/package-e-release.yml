@@ -21,7 +21,7 @@ jobs:
                 ```bash
                 # Extract
                 tar -xzf package-e-<platform>.tar.gz  # or unzip for Windows
-                
+
                 # Run
                 ./package-e-<platform>
                 ```

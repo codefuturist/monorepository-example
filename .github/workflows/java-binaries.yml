@@ -35,8 +35,8 @@ jobs:
             - name: Setup Java
               uses: actions/setup-java@v4
               with:
-                  java-version: '17'
-                  distribution: 'temurin'
+                  java-version: "17"
+                  distribution: "temurin"
 
             - name: Extract version
               id: version
@@ -60,13 +60,13 @@ jobs:
               run: |
                   cd packages/package-h
                   mkdir -p release
-                  
+
                   # Universal JAR (works on all platforms)
                   cp target/package-h.jar release/package-h-universal.jar
-                  
+
                   # Platform-tagged JAR for organization
                   cp target/package-h.jar release/package-h-${{ matrix.target }}.jar
-                  
+
                   # Create checksums
                   cd release
                   if command -v sha256sum &> /dev/null; then
@@ -94,8 +94,8 @@ jobs:
             - name: Setup Java
               uses: actions/setup-java@v4
               with:
-                  java-version: '17'
-                  distribution: 'temurin'
+                  java-version: "17"
+                  distribution: "temurin"
 
             - name: Extract version
               id: version
@@ -131,21 +131,21 @@ jobs:
                   name: package-h v${{ steps.version.outputs.VERSION }}
                   body: |
                       ## Package H v${{ steps.version.outputs.VERSION }}
-                      
+
                       Java JSON Utilities
-                      
+
                       ### Features
                       - JSON parsing and formatting
                       - Colored console output
                       - Object serialization
-                      
+
                       ### Downloads
-                      
+
                       **Universal JAR** (Recommended - works on all platforms with JDK 17+):
                       - `package-h-universal.jar`
-                      
+
                       **Platform-Tagged JARs** (same JAR, tagged for organization):
-                      
+
                       | Platform | Architecture | File |
                       |----------|--------------|------|
                       | Linux | x86_64 | `package-h-x86_64-unknown-linux-gnu.jar` |
@@ -154,16 +154,16 @@ jobs:
                       | macOS | aarch64 (Apple Silicon) | `package-h-aarch64-apple-darwin.jar` |
                       | Windows | x86_64 | `package-h-x86_64-pc-windows-msvc.jar` |
                       | Windows | aarch64 (ARM64) | `package-h-aarch64-pc-windows-msvc.jar` |
-                      
+
                       ### Verification
-                      
+
                       ```bash
                       sha256sum -c package-h-universal.jar.sha256
                       ```
-                      
+
                       ### Requirements
                       - Java 17 or higher
-                      
+
                       ### Usage
                       ```bash
                       java -jar package-h-universal.jar

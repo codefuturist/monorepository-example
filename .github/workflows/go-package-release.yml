@@ -4,19 +4,19 @@ on:
     workflow_call:
         inputs:
             package-name:
-                description: 'Name of the Go package (e.g., package-g)'
+                description: "Name of the Go package (e.g., package-g)"
                 required: true
                 type: string
             package-description:
-                description: 'Short description of the package'
+                description: "Short description of the package"
                 required: true
                 type: string
             package-features:
-                description: 'Markdown list of package features'
+                description: "Markdown list of package features"
                 required: true
                 type: string
             usage-examples:
-                description: 'Markdown usage examples (optional)'
+                description: "Markdown usage examples (optional)"
                 required: false
                 type: string
                 default: |
@@ -67,7 +67,7 @@ jobs:
             - name: Setup Go
               uses: actions/setup-go@v5
               with:
-                  go-version: '1.22'
+                  go-version: "1.22"
 
             - name: Extract version
               id: version
@@ -124,14 +124,14 @@ jobs:
                   name: ${{ inputs.package-name }} v${{ steps.version.outputs.VERSION }}
                   body: |
                       ## ${{ inputs.package-name }} v${{ steps.version.outputs.VERSION }}
-                      
+
                       ${{ inputs.package-description }}
-                      
+
                       ### Features
                       ${{ inputs.package-features }}
-                      
+
                       ### Downloads
-                      
+
                       | Platform | Architecture | Archive |
                       |----------|--------------|---------|
                       | Linux | x86_64 | `${{ inputs.package-name }}-x86_64-unknown-linux-gnu.tar.gz` |
@@ -140,27 +140,27 @@ jobs:
                       | macOS | aarch64 (Apple Silicon) | `${{ inputs.package-name }}-aarch64-apple-darwin.tar.gz` |
                       | Windows | x86_64 | `${{ inputs.package-name }}-x86_64-pc-windows-msvc.zip` |
                       | Windows | aarch64 (ARM64) | `${{ inputs.package-name }}-aarch64-pc-windows-msvc.zip` |
-                      
+
                       ### Verification
-                      
+
                       Verify integrity with SHA256 checksums:
                       ```bash
                       sha256sum -c ${{ inputs.package-name }}-<platform>.tar.gz.sha256
                       ```
-                      
+
                       ### Installation
                       ```bash
                       # Linux/macOS
                       tar -xzf ${{ inputs.package-name }}-<platform>.tar.gz
                       sudo mv ${{ inputs.package-name }}-<platform> /usr/local/bin/${{ inputs.package-name }}
-                      
+
                       # Windows
                       unzip ${{ inputs.package-name }}-<platform>.zip
                       # Add to PATH
                       ```
-                      
+
                       ### Usage
-                      
+
                       ${{ inputs.usage-examples }}
                   files: |
                       release/*
