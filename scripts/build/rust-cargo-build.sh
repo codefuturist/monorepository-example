@@ -377,7 +377,7 @@ if [ $SUCCESSFUL_BUILDS -eq 0 ]; then
 fi
 
 echo "Release artifacts in: $RELEASE_DIR/"
-ls -lh "$RELEASE_DIR" | grep -E "\.(tar\.gz|zip|exe|$PACKAGE_NAME)" || ls -lh "$RELEASE_DIR"
+ls -lh "$RELEASE_DIR" | grep -E "\.(tar\.gz|zip|exe|$PACKAGE_NAME)" || ls -lh "$RELEASE_DIR" || true
 echo ""
 
 if [ "$CROSS_COMPILE" = "true" ]; then
