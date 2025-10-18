@@ -61,11 +61,11 @@ jobs:
                       goos: linux
                       goarch: arm64
                     # macOS builds
-                    - os: macos-13  # Intel
+                    - os: macos-13 # Intel
                       target: x86_64-apple-darwin
                       goos: darwin
                       goarch: amd64
-                    - os: macos-latest  # Apple Silicon
+                    - os: macos-latest # Apple Silicon
                       target: aarch64-apple-darwin
                       goos: darwin
                       goarch: arm64
@@ -89,7 +89,7 @@ jobs:
             - name: Setup Go
               uses: actions/setup-go@v5
               with:
-                  go-version: "1.22"  # CONFIGURATION: Update to desired Go version
+                  go-version: "1.22" # CONFIGURATION: Update to desired Go version
 
             - name: Extract version
               id: version

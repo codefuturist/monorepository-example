@@ -1,5 +1,6 @@
 #include "package_d/math_utils.hpp"
 #include <cmath>
+#include <stdexcept>
 
 namespace package_d {
 

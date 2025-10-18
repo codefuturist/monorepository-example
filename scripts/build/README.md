@@ -11,6 +11,7 @@ This directory contains reusable build scripts for different programming languag
 Builds C++ projects using CMake with cross-platform support.
 
 **Usage in monorepo:**
+
 ```bash
 # In package directory
 export VERSION="1.0.0"
@@ -20,6 +21,7 @@ source ../../scripts/build/cpp-cmake-build.sh
 ```
 
 **Standalone usage:**
+
 ```bash
 # Copy script to your project
 cp scripts/build/cpp-cmake-build.sh ~/my-cpp-project/
@@ -33,6 +35,7 @@ VERSION="2.0.0" PACKAGE_NAME="my-app" ./cpp-cmake-build.sh
 ```
 
 **Configuration:**
+
 - `VERSION` - Project version (default: `1.0.0`)
 - `PACKAGE_NAME` - Package name (default: `my-cpp-project`)
 - `CMAKE_TARGET_NAME` - CMake target name (default: `$PACKAGE_NAME`)
@@ -43,11 +46,13 @@ VERSION="2.0.0" PACKAGE_NAME="my-app" ./cpp-cmake-build.sh
 ---
 
 ### Rust (Cargo)
+
 **File:** `rust-cargo-build.sh`
 
 Builds Rust projects using Cargo with cross-compilation support.
 
 **Usage in monorepo:**
+
 ```bash
 # In package directory
 export VERSION="1.0.0"
@@ -56,6 +61,7 @@ source ../../scripts/build/rust-cargo-build.sh
 ```
 
 **Standalone usage:**
+
 ```bash
 # Copy script to your project
 cp scripts/build/rust-cargo-build.sh ~/my-rust-app/
@@ -69,12 +75,14 @@ VERSION="2.0.0" PACKAGE_NAME="my-app" ./rust-cargo-build.sh
 ```
 
 **Configuration:**
+
 - `VERSION` - Project version (default: `1.0.0`)
 - `PACKAGE_NAME` - Package/binary name (default: `my-rust-app`)
 - `RELEASE_DIR` - Output directory (default: `release`)
 - `CARGO_FLAGS` - Additional cargo flags (default: empty)
 
 **Cross-compilation:**
+
 ```bash
 # Install targets first
 rustup target add aarch64-unknown-linux-gnu
@@ -87,11 +95,13 @@ rustup target add x86_64-pc-windows-msvc
 ---
 
 ### Go
+
 **File:** `go-build.sh`
 
 Builds Go projects for multiple platforms simultaneously.
 
 **Usage in monorepo:**
+
 ```bash
 # In package directory
 export VERSION="1.0.0"
@@ -106,6 +116,7 @@ source ../../scripts/build/go-build.sh
 ```
 
 **Standalone usage:**
+
 ```bash
 # Copy script to your project
 cp scripts/build/go-build.sh ~/my-go-app/
@@ -119,6 +130,7 @@ TARGETS=("linux:amd64:x86_64-unknown-linux-gnu") ./go-build.sh
 ```
 
 **Configuration:**
+
 - `VERSION` - Project version (default: `1.0.0`)
 - `PACKAGE_NAME` - Package name (default: `my-go-app`)
 - `MAIN_FILE` - Entry point (default: `./cmd/main.go`)
@@ -128,6 +140,7 @@ TARGETS=("linux:amd64:x86_64-unknown-linux-gnu") ./go-build.sh
 - `TARGETS` - Array of `GOOS:GOARCH:TARGET_NAME` (default: 6 platforms)
 
 **Default Targets:**
+
 1. `linux:amd64:x86_64-unknown-linux-gnu`
 2. `linux:arm64:aarch64-unknown-linux-gnu`
 3. `darwin:amd64:x86_64-apple-darwin`
@@ -138,11 +151,13 @@ TARGETS=("linux:amd64:x86_64-unknown-linux-gnu") ./go-build.sh
 ---
 
 ### Python (PyInstaller)
+
 **File:** `python-pyinstaller-build.sh`
 
 Builds Python projects into standalone executables using PyInstaller.
 
 **Usage in monorepo:**
+
 ```bash
 # In package directory
 export VERSION="1.0.0"
@@ -156,6 +171,7 @@ source ../../scripts/build/python-pyinstaller-build.sh
 ```
 
 **Standalone usage:**
+
 ```bash
 # Copy script to your project
 cp scripts/build/python-pyinstaller-build.sh ~/my-python-app/
@@ -169,6 +185,7 @@ VERSION="2.0.0" ENTRY_POINT="app.py" ./python-pyinstaller-build.sh
 ```
 
 **Configuration:**
+
 - `VERSION` - Project version (default: `1.0.0`)
 - `PACKAGE_NAME` - Package name (default: `my-python-app`)
 - `ENTRY_POINT` - Main Python file (default: `src/main.py`)
@@ -187,6 +204,7 @@ VERSION="2.0.0" ENTRY_POINT="app.py" ./python-pyinstaller-build.sh
 Builds Java projects using Maven. Creates platform-independent JARs with optional platform tagging.
 
 **Usage in monorepo:**
+
 ```bash
 # In package directory
 export VERSION="1.0.0"
@@ -196,6 +214,7 @@ source ../../scripts/build/java-maven-build.sh
 ```
 
 **Standalone usage:**
+
 ```bash
 # Copy script to your project
 cp scripts/build/java-maven-build.sh ~/my-java-app/
@@ -209,6 +228,7 @@ VERSION="2.0.0" MAVEN_ARGS="-Dmaven.test.skip=true" ./java-maven-build.sh
 ```
 
 **Configuration:**
+
 - `VERSION` - Project version (default: `1.0.0`)
 - `PACKAGE_NAME` - Package name (default: `my-java-app`)
 - `RELEASE_DIR` - Output directory (default: `release`)
@@ -229,6 +249,7 @@ VERSION="2.0.0" MAVEN_ARGS="-Dmaven.test.skip=true" ./java-maven-build.sh
 Builds Swift projects using Swift Package Manager. macOS only (requires Xcode/Swift toolchain).
 
 **Usage in monorepo:**
+
 ```bash
 # In package directory
 export VERSION="1.0.0"
@@ -238,6 +259,7 @@ source ../../scripts/build/swift-spm-build.sh
 ```
 
 **Standalone usage:**
+
 ```bash
 # Copy script to your project
 cp scripts/build/swift-spm-build.sh ~/my-swift-app/
@@ -251,6 +273,7 @@ CREATE_UNIVERSAL="true" ./swift-spm-build.sh
 ```
 
 **Configuration:**
+
 - `VERSION` - Project version (default: `1.0.0`)
 - `PACKAGE_NAME` - Package name (default: `my-swift-app`)
 - `RELEASE_DIR` - Output directory (default: `release`)
@@ -259,6 +282,7 @@ CREATE_UNIVERSAL="true" ./swift-spm-build.sh
 - `CREATE_UNIVERSAL` - Create universal binary for arm64 + x86_64 (default: `false`)
 
 **Platform Requirements:**
+
 - macOS only (requires Xcode 12.2+ or Swift toolchain)
 - For universal binaries, requires Xcode 12.2+
 
@@ -268,16 +292,17 @@ CREATE_UNIVERSAL="true" ./swift-spm-build.sh
 
 Most scripts support the following platforms:
 
-| Platform | Architecture | Target Triple |
-|----------|-------------|---------------|
-| Linux | x86_64 | `x86_64-unknown-linux-gnu` |
-| Linux | ARM64 | `aarch64-unknown-linux-gnu` |
-| macOS | x86_64 | `x86_64-apple-darwin` |
-| macOS | ARM64 | `aarch64-apple-darwin` |
-| Windows | x86_64 | `x86_64-pc-windows-msvc` |
-| Windows | ARM64 | `aarch64-pc-windows-msvc` |
+| Platform | Architecture | Target Triple               |
+| -------- | ------------ | --------------------------- |
+| Linux    | x86_64       | `x86_64-unknown-linux-gnu`  |
+| Linux    | ARM64        | `aarch64-unknown-linux-gnu` |
+| macOS    | x86_64       | `x86_64-apple-darwin`       |
+| macOS    | ARM64        | `aarch64-apple-darwin`      |
+| Windows  | x86_64       | `x86_64-pc-windows-msvc`    |
+| Windows  | ARM64        | `aarch64-pc-windows-msvc`   |
 
 **Platform-Specific Notes:**
+
 - **Java**: Platform-independent JARs, tagged as `universal-java` or with build platform
 - **Swift**: macOS only (requires Xcode/Swift toolchain), can create universal binaries (arm64 + x86_64)
 
@@ -286,6 +311,7 @@ Most scripts support the following platforms:
 All scripts produce consistent output:
 
 ### Binaries
+
 - `{package-name}-{target-triple}` (Unix)
 - `{package-name}-{target-triple}.exe` (Windows)
 - `{package-name}-universal.jar` (Java - platform-independent)
@@ -293,10 +319,12 @@ All scripts produce consistent output:
 - `{package-name}-{target-triple}.exe` (Windows)
 
 ### Archives
+
 - `{package-name}-{target-triple}.tar.gz` (Unix)
 - `{package-name}-{target-triple}.zip` (Windows)
 
 ### Checksums
+
 - `{package-name}-{target-triple}.tar.gz.sha256` (archive checksum)
 - `{package-name}-{target-triple}.sha256` (binary checksum)
 
@@ -309,6 +337,7 @@ All scripts use the `${VARIABLE:-default}` pattern, which means:
 3. **Environment override:** `VAR=value ./script.sh`
 
 Example:
+
 ```bash
 # Default (if VERSION not set)
 VERSION="${VERSION:-1.0.0}"  # Uses 1.0.0
@@ -324,11 +353,13 @@ VERSION="3.0.0" ./script.sh  # Uses 3.0.0
 ## Using in Monorepo Packages
 
 Each package has a thin wrapper script that:
+
 1. Exports package-specific configuration
 2. Sources the shared script
 3. Handles errors if script not found
 
 Example wrapper (`packages/my-package/build.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -e
@@ -396,6 +427,7 @@ VERSION="1.0.0" ./cpp-cmake-build.sh
 ## Error Handling
 
 All scripts use `set -e` to exit immediately on errors. They also:
+
 - Validate required tools are installed
 - Check for successful compilation
 - Verify output files exist
@@ -420,32 +452,41 @@ To customize for your needs:
 ## Troubleshooting
 
 ### Script not found error
+
 ```
 Error: Shared build script not found at ../../scripts/build/xxx-build.sh
 ```
+
 **Solution:** Ensure you're running from the package directory and the path is correct.
 
 ### Permission denied
+
 ```
 bash: ./build.sh: Permission denied
 ```
+
 **Solution:** Make script executable: `chmod +x build.sh`
 
 ### Cross-compilation fails (Rust)
+
 ```
 error: linker `cc` not found
 ```
+
 **Solution:** Install cross-compilation toolchain or remove cross-compilation attempt from script.
 
 ### PyInstaller not found
+
 ```
 pyinstaller: command not found
 ```
+
 **Solution:** Install PyInstaller: `pip install pyinstaller`
 
 ## Further Documentation
 
 For more detailed information about build scripts and their configuration, see:
+
 - [BUILD_SCRIPTS_GUIDE.md](../../BUILD_SCRIPTS_GUIDE.md) - Comprehensive guide
 - Package-specific build scripts in `packages/*/build.sh`
 - GitHub Actions workflows in `.github/workflows/`

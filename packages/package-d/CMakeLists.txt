@@ -33,20 +33,3 @@ target_link_libraries(package_d_cli PRIVATE package_d nlohmann_json::nlohmann_js
 # Tests
 enable_testing()
 add_subdirectory(tests)
-
-# Install
-install(TARGETS package_d
-    EXPORT package_d-targets
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
-    RUNTIME DESTINATION bin
-)
-
-install(DIRECTORY include/
-    DESTINATION include
-)
-
-install(EXPORT package_d-targets
-    FILE package_d-config.cmake
-    DESTINATION lib/cmake/package_d
-)

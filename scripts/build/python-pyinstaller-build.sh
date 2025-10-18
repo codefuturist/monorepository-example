@@ -20,6 +20,13 @@ PACKAGE_NAME="${PACKAGE_NAME:-my-python-app}"                  # Package name (u
 ENTRY_POINT="${ENTRY_POINT:-src/main.py}"                      # Main entry point file
 RELEASE_DIR="${RELEASE_DIR:-release}"                          # Where final artifacts are stored
 
+# Tool installation
+INSTALL_TOOLS="${INSTALL_TOOLS:-false}"                        # Set to 'true' to auto-install required build tools
+
+# Docker build options
+USE_DOCKER="${USE_DOCKER:-false}"                              # Set to 'true' to build in Docker container
+DOCKER_IMAGE="${DOCKER_IMAGE:-python:3.11-slim}"               # Docker image to use for builds
+
 # PyInstaller configuration
 PYINSTALLER_NAME="${PYINSTALLER_NAME:-$PACKAGE_NAME}"          # Name of the built executable
 PYINSTALLER_FLAGS="${PYINSTALLER_FLAGS:---onefile}"            # PyInstaller flags (--onefile, --windowed, etc.)
@@ -44,6 +51,210 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 echo "======================================"
 echo "Building $PACKAGE_NAME v$VERSION"
 echo "======================================"
+echo ""
+echo "✓ PyInstaller creates STANDALONE executables"
+echo "  - No Python interpreter required by end users"
+echo "  - All dependencies bundled into single executable"
+echo "  - Cross-platform builds require building on target OS"
+echo ""
+
+# ==============================================================================
+# TOOL INSTALLATION (if requested)
+# ==============================================================================
+if [ "$INSTALL_TOOLS" = "true" ]; then
+    echo "======================================"
+    echo "Installing Build Tools"
+    echo "======================================"
+    echo ""
+    
+    # Detect OS
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "Platform: macOS"
+        echo ""
+        
+        # Check if Homebrew is installed
+        if ! command -v brew &> /dev/null; then
+            echo "Installing Homebrew..."
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        fi
+        
+        # Check if Python3 is installed
+        if ! command -v python3 &> /dev/null; then
+            echo "Installing Python 3..."
+            brew install python3
+        else
+            echo "✓ Python 3 already installed: $(python3 --version)"
+        fi
+        
+        # Check if pip is installed
+        if ! command -v pip3 &> /dev/null; then
+            echo "Installing pip..."
+            python3 -m ensurepip --upgrade
+        else
+            echo "✓ pip already installed: $(pip3 --version)"
+        fi
+        
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        echo "Platform: Linux"
+        echo ""
+        
+        # Detect package manager
+        if command -v apt-get &> /dev/null; then
+            echo "Using apt (Debian/Ubuntu)..."
+            if ! command -v python3 &> /dev/null; then
+                echo "Installing Python 3..."
+                sudo apt-get update
+                sudo apt-get install -y python3 python3-pip python3-dev
+            else
+                echo "✓ Python 3 already installed: $(python3 --version)"
+            fi
+        elif command -v yum &> /dev/null; then
+            echo "Using yum (RHEL/CentOS/Fedora)..."
+            if ! command -v python3 &> /dev/null; then
+                echo "Installing Python 3..."
+                sudo yum install -y python3 python3-pip python3-devel
+            else
+                echo "✓ Python 3 already installed: $(python3 --version)"
+            fi
+        elif command -v dnf &> /dev/null; then
+            echo "Using dnf (Fedora)..."
+            if ! command -v python3 &> /dev/null; then
+                echo "Installing Python 3..."
+                sudo dnf install -y python3 python3-pip python3-devel
+            else
+                echo "✓ Python 3 already installed: $(python3 --version)"
+            fi
+        else
+            echo "⚠ Unknown package manager. Please install Python 3 manually."
+        fi
+        
+    elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" || "$OSTYPE" == "cygwin" ]]; then
+        echo "Platform: Windows"
+        echo ""
+        
+        # Check if Chocolatey is installed
+        if ! command -v choco &> /dev/null; then
+            echo "⚠ Chocolatey not found."
+            echo "Please install Python manually from:"
+            echo "  https://www.python.org/downloads/"
+            echo "Or install Chocolatey first:"
+            echo "  https://chocolatey.org/install"
+        else
+            if ! command -v python &> /dev/null; then
+                echo "Installing Python 3..."
+                choco install python3 -y
+            else
+                echo "✓ Python already installed: $(python --version)"
+            fi
+        fi
+    fi
+    
+    echo ""
+    echo "✓ Build tools check complete"
+    echo ""
+fi
+
+# ==============================================================================
+# DOCKER BUILD (if requested)
+# ==============================================================================
+if [ "$USE_DOCKER" = "true" ]; then
+    echo "======================================"
+    echo "Docker Build Mode"
+    echo "======================================"
+    echo ""
+    
+    # Source Docker utilities
+    DOCKER_UTILS="${SCRIPT_DIR}/docker-build-utils.sh"
+    if [ -f "$DOCKER_UTILS" ]; then
+        source "$DOCKER_UTILS"
+    else
+        echo "ERROR: Docker utilities not found at $DOCKER_UTILS"
+        exit 1
+    fi
+    
+    # Check Docker availability
+    if ! check_docker; then
+        exit 1
+    fi
+    
+    # Setup cleanup trap
+    DOCKER_CONTAINER_NAME="build-python-${PACKAGE_NAME}-$$"
+    cleanup_python_docker() {
+        echo ""
+        echo "Cleaning up Docker resources..."
+        docker rm -f "$DOCKER_CONTAINER_NAME" 2>/dev/null || true
+        # Clean up any intermediate build artifacts in Docker
+        rm -rf dist build *.spec 2>/dev/null || true
+        echo "✓ Docker cleanup complete"
+    }
+    trap cleanup_python_docker EXIT INT TERM
+    
+    # Ensure image is available
+    ensure_docker_image "$DOCKER_IMAGE"
+    
+    echo "Building in Docker container using: $DOCKER_IMAGE"
+    echo "Working directory: $(pwd)"
+    echo ""
+    
+    # Build command to run inside Docker
+    BUILD_CMD="set -e && \
+        apt-get update -qq && apt-get install -y -qq binutils > /dev/null 2>&1 && \
+        pip install --quiet $BUILD_DEPS && \
+        cd /workspace && \
+        pyinstaller $PYINSTALLER_FLAGS --name $PYINSTALLER_NAME $ENTRY_POINT && \
+        mkdir -p release && \
+        cp dist/$PYINSTALLER_NAME release/ && \
+        cd release && \
+        tar -czf ${PYINSTALLER_NAME}.tar.gz $PYINSTALLER_NAME && \
+        sha256sum ${PYINSTALLER_NAME}.tar.gz > ${PYINSTALLER_NAME}.tar.gz.sha256 && \
+        sha256sum $PYINSTALLER_NAME > ${PYINSTALLER_NAME}.sha256"
+    
+    # Run build in Docker
+    BUILD_SUCCESS=false
+    if docker run --name "$DOCKER_CONTAINER_NAME" --rm \
+        -v "$(pwd):/workspace" \
+        -w /workspace \
+        "$DOCKER_IMAGE" \
+        sh -c "$BUILD_CMD"; then
+        BUILD_SUCCESS=true
+    fi
+    
+    # Cleanup intermediate files
+    rm -rf dist build *.spec 2>/dev/null || true
+    
+    if [ "$BUILD_SUCCESS" = "true" ]; then
+        echo ""
+        echo "======================================"
+        echo "Docker Build Complete"
+        echo "======================================"
+        echo ""
+        echo "Release artifacts in: $RELEASE_DIR/"
+        ls -lh "$RELEASE_DIR"
+        echo ""
+        exit 0
+    else
+        echo "ERROR: Docker build failed"
+        exit 1
+    fi
+fi
+
+# ==============================================================================
+# PRE-BUILD CLEANUP
+# ==============================================================================
+echo "Cleaning previous build artifacts..."
+rm -rf "$RELEASE_DIR" dist build *.spec 2>/dev/null || true
+echo "✓ Cleanup complete"
+echo ""
+echo "⚠ PyInstaller builds for the current platform/architecture only"
+echo "  - Build on Linux x86_64 → Linux x86_64 binary"
+echo "  - Build on macOS ARM64 → macOS ARM64 binary"
+echo "  - Build on Windows x86_64 → Windows x86_64 binary"
+echo "  - To get all platforms: build on each target platform/architecture"
+echo "  - Or use USE_DOCKER=true to build Linux binaries in a container"
+echo ""
+
+# Ensure we're in the package directory
+cd "$PACKAGE_DIR"
 
 # Detect platform
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -82,6 +293,33 @@ fi
 echo "Platform: $TARGET"
 echo ""
 
+# Create and activate virtual environment
+VENV_DIR=".build_venv"
+if [[ ! -d "$VENV_DIR" ]]; then
+    echo "Creating virtual environment..."
+    python3 -m venv "$VENV_DIR"
+fi
+
+echo "Activating virtual environment..."
+source "$VENV_DIR/bin/activate"
+
+# Clean up previous build artifacts
+echo "Cleaning up previous build artifacts..."
+rm -rf "$RELEASE_DIR" 2>/dev/null || true
+rm -rf dist 2>/dev/null || true
+rm -rf build 2>/dev/null || true
+rm -f *.spec 2>/dev/null || true
+echo "  ✓ Cleanup completed"
+echo ""
+
+# Install package dependencies from pyproject.toml
+if [[ -f "pyproject.toml" ]]; then
+    echo "Installing package dependencies from pyproject.toml..."
+    pip install -q -e .
+else
+    echo "Warning: pyproject.toml not found, skipping package dependency installation"
+fi
+
 # Install build dependencies
 echo "Installing build dependencies..."
 pip install -q $BUILD_DEPS
@@ -111,6 +349,37 @@ mkdir -p "$RELEASE_DIR"
 BINARY_NAME="${PACKAGE_NAME}-${TARGET}${EXT}"
 cp "dist/${PYINSTALLER_NAME}${EXT}" "$RELEASE_DIR/$BINARY_NAME"
 
+# Verify binary exists and is executable
+echo ""
+echo "Verifying built binary..."
+if [ ! -f "$RELEASE_DIR/$BINARY_NAME" ]; then
+    echo "ERROR: Binary not found at $RELEASE_DIR/$BINARY_NAME"
+    exit 1
+fi
+
+# Check if binary is executable (Unix only)
+if [[ "$EXT" != ".exe" ]]; then
+    chmod +x "$RELEASE_DIR/$BINARY_NAME"
+    if [ ! -x "$RELEASE_DIR/$BINARY_NAME" ]; then
+        echo "ERROR: Binary is not executable: $RELEASE_DIR/$BINARY_NAME"
+        exit 1
+    fi
+fi
+
+# Verify binary file type
+if command -v file &> /dev/null; then
+    FILE_TYPE=$(file "$RELEASE_DIR/$BINARY_NAME")
+    echo "Binary type: $FILE_TYPE"
+    if [[ "$FILE_TYPE" == *"executable"* ]] || [[ "$FILE_TYPE" == *"Mach-O"* ]] || [[ "$FILE_TYPE" == *"ELF"* ]] || [[ "$FILE_TYPE" == *"PE32"* ]]; then
+        echo "  ✓ Binary verification passed"
+    else
+        echo "WARNING: Binary may not be a valid executable"
+    fi
+else
+    echo "  ✓ Binary exists (file command not available for detailed verification)"
+fi
+echo ""
+
 # Create tar.gz (Unix) or zip (Windows)
 cd "$PACKAGE_DIR/$RELEASE_DIR"
 if [[ "$EXT" == ".exe" ]]; then
@@ -132,9 +401,26 @@ fi
 
 cd "$PACKAGE_DIR"
 
+# Deactivate virtual environment
+deactivate 2>/dev/null || true
+
 echo ""
-echo "✓ Build completed successfully!"
+echo "════════════════════════════════════════════════════════"
+echo "Build Summary"
+echo "════════════════════════════════════════════════════════"
+echo "✓ STANDALONE executable created successfully!"
+echo ""
+echo "End users can run this binary WITHOUT installing Python!"
+echo "  - Python interpreter: ✓ Bundled"
+echo "  - All dependencies: ✓ Bundled"
+echo "  - Just download and run: ✓ Ready"
 echo ""
 echo "Release artifacts in: $RELEASE_DIR/"
 ls -lh "$RELEASE_DIR"
+echo ""
+echo "Note: Build used virtual environment at $VENV_DIR (can be deleted)"
+echo ""
+echo "To get binaries for other platforms/architectures:"
+echo "  - Build this package on each target platform"
+echo "  - Or use CI/CD with multiple runners (Linux x64/ARM64, macOS x64/ARM64, Windows x64/ARM64)"
 echo ""

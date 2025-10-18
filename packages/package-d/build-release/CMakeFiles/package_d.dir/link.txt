@@ -1,0 +1,2 @@
+/usr/bin/ar qc libpackage_d.a CMakeFiles/package_d.dir/src/math_utils.cpp.o
+/usr/bin/ranlib libpackage_d.a

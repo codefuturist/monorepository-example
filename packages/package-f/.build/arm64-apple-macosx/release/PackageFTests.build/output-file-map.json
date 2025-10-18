@@ -1,0 +1,13 @@
+{
+  "": {
+    "dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/PackageFTests.d",
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/PackageFTests.o",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/master.swiftdeps"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/Tests/PackageFTests/ArrayUtilsTests.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/ArrayUtilsTests.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/ArrayUtilsTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/ArrayUtilsTests.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/ArrayUtilsTests.dia"
+  }
+}

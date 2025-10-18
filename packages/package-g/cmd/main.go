@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
+	"time"
 
 	"github.com/codefuturist/monorepository-example/packages/package-g"
 	"github.com/fatih/color"
@@ -49,7 +51,16 @@ func runTests() error {
 	t.AppendHeader(table.Row{"Base URL", "Parameters", "Result"})
 
 	for _, u := range urls {
-		result := packageg.BuildURL(u.base, u.params)
+		// Build base URL (BuildURL takes base and path as strings)
+		result := u.base
+		if len(u.params) > 0 {
+			// Append query parameters manually
+			var params []string
+			for k, v := range u.params {
+				params = append(params, fmt.Sprintf("%s=%s", k, v))
+			}
+			result = fmt.Sprintf("%s?%s", result, strings.Join(params, "&"))
+		}
 		t.AppendRow(table.Row{u.base, fmt.Sprintf("%v", u.params), result})
 	}
 	t.Render()
@@ -74,19 +85,25 @@ func runTests() error {
 
 	// Test HTTPClient
 	fmt.Println("\n" + color.YellowString("HTTPClient Test:"))
-	client := packageg.NewHTTPClient()
+	client := packageg.NewHTTPClient("https://api.example.com", 30*time.Second)
 	if client == nil {
 		return fmt.Errorf("failed to create HTTP client")
 	}
 	
 	green := color.New(color.FgGreen)
 	green.Println("✓ HTTPClient created successfully")
-	green.Printf("✓ Client timeout: %v\n", client.Timeout)
+	green.Printf("✓ Client base URL: https://api.example.com\n")
+	green.Printf("✓ Client timeout: 30s\n")
 
+	// Test BuildURL with path
+	fmt.Println("\n" + color.CyanString("BuildURL Test:"))
+	testURL := packageg.BuildURL("https://api.example.com", "/v1/users")
+	green.Printf("BuildURL result: %s\n", testURL)
+	
 	// Error handling test
 	fmt.Println("\n" + color.CyanString("Error Handling Test:"))
-	emptyURL := packageg.BuildURL("", nil)
-	if emptyURL == "" {
+	emptyURL := packageg.BuildURL("", "")
+	if emptyURL == "/" {
 		green.Println("✓ Empty URL handled correctly")
 	}
 

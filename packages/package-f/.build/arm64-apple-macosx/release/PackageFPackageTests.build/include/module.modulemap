@@ -1,0 +1,3 @@
+module PackageFPackageTests {
+    header "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.build/include/PackageFPackageTests-Swift.h"
+}

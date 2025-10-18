@@ -2,12 +2,6 @@
 #include <vector>
 #include <string>
 #include "package_d/math_utils.hpp"
-
-// Check if nlohmann/json is available
-#ifndef NLOHMANN_JSON_VERSION_MAJOR
-#error "nlohmann/json library is required but not found. Please ensure it's properly linked."
-#endif
-
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;

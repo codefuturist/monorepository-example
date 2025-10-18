@@ -11,7 +11,7 @@ name: Package I Release
 on:
     push:
         tags:
-            - "package-i@v*.*.*"  # CONFIGURATION: Update package name if changed
+            - "package-i@v*.*.*" # CONFIGURATION: Update package name if changed
 
 jobs:
     release:

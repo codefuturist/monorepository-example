@@ -42,9 +42,9 @@ struct PackageFCLI {
         }
         
         // Test average
-        if let avg = ArrayUtils.average(numbers) {
-            print("Average: \(String(format: "%.2f", avg))".cyan)
-        }
+        let doublesForAvg = numbers.map { Double($0) }
+        let avg = ArrayUtils.average(doublesForAvg)
+        print("Average: \(String(format: "%.2f", avg))".cyan)
         
         // Test removeDuplicates
         let unique = ArrayUtils.removeDuplicates(numbers)
@@ -73,12 +73,12 @@ struct PackageFCLI {
             print("✓ Empty array handled correctly (returns nil)".green)
         }
         
-        // Test invalid chunk size
-        do {
-            _ = try ArrayUtils.chunk([1, 2, 3], size: 0)
-            print("✗ Should have thrown error for invalid chunk size".red)
-        } catch {
-            print("✓ Invalid chunk size error caught: \(error)".green)
+        // Test invalid chunk size (ArrayUtils.chunk returns empty array for size 0)
+        let invalidChunks = ArrayUtils.chunk([1, 2, 3], size: 0)
+        if invalidChunks.isEmpty {
+            print("✓ Invalid chunk size handled correctly (returns empty array)".green)
+        } else {
+            print("✗ Invalid chunk size not handled correctly".red)
         }
     }
     
@@ -89,17 +89,4 @@ struct PackageFCLI {
             print(String(repeating: "=", count: 60))
         }
     }
-}
-
-extension ArrayUtils {
-    static func chunk<T>(_ array: [T], size: Int) throws -> [[T]] {
-        guard size > 0 else {
-            throw ChunkError.invalidSize
-        }
-        return chunk(array, size: size)
-    }
-}
-
-enum ChunkError: Error {
-    case invalidSize
 }
