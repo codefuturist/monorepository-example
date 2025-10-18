@@ -26,8 +26,9 @@ CREATE_UNIVERSAL="${CREATE_UNIVERSAL:-false}"      # Create universal binary (ar
 # IMPLEMENTATION - REUSABLE ACROSS ALL SWIFT PROJECTS
 # ==============================================================================
 
+# Remember the package directory (where build.sh was called from)
+PACKAGE_DIR="$(pwd)"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$SCRIPT_DIR"
 
 echo "======================================"
 echo "Building $PACKAGE_NAME v$VERSION"

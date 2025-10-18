@@ -37,8 +37,9 @@ BUILD_DEPS="${BUILD_DEPS:-pyinstaller}"
 # IMPLEMENTATION - REUSABLE ACROSS ALL PYTHON PROJECTS
 # ==============================================================================
 
+# Remember the package directory (where build.sh was called from)
+PACKAGE_DIR="$(pwd)"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$SCRIPT_DIR"
 
 echo "======================================"
 echo "Building $PACKAGE_NAME v$VERSION"
@@ -87,10 +88,21 @@ pip install -q $BUILD_DEPS
 
 # Build for current platform
 echo "Building executable for current platform..."
-pyinstaller $PYINSTALLER_FLAGS \
-    --name "$PYINSTALLER_NAME" \
-    "${PYINSTALLER_DATA[@]}" \
-    "$ENTRY_POINT"
+
+# Build pyinstaller command with proper array handling
+PYINSTALLER_CMD=(pyinstaller $PYINSTALLER_FLAGS --name "$PYINSTALLER_NAME")
+
+# Add data files if specified
+if [[ ${#PYINSTALLER_DATA[@]} -gt 0 ]]; then
+    PYINSTALLER_CMD+=("${PYINSTALLER_DATA[@]}")
+fi
+
+# Add entry point
+PYINSTALLER_CMD+=("$ENTRY_POINT")
+
+# Execute the command from package directory
+cd "$PACKAGE_DIR"
+"${PYINSTALLER_CMD[@]}"
 
 # Create release directory
 mkdir -p "$RELEASE_DIR"
@@ -100,7 +112,7 @@ BINARY_NAME="${PACKAGE_NAME}-${TARGET}${EXT}"
 cp "dist/${PYINSTALLER_NAME}${EXT}" "$RELEASE_DIR/$BINARY_NAME"
 
 # Create tar.gz (Unix) or zip (Windows)
-cd "$RELEASE_DIR"
+cd "$PACKAGE_DIR/$RELEASE_DIR"
 if [[ "$EXT" == ".exe" ]]; then
     # Windows: create zip
     zip "${PACKAGE_NAME}-${TARGET}.zip" "$BINARY_NAME"
@@ -118,7 +130,7 @@ else
     shasum -a 256 "$BINARY_NAME" > "${BINARY_NAME}.sha256"
 fi
 
-cd "$SCRIPT_DIR"
+cd "$PACKAGE_DIR"
 
 echo ""
 echo "✓ Build completed successfully!"

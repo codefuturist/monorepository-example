@@ -13,8 +13,8 @@ export RELEASE_DIR="release"
 export PYINSTALLER_NAME="$PACKAGE_NAME"
 export PYINSTALLER_FLAGS="--onefile"
 export PYINSTALLER_DATA=(
-    "--add-data src/package_a:package_a"
-    "--collect-all colorama"
+    "--add-data" "src/package_a:package_a"
+    "--collect-all" "colorama"
 )
 export BUILD_DEPS="pyinstaller colorama"
 

@@ -28,8 +28,9 @@ RELEASE_DIR="${RELEASE_DIR:-release}"                # Where final artifacts are
 # IMPLEMENTATION - REUSABLE ACROSS ALL C++ PROJECTS
 # ==============================================================================
 
+# Remember the package directory (where build.sh was called from)
+PACKAGE_DIR="$(pwd)"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$SCRIPT_DIR"
 
 echo "======================================"
 echo "Building $PACKAGE_NAME v$VERSION"

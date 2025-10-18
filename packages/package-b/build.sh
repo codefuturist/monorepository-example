@@ -13,8 +13,8 @@ export RELEASE_DIR="release"
 export PYINSTALLER_NAME="$PACKAGE_NAME"
 export PYINSTALLER_FLAGS="--onefile"
 export PYINSTALLER_DATA=(
-    "--add-data src/package_b:package_b"
-    "--collect-all rich"
+    "--add-data" "src/package_b:package_b"
+    "--collect-all" "rich"
 )
 export BUILD_DEPS="pyinstaller rich"
 

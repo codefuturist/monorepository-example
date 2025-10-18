@@ -26,11 +26,12 @@ CREATE_UNIVERSAL="${CREATE_UNIVERSAL:-true}"       # Create universal JAR
 CREATE_PLATFORM_TAGGED="${CREATE_PLATFORM_TAGGED:-true}"  # Create platform-tagged JAR
 
 # ==============================================================================
-# IMPLEMENTATION - REUSABLE ACROSS ALL JAVA/MAVEN PROJECTS
+# IMPLEMENTATION - REUSABLE ACROSS ALL JAVA PROJECTS
 # ==============================================================================
 
+# Remember the package directory (where build.sh was called from)
+PACKAGE_DIR="$(pwd)"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$SCRIPT_DIR"
 
 echo "======================================"
 echo "Building $PACKAGE_NAME v$VERSION"

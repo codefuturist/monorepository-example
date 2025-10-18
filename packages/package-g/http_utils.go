@@ -10,6 +10,9 @@ import (
 	"time"
 )
 
+// Version is the current version of package-g
+const Version = "1.0.0"
+
 // HTTPClient represents a simple HTTP client
 type HTTPClient struct {
 	client  *http.Client
