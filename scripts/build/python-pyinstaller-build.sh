@@ -301,7 +301,12 @@ if [[ ! -d "$VENV_DIR" ]]; then
 fi
 
 echo "Activating virtual environment..."
-source "$VENV_DIR/bin/activate"
+# Windows uses Scripts/activate, Unix uses bin/activate
+if [[ -f "$VENV_DIR/Scripts/activate" ]]; then
+    source "$VENV_DIR/Scripts/activate"
+else
+    source "$VENV_DIR/bin/activate"
+fi
 
 # Clean up previous build artifacts
 echo "Cleaning up previous build artifacts..."
