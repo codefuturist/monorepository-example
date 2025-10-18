@@ -1,0 +1,12 @@
+[package]
+name = "package-e"
+version = "1.0.0"
+edition = "2021"
+authors = ["Your Team <team@example.com>"]
+description = "Rust string manipulation utilities"
+license = "MIT"
+repository = "https://github.com/codefuturist/monorepository-example"
+
+[dependencies]
+
+[dev-dependencies]

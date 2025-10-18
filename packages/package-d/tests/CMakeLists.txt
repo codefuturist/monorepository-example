@@ -1,0 +1,3 @@
+add_executable(test_math_utils test_math_utils.cpp)
+target_link_libraries(test_math_utils package_d)
+add_test(NAME test_math_utils COMMAND test_math_utils)

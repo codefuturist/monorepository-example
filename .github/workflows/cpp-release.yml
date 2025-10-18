@@ -1,0 +1,87 @@
+name: C++ Release
+
+on:
+    push:
+        tags:
+            - "package-d@v*.*.*"
+
+permissions:
+    contents: write
+
+jobs:
+    build-and-test:
+        name: Build & Test C++ Package
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [ubuntu-latest, macos-latest]
+                build_type: [Release]
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Install CMake
+              uses: lukka/get-cmake@latest
+
+            - name: Configure CMake
+              run: |
+                  cd packages/package-d
+                  cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+
+            - name: Build
+              run: |
+                  cd packages/package-d
+                  cmake --build build --config ${{ matrix.build_type }}
+
+            - name: Test
+              run: |
+                  cd packages/package-d/build
+                  ctest -C ${{ matrix.build_type }} --output-on-failure
+
+            - name: Create tarball
+              if: matrix.os == 'ubuntu-latest'
+              run: |
+                  cd packages/package-d
+                  tar -czf package-d-${{ github.ref_name }}-linux.tar.gz \
+                      include/ \
+                      build/libpackage_d.a \
+                      README.md
+
+            - name: Upload artifacts
+              if: matrix.os == 'ubuntu-latest'
+              uses: actions/upload-artifact@v4
+              with:
+                  name: cpp-package-linux
+                  path: packages/package-d/*.tar.gz
+
+    publish:
+        name: Publish C++ Package
+        needs: build-and-test
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Download artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: cpp-package-linux
+                  path: dist/
+
+            - name: Create GitHub Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: ${{ github.ref_name }}
+                  name: package-d ${{ github.ref_name }}
+                  body: |
+                      ## C++ Package Release
+
+                      **Package:** package-d
+                      **Version:** ${{ github.ref_name }}
+
+                      Built and tested on Ubuntu and macOS
+                  files: dist/*.tar.gz
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
