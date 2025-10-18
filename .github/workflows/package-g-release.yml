@@ -1,0 +1,22 @@
+name: Package G Release
+
+on:
+    push:
+        tags:
+            - "package-g@v*.*.*"
+
+jobs:
+    release:
+        uses: ./.github/workflows/go-package-release.yml
+        with:
+            package-name: package-g
+            package-description: Go HTTP Utilities
+            package-features: |
+                - HTTPClient: HTTP client with configurable timeout
+                - BuildURL(): Construct URLs with query parameters
+                - ParseQueryString(): Parse URL query strings
+                - Colored table output
+            usage-examples: |
+                ```bash
+                package-g-<platform>
+                ```

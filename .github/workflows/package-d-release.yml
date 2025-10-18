@@ -1,0 +1,23 @@
+name: Package D Release
+
+on:
+    push:
+        tags:
+            - "package-d@v*.*.*"
+
+jobs:
+    release:
+        uses: ./.github/workflows/cpp-package-release.yml
+        with:
+            package-name: package-d
+            package-description: C++ Math Utilities
+            package-features: |
+                - factorial(): Calculate factorial of a number
+                - is_prime(): Check if a number is prime
+                - gcd(): Find greatest common divisor
+                - JSON output support (nlohmann/json)
+            usage-examples: |
+                ```bash
+                tar -xzf package-d-<platform>.tar.gz
+                ./package-d-<platform>
+                ```

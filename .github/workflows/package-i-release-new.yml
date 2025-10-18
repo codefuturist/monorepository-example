@@ -1,0 +1,43 @@
+name: Package I Release
+
+on:
+    push:
+        tags:
+            - "package-i@v*.*.*"
+
+jobs:
+    release:
+        uses: ./.github/workflows/rust-package-release.yml
+        with:
+            package-name: package-i
+            package-description: Rust Data Processing CLI Utilities
+            package-features: |
+                - 📊 Statistical Analysis: Calculate average, median, min, max
+                - 📝 Word Frequency: Analyze word occurrence in text
+                - 📧 Email Validation: Validate email address format
+                - 👤 User Management: Create and manage user data with JSON support
+                - 🎨 Colored Output: Beautiful terminal output
+                - 🚀 CLI Interface: Powerful command-line interface with subcommands
+            usage-examples: |
+                ```bash
+                # Extract
+                tar -xzf package-i-<platform>.tar.gz  # or unzip for Windows
+                
+                # Run demo
+                ./package-i-<platform> demo
+                
+                # Statistical analysis
+                ./package-i-<platform> stats --numbers 10,20,30,40,50
+                
+                # Word frequency analysis
+                ./package-i-<platform> frequency --text "your text here"
+                
+                # Email validation
+                ./package-i-<platform> email --address user@example.com
+                
+                # User management
+                ./package-i-<platform> user --id 1 --name "John" --email john@example.com
+                
+                # Help
+                ./package-i-<platform> --help
+                ```
