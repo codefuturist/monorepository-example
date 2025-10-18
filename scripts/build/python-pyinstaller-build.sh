@@ -388,8 +388,14 @@ echo ""
 # Create tar.gz (Unix) or zip (Windows)
 cd "$PACKAGE_DIR/$RELEASE_DIR"
 if [[ "$EXT" == ".exe" ]]; then
-    # Windows: create zip
-    zip "${PACKAGE_NAME}-${TARGET}.zip" "$BINARY_NAME"
+    # Windows: create zip (use tar which is available in Windows 10+, or PowerShell)
+    if command -v zip &> /dev/null; then
+        zip "${PACKAGE_NAME}-${TARGET}.zip" "$BINARY_NAME"
+    else
+        # Use tar with zip format (available in Windows 10+)
+        powershell.exe -Command "Compress-Archive -Path '$BINARY_NAME' -DestinationPath '${PACKAGE_NAME}-${TARGET}.zip' -Force" 2>/dev/null || \
+        tar -a -cf "${PACKAGE_NAME}-${TARGET}.zip" "$BINARY_NAME"
+    fi
     sha256sum "${PACKAGE_NAME}-${TARGET}.zip" > "${PACKAGE_NAME}-${TARGET}.zip.sha256"
 else
     # Unix: create tar.gz
