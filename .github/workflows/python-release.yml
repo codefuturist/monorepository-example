@@ -172,7 +172,7 @@ jobs:
               uses: softprops/action-gh-release@v2
               with:
                   tag_name: ${{ steps.tag_info.outputs.tag }}
-                  name: ${{ steps.tag_info.outputs.package }} v${{ steps.tag_info.outputs.version }}
+                  name: ${{ steps.tag_info.outputs.package }} ${{ steps.tag_info.outputs.version }}
                   body: |
                       ## Python Package Release
 
