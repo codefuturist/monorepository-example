@@ -1,6 +1,6 @@
 [package]
 name = "package-e"
-version = "1.0.4"
+version = "1.0.5"
 edition = "2021"
 authors = ["Your Team <team@example.com>"]
 description = "Rust string manipulation utilities"
