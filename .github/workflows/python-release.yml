@@ -126,7 +126,7 @@ jobs:
             # 10. Upload artifacts
             - name: Upload artifacts
               if: steps.tag_info.outputs.is_package == 'true'
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: python-packages-${{ matrix.python-version }}
                   path: ${{ steps.tag_info.outputs.package_path }}/dist/
@@ -163,7 +163,7 @@ jobs:
                   fi
 
             - name: Download artifacts
-              uses: actions/download-artifact@v3
+              uses: actions/download-artifact@v4
               with:
                   name: python-packages-3.12
                   path: dist/
