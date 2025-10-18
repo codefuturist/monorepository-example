@@ -1,14 +1,23 @@
+# =============================================================================
+# CONFIGURATION - Package-specific settings
+# =============================================================================
+# Package: package-d (C++ Math Utilities)
+# Trigger: Tags matching pattern "package-d@v*.*.*"
+# Example: package-d@v1.0.0
+# =============================================================================
+
 name: Package D Release
 
 on:
     push:
         tags:
-            - "package-d@v*.*.*"
+            - "package-d@v*.*.*"  # CONFIGURATION: Update package name if changed
 
 jobs:
     release:
         uses: ./.github/workflows/cpp-package-release.yml
         with:
+            # CONFIGURATION: Update these values when package changes
             package-name: package-d
             package-description: C++ Math Utilities
             package-features: |

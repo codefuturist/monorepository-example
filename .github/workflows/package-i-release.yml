@@ -1,14 +1,23 @@
+# =============================================================================
+# CONFIGURATION - Package-specific settings
+# =============================================================================
+# Package: package-i (Rust Data Processing CLI)
+# Trigger: Tags matching pattern "package-i@v*.*.*"
+# Example: package-i@v1.0.0
+# =============================================================================
+
 name: Package I Release
 
 on:
     push:
         tags:
-            - "package-i@v*.*.*"
+            - "package-i@v*.*.*"  # CONFIGURATION: Update package name if changed
 
 jobs:
     release:
         uses: ./.github/workflows/rust-package-release.yml
         with:
+            # CONFIGURATION: Update these values when package changes
             package-name: package-i
             package-description: Rust Data Processing CLI Utilities
             package-features: |

@@ -1,16 +1,25 @@
+# =============================================================================
+# CONFIGURATION - Package-specific settings
+# =============================================================================
+# Package: package-g (Go REST API)
+# Trigger: Tags matching pattern "package-g@v*.*.*"
+# Example: package-g@v1.0.0
+# =============================================================================
+
 name: Package G Release
 
 on:
     push:
         tags:
-            - "package-g@v*.*.*"
+            - "package-g@v*.*.*"  # CONFIGURATION: Update package name if changed
 
 jobs:
     release:
         uses: ./.github/workflows/go-package-release.yml
         with:
+            # CONFIGURATION: Update these values when package changes
             package-name: package-g
-            package-description: Go HTTP Utilities
+            package-description: Go REST API with PostgreSQL
             package-features: |
                 - HTTPClient: HTTP client with configurable timeout
                 - BuildURL(): Construct URLs with query parameters

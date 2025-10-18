@@ -25,6 +25,19 @@ on:
                     ./$PACKAGE_NAME-<platform>
                     ```
 
+# =============================================================================
+# CONFIGURATION - Values that may change over time
+# =============================================================================
+env:
+    # Build configuration (customize paths if needed)
+    PACKAGES_DIR: "packages"
+    RELEASE_DIR: "release"
+    DIST_DIR: "dist"
+    BUILD_SCRIPT: "build.sh"
+
+# =============================================================================
+# IMPLEMENTATION - Stable workflow logic (rarely changes)
+# =============================================================================
 permissions:
     contents: write
 
@@ -33,8 +46,12 @@ jobs:
         name: Build & Test (${{ matrix.target }})
         runs-on: ${{ matrix.os }}
         strategy:
+            # =====================================================================
+            # CONFIGURATION - Build matrix (add/remove platforms as needed)
+            # =====================================================================
             matrix:
                 include:
+                    # Linux builds
                     - os: ubuntu-latest
                       target: x86_64-unknown-linux-gnu
                       goos: linux
@@ -43,14 +60,16 @@ jobs:
                       target: aarch64-unknown-linux-gnu
                       goos: linux
                       goarch: arm64
-                    - os: macos-13
+                    # macOS builds
+                    - os: macos-13  # Intel
                       target: x86_64-apple-darwin
                       goos: darwin
                       goarch: amd64
-                    - os: macos-latest
+                    - os: macos-latest  # Apple Silicon
                       target: aarch64-apple-darwin
                       goos: darwin
                       goarch: arm64
+                    # Windows builds
                     - os: windows-latest
                       target: x86_64-pc-windows-msvc
                       goos: windows
@@ -64,10 +83,13 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
+            # =====================================================================
+            # CONFIGURATION - Go version (update as needed)
+            # =====================================================================
             - name: Setup Go
               uses: actions/setup-go@v5
               with:
-                  go-version: "1.22"
+                  go-version: "1.22"  # CONFIGURATION: Update to desired Go version
 
             - name: Extract version
               id: version
@@ -76,22 +98,22 @@ jobs:
 
             - name: Test
               run: |
-                  cd packages/${{ inputs.package-name }}
+                  cd ${{ env.PACKAGES_DIR }}/${{ inputs.package-name }}
                   go test -v -race -coverprofile=coverage.out ./...
 
             - name: Build with script
               shell: bash
               run: |
-                  cd packages/${{ inputs.package-name }}
-                  chmod +x build.sh
-                  ./build.sh
+                  cd ${{ env.PACKAGES_DIR }}/${{ inputs.package-name }}
+                  chmod +x ${{ env.BUILD_SCRIPT }}
+                  ./${{ env.BUILD_SCRIPT }}
 
             - name: Upload release artifacts
               uses: actions/upload-artifact@v4
               with:
                   name: ${{ inputs.package-name }}-${{ matrix.target }}
                   path: |
-                      packages/${{ inputs.package-name }}/release/${{ inputs.package-name }}-${{ matrix.target }}*
+                      ${{ env.PACKAGES_DIR }}/${{ inputs.package-name }}/${{ env.RELEASE_DIR }}/${{ inputs.package-name }}-${{ matrix.target }}*
 
     publish:
         name: Publish Go Package
@@ -109,14 +131,17 @@ jobs:
             - name: Download all artifacts
               uses: actions/download-artifact@v4
               with:
-                  path: dist/
+                  path: ${{ env.DIST_DIR }}/
 
             - name: Organize release files
               run: |
-                  mkdir -p release
-                  find dist -type f -exec mv {} release/ \;
-                  ls -lh release/
+                  mkdir -p ${{ env.RELEASE_DIR }}
+                  find ${{ env.DIST_DIR }} -type f -exec mv {} ${{ env.RELEASE_DIR }}/ \;
+                  ls -lh ${{ env.RELEASE_DIR }}/
 
+            # =========================================================================
+            # CONFIGURATION - Release body template (customize as needed)
+            # =========================================================================
             - name: Create GitHub Release
               uses: softprops/action-gh-release@v2
               with:
@@ -163,7 +188,8 @@ jobs:
 
                       ${{ inputs.usage-examples }}
                   files: |
-                      release/*
+                      ${{ env.RELEASE_DIR }}/*
+                  # CONFIGURATION: Change to true for manual approval before publishing
                   draft: false
                   prerelease: false
               env:

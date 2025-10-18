@@ -24,6 +24,19 @@ on:
                     ./$PACKAGE_NAME-<platform>
                     ```
 
+# =============================================================================
+# CONFIGURATION - Values that may change over time
+# =============================================================================
+env:
+    # Build configuration (customize paths if needed)
+    PACKAGES_DIR: "packages"
+    RELEASE_DIR: "release"
+    DIST_DIR: "dist"
+    BUILD_SCRIPT: "build.sh"
+
+# =============================================================================
+# IMPLEMENTATION - Stable workflow logic (rarely changes)
+# =============================================================================
 permissions:
     contents: write
 
@@ -32,16 +45,22 @@ jobs:
         name: Build & Test (${{ matrix.target }})
         runs-on: ${{ matrix.os }}
         strategy:
+            # =====================================================================
+            # CONFIGURATION - Build matrix (add/remove platforms as needed)
+            # =====================================================================
             matrix:
                 include:
+                    # Linux builds
                     - os: ubuntu-latest
                       target: x86_64-unknown-linux-gnu
                     - os: ubuntu-latest
                       target: aarch64-unknown-linux-gnu
-                    - os: macos-13
+                    # macOS builds
+                    - os: macos-13  # Intel
                       target: x86_64-apple-darwin
-                    - os: macos-latest
+                    - os: macos-latest  # Apple Silicon
                       target: aarch64-apple-darwin
+                    # Windows builds
                     - os: windows-latest
                       target: x86_64-pc-windows-msvc
                     - os: windows-latest
@@ -62,18 +81,18 @@ jobs:
             - name: Build with build script
               shell: bash
               run: |
-                  cd packages/${{ inputs.package-name }}
-                  chmod +x build.sh
-                  ./build.sh
+                  cd ${{ env.PACKAGES_DIR }}/${{ inputs.package-name }}
+                  chmod +x ${{ env.BUILD_SCRIPT }}
+                  ./${{ env.BUILD_SCRIPT }}
 
             - name: Test
               shell: bash
               run: |
-                  cd packages/${{ inputs.package-name }}
-                  if [ -f "release/${{ inputs.package-name }}-${{ matrix.target }}.exe" ]; then
-                    ./release/${{ inputs.package-name }}-${{ matrix.target }}.exe
+                  cd ${{ env.PACKAGES_DIR }}/${{ inputs.package-name }}
+                  if [ -f "${{ env.RELEASE_DIR }}/${{ inputs.package-name }}-${{ matrix.target }}.exe" ]; then
+                    ./${{ env.RELEASE_DIR }}/${{ inputs.package-name }}-${{ matrix.target }}.exe
                   else
-                    ./release/${{ inputs.package-name }}-${{ matrix.target }}
+                    ./${{ env.RELEASE_DIR }}/${{ inputs.package-name }}-${{ matrix.target }}
                   fi
 
             - name: Upload release artifacts
@@ -81,7 +100,7 @@ jobs:
               with:
                   name: ${{ inputs.package-name }}-${{ matrix.target }}
                   path: |
-                      packages/${{ inputs.package-name }}/release/${{ inputs.package-name }}-${{ matrix.target }}*
+                      ${{ env.PACKAGES_DIR }}/${{ inputs.package-name }}/${{ env.RELEASE_DIR }}/${{ inputs.package-name }}-${{ matrix.target }}*
 
     publish:
         name: Publish C++ Package
@@ -99,14 +118,17 @@ jobs:
             - name: Download all artifacts
               uses: actions/download-artifact@v4
               with:
-                  path: dist/
+                  path: ${{ env.DIST_DIR }}/
 
             - name: Organize release files
               run: |
-                  mkdir -p release
-                  find dist -type f -exec mv {} release/ \;
-                  ls -lh release/
+                  mkdir -p ${{ env.RELEASE_DIR }}
+                  find ${{ env.DIST_DIR }} -type f -exec mv {} ${{ env.RELEASE_DIR }}/ \;
+                  ls -lh ${{ env.RELEASE_DIR }}/
 
+            # =========================================================================
+            # CONFIGURATION - Release body template (customize as needed)
+            # =========================================================================
             - name: Create GitHub Release
               uses: softprops/action-gh-release@v2
               with:
@@ -142,7 +164,8 @@ jobs:
 
                       ${{ inputs.usage-examples }}
                   files: |
-                      release/*
+                      ${{ env.RELEASE_DIR }}/*
+                  # CONFIGURATION: Change to true for manual approval before publishing
                   draft: false
                   prerelease: false
               env:

@@ -1,5 +1,19 @@
 # Monorepo Example with Automated Releases
 
+[![CI](https://github.com/codefuturist/monorepository-example/actions/workflows/ci.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/ci.yml)
+[![Python CI](https://github.com/codefuturist/monorepository-example/actions/workflows/python-ci.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/python-ci.yml)
+[![Release](https://github.com/codefuturist/monorepository-example/actions/workflows/release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/release.yml)
+
+**Package Releases:**
+
+[![Python Release](https://github.com/codefuturist/monorepository-example/actions/workflows/python-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/python-release.yml)
+[![C++ Package (D)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-d-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-d-release.yml)
+[![Rust Package (E)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-e-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-e-release.yml)
+[![Swift Package (F)](https://github.com/codefuturist/monorepository-example/actions/workflows/swift-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/swift-release.yml)
+[![Go Package (G)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-g-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-g-release.yml)
+[![Java Package (H)](https://github.com/codefuturist/monorepository-example/actions/workflows/java-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/java-release.yml)
+[![Rust Package (I)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-i-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-i-release.yml)
+
 Example monorepo demonstrating automated CD using `release-it`, GitHub Actions, and Git Flow.
 
 > **🚀 NEW HERE?** Start with **[MONOREPO_RELEASE_GUIDE.md](./MONOREPO_RELEASE_GUIDE.md)** - The complete practical reference!
