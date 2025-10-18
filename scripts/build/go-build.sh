@@ -359,7 +359,7 @@ echo ""
 echo "✓ Build completed successfully!"
 echo ""
 echo "Release artifacts created in: $RELEASE_DIR/"
-ls -lh "$RELEASE_DIR" | grep -E '\.(tar\.gz|zip|sha256)$' || ls -lh "$RELEASE_DIR"
+ls -lh "$RELEASE_DIR" | grep -E '\.(tar\.gz|zip|sha256)$' || ls -lh "$RELEASE_DIR" || true
 echo ""
 
 if [ "$CROSS_COMPILE" = "true" ]; then

@@ -11,18 +11,28 @@ These are shared workflow templates that can be called by multiple packages:
 - **`rust-package-release.yml`** - Reusable workflow for Rust packages
 - **`go-package-release.yml`** - Reusable workflow for Go packages
 - **`cpp-package-release.yml`** - Reusable workflow for C++ packages
-- **`python-binaries.yml`** - Workflow for Python package binaries
-- **`swift-binaries.yml`** - Workflow for Swift package binaries
-- **`java-binaries.yml`** - Workflow for Java package binaries
+- **`python-package-release.yml`** - Reusable workflow for Python packages ✨ NEW
+- **`swift-binaries.yml`** - Workflow for Swift package binaries (to be refactored)
+- **`java-binaries.yml`** - Workflow for Java package binaries (to be refactored)
 
 ### Package-Specific Workflows
 
 These workflows call the reusable templates with package-specific configuration:
 
-- **`package-d-release.yml`** - C++ package (uses `cpp-package-release.yml`)
+**Rust Packages:**
 - **`package-e-release.yml`** - Rust package (uses `rust-package-release.yml`)
-- **`package-g-release.yml`** - Go package (uses `go-package-release.yml`)
 - **`package-i-release.yml`** - Rust package (uses `rust-package-release.yml`)
+
+**Go Packages:**
+- **`package-g-release.yml`** - Go package (uses `go-package-release.yml`)
+
+**C++ Packages:**
+- **`package-d-release.yml`** - C++ package (uses `cpp-package-release.yml`)
+
+**Python Packages:** ✨ NEW
+- **`package-a-release.yml`** - Python package (uses `python-package-release.yml`)
+- **`package-b-release.yml`** - Python package (uses `python-package-release.yml`)
+- **`package-c-release.yml`** - Python package (uses `python-package-release.yml`)
 
 ### Legacy Workflows (To Be Migrated)
 
@@ -136,6 +146,31 @@ jobs:
       usage-examples: |
         ```bash
         ./my-cpp-package-<platform>
+        ```
+````
+
+### Adding a New Python Package
+
+````yaml
+name: My Python Package Release
+
+on:
+  push:
+    tags:
+      - "my-python-package@v*.*.*"
+
+jobs:
+  release:
+    uses: ./.github/workflows/python-package-release.yml
+    with:
+      package-name: my-python-package
+      package-description: Python utilities for...
+      package-features: |
+        - Feature 1
+        - Feature 2
+      usage-examples: |
+        ```bash
+        ./my-python-package-<platform>
         ```
 ````
 

@@ -1,0 +1,29 @@
+name: Package A Release
+
+on:
+    push:
+        tags:
+            - "package-a@v*.*.*"
+
+jobs:
+    release:
+        uses: ./.github/workflows/python-package-release.yml
+        with:
+            package-name: package-a
+            package-description: "Python utility package A with logging and file management capabilities"
+            package-features: |
+                - Advanced logging utilities with colored output
+                - File system operations
+                - Configuration management
+                - Cross-platform compatibility
+            usage-examples: |
+                ```bash
+                # Run package-a
+                ./package-a-<platform>
+
+                # Example: macOS Apple Silicon
+                ./package-a-aarch64-apple-darwin
+
+                # Example: Windows x64
+                .\package-a-x86_64-pc-windows-msvc.exe
+                ```

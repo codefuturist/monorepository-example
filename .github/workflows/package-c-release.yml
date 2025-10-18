@@ -1,0 +1,29 @@
+name: Package C Release
+
+on:
+    push:
+        tags:
+            - "package-c@v*.*.*"
+
+jobs:
+    release:
+        uses: ./.github/workflows/python-package-release.yml
+        with:
+            package-name: package-c
+            package-description: "Python utility package C with specialized features"
+            package-features: |
+                - Specialized utility functions
+                - Performance optimizations
+                - Standalone binary distribution
+                - Multi-platform support
+            usage-examples: |
+                ```bash
+                # Run package-c
+                ./package-c-<platform>
+
+                # Example: macOS Intel
+                ./package-c-x86_64-apple-darwin
+
+                # Example: Windows ARM64
+                .\package-c-aarch64-pc-windows-msvc.exe
+                ```
