@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.4] - 2025-10-18
+### Fixed
+- Windows zip creation using PowerShell Compress-Archive
+
 ## [1.2.3] - 2025-10-18
 ### Fixed
 - Windows virtual environment activation in build scripts
