@@ -1,14 +1,42 @@
 #!/usr/bin/env bash
-# Build script for package-g (Go)
-# Builds release binaries for multiple platforms
+# ==============================================================================
+# REUSABLE GO BUILD SCRIPT
+# ==============================================================================
+# This script can be used in any Go project with minimal configuration.
+# Just update the CONFIGURATION section below.
+# ==============================================================================
 
 set -e
 
+# ==============================================================================
+# CONFIGURATION - UPDATE THESE VALUES FOR YOUR PROJECT
+# ==============================================================================
+VERSION="1.0.0"                # Project version
+PACKAGE_NAME="package-g"       # Package name (used for output files)
+MAIN_FILE="./cmd/main.go"      # Path to main.go file
+RELEASE_DIR="release"          # Where final artifacts are stored
+
+# Build options
+LDFLAGS="-s -w"                # Linker flags (strip debug info for smaller binaries)
+BUILD_FLAGS=""                 # Additional go build flags
+
+# Build targets (GOOS:GOARCH:TARGET_NAME)
+# Modify this array to add/remove platforms
+TARGETS=(
+    "linux:amd64:x86_64-unknown-linux-gnu"
+    "linux:arm64:aarch64-unknown-linux-gnu"
+    "darwin:amd64:x86_64-apple-darwin"
+    "darwin:arm64:aarch64-apple-darwin"
+    "windows:amd64:x86_64-pc-windows-msvc"
+    "windows:arm64:aarch64-pc-windows-msvc"
+)
+
+# ==============================================================================
+# IMPLEMENTATION - REUSABLE ACROSS ALL GO PROJECTS
+# ==============================================================================
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
-
-VERSION="1.0.0"
-PACKAGE_NAME="package-g"
 
 echo "======================================"
 echo "Building $PACKAGE_NAME v$VERSION"
@@ -18,18 +46,7 @@ echo "======================================"
 echo "Downloading dependencies..."
 go mod download
 
-RELEASE_DIR="release"
 mkdir -p "$RELEASE_DIR"
-
-# Define build targets matching Rust/Starship conventions
-declare -a TARGETS=(
-    "linux:amd64:x86_64-unknown-linux-gnu"
-    "linux:arm64:aarch64-unknown-linux-gnu"
-    "darwin:amd64:x86_64-apple-darwin"
-    "darwin:arm64:aarch64-apple-darwin"
-    "windows:amd64:x86_64-pc-windows-msvc"
-    "windows:arm64:aarch64-pc-windows-msvc"
-)
 
 echo ""
 echo "Building for multiple platforms..."
@@ -45,7 +62,7 @@ for TARGET_SPEC in "${TARGETS[@]}"; do
     
     echo "Building for $RUST_TARGET (GOOS=$GOOS GOARCH=$GOARCH)..."
     
-    if env GOOS="$GOOS" GOARCH="$GOARCH" go build -ldflags="-s -w" -o "$RELEASE_DIR/$OUTPUT_NAME" ./cmd/main.go; then
+    if env GOOS="$GOOS" GOARCH="$GOARCH" go build -ldflags="$LDFLAGS" $BUILD_FLAGS -o "$RELEASE_DIR/$OUTPUT_NAME" "$MAIN_FILE"; then
         echo "  ✓ $OUTPUT_NAME"
         
         # Create archive and checksum

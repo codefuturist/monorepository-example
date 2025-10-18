@@ -1,14 +1,41 @@
 #!/usr/bin/env bash
-# Build script for package-a (Python)
-# Builds standalone executables for multiple platforms using PyInstaller
+# ==============================================================================
+# REUSABLE PYTHON BUILD SCRIPT (PyInstaller)
+# ==============================================================================
+# This script can be used in any Python project with minimal configuration.
+# Just update the CONFIGURATION section below.
+# ==============================================================================
 
 set -e
 
+# ==============================================================================
+# CONFIGURATION - UPDATE THESE VALUES FOR YOUR PROJECT
+# ==============================================================================
+VERSION="1.2.0"                           # Project version
+PACKAGE_NAME="package-a"                  # Package name (used for output files)
+ENTRY_POINT="src/package_a/__main__.py"  # Main entry point file
+RELEASE_DIR="release"                     # Where final artifacts are stored
+
+# PyInstaller configuration
+PYINSTALLER_NAME="$PACKAGE_NAME"          # Name of the built executable
+PYINSTALLER_FLAGS="--onefile"             # PyInstaller flags (--onefile, --windowed, etc.)
+
+# Dependencies to collect (space-separated)
+# Format: "--add-data source:dest" or "--collect-all package"
+PYINSTALLER_DATA=(
+    "--add-data src/package_a:package_a"
+    "--collect-all colorama"
+)
+
+# Runtime dependencies to install before building
+BUILD_DEPS="pyinstaller colorama"
+
+# ==============================================================================
+# IMPLEMENTATION - REUSABLE ACROSS ALL PYTHON PROJECTS
+# ==============================================================================
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
-
-VERSION="1.2.0"
-PACKAGE_NAME="package-a"
 
 echo "======================================"
 echo "Building $PACKAGE_NAME v$VERSION"
@@ -53,23 +80,21 @@ echo ""
 
 # Install build dependencies
 echo "Installing build dependencies..."
-pip install -q pyinstaller colorama
+pip install -q $BUILD_DEPS
 
 # Build for current platform
 echo "Building executable for current platform..."
-pyinstaller --onefile \
-    --name "${PACKAGE_NAME}" \
-    --add-data "src/package_a:package_a" \
-    --collect-all colorama \
-    src/package_a/__main__.py
+pyinstaller $PYINSTALLER_FLAGS \
+    --name "$PYINSTALLER_NAME" \
+    "${PYINSTALLER_DATA[@]}" \
+    "$ENTRY_POINT"
 
 # Create release directory
-RELEASE_DIR="release"
 mkdir -p "$RELEASE_DIR"
 
 # Copy and rename binary
 BINARY_NAME="${PACKAGE_NAME}-${TARGET}${EXT}"
-cp "dist/${PACKAGE_NAME}${EXT}" "$RELEASE_DIR/$BINARY_NAME"
+cp "dist/${PYINSTALLER_NAME}${EXT}" "$RELEASE_DIR/$BINARY_NAME"
 
 # Create tar.gz (Unix) or zip (Windows)
 cd "$RELEASE_DIR"

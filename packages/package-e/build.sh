@@ -1,14 +1,29 @@
 #!/usr/bin/env bash
-# Build script for package-e (Rust)
-# Builds release binaries for multiple platforms
+# ==============================================================================
+# REUSABLE RUST BUILD SCRIPT
+# ==============================================================================
+# This script can be used in any Rust project with minimal configuration.
+# Just update the CONFIGURATION section below.
+# ==============================================================================
 
 set -e
 
+# ==============================================================================
+# CONFIGURATION - UPDATE THESE VALUES FOR YOUR PROJECT
+# ==============================================================================
+VERSION="1.0.0"              # Project version
+PACKAGE_NAME="package-e"     # Package/binary name (from Cargo.toml)
+RELEASE_DIR="release"        # Where final artifacts are stored
+
+# Build options
+CARGO_FLAGS=""               # Additional cargo build flags (e.g., "--features xyz")
+
+# ==============================================================================
+# IMPLEMENTATION - REUSABLE ACROSS ALL RUST PROJECTS
+# ==============================================================================
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
-
-VERSION="1.0.0"
-PACKAGE_NAME="package-e"
 
 echo "======================================"
 echo "Building $PACKAGE_NAME v$VERSION"
@@ -53,15 +68,14 @@ echo ""
 
 # Build release binary
 echo "Building release binary..."
-cargo build --release --target "$TARGET" 2>/dev/null || cargo build --release
+cargo build --release --target "$TARGET" $CARGO_FLAGS 2>/dev/null || cargo build --release $CARGO_FLAGS
 
 # Create release directory
-RELEASE_DIR="release"
 mkdir -p "$RELEASE_DIR"
 
 # Copy binary with proper naming
 BINARY_NAME="${PACKAGE_NAME}-${TARGET}${EXT}"
-if cargo build --release --target "$TARGET" 2>/dev/null; then
+if cargo build --release --target "$TARGET" $CARGO_FLAGS 2>/dev/null; then
     cp "target/${TARGET}/release/${PACKAGE_NAME}${EXT}" "$RELEASE_DIR/$BINARY_NAME"
 else
     cp "target/release/${PACKAGE_NAME}${EXT}" "$RELEASE_DIR/$BINARY_NAME"

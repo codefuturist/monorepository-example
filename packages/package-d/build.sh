@@ -1,14 +1,31 @@
 #!/usr/bin/env bash
-# Build script for package-d (C++)
-# Builds executables for multiple platforms
+# ==============================================================================
+# REUSABLE C++ BUILD SCRIPT
+# ==============================================================================
+# This script can be used in any C++ project with minimal configuration.
+# Just update the CONFIGURATION section below.
+# ==============================================================================
 
 set -e
 
+# ==============================================================================
+# CONFIGURATION - UPDATE THESE VALUES FOR YOUR PROJECT
+# ==============================================================================
+VERSION="1.0.0"                    # Project version
+PACKAGE_NAME="package-d"           # Package name (used for output files)
+CMAKE_TARGET_NAME="package_d_cli"  # CMake executable target name
+BUILD_TYPE="Release"               # CMake build type: Release, Debug, RelWithDebInfo
+
+# Directory configuration
+BUILD_DIR="build-release"          # Where CMake builds the project
+RELEASE_DIR="release"              # Where final artifacts are stored
+
+# ==============================================================================
+# IMPLEMENTATION - REUSABLE ACROSS ALL C++ PROJECTS
+# ==============================================================================
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
-
-VERSION="1.0.0"
-PACKAGE_NAME="package-d"
 
 echo "======================================"
 echo "Building $PACKAGE_NAME v$VERSION"
@@ -48,9 +65,6 @@ else
     EXT=""
 fi
 
-BUILD_DIR="build-release"
-RELEASE_DIR="release"
-
 echo "Platform: $TARGET"
 echo "Build directory: $BUILD_DIR"
 echo ""
@@ -61,11 +75,11 @@ cd "$BUILD_DIR"
 
 # Configure with CMake
 echo "Configuring with CMake..."
-cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake .. -DCMAKE_BUILD_TYPE="$BUILD_TYPE"
 
 # Build
 echo "Building..."
-cmake --build . --config Release
+cmake --build . --config "$BUILD_TYPE"
 
 # Create release directory
 cd "$SCRIPT_DIR"
@@ -74,10 +88,10 @@ mkdir -p "$RELEASE_DIR"
 # Copy executable with proper naming
 BINARY_NAME="${PACKAGE_NAME}-${TARGET}${EXT}"
 if [[ "$EXT" == ".exe" ]]; then
-    cp "$BUILD_DIR/Release/package_d_cli.exe" "$RELEASE_DIR/$BINARY_NAME" 2>/dev/null || \
-    cp "$BUILD_DIR/package_d_cli.exe" "$RELEASE_DIR/$BINARY_NAME"
+    cp "$BUILD_DIR/$BUILD_TYPE/${CMAKE_TARGET_NAME}.exe" "$RELEASE_DIR/$BINARY_NAME" 2>/dev/null || \
+    cp "$BUILD_DIR/${CMAKE_TARGET_NAME}.exe" "$RELEASE_DIR/$BINARY_NAME"
 else
-    cp "$BUILD_DIR/package_d_cli" "$RELEASE_DIR/$BINARY_NAME"
+    cp "$BUILD_DIR/${CMAKE_TARGET_NAME}" "$RELEASE_DIR/$BINARY_NAME"
     chmod +x "$RELEASE_DIR/$BINARY_NAME"
 fi
 
