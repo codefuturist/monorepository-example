@@ -3,8 +3,11 @@ name: Python Release
 on:
   push:
     tags:
-      - "package-[abc]@v*.*.*" # Python packages only (a, b, c)
-      - "v*.*.*" # Monorepo releases
+      - "v*.*.*" # Monorepo releases only
+      # Note: Individual package releases now use dedicated workflows:
+      #   - package-a-release.yml
+      #   - package-b-release.yml
+      #   - package-c-release.yml
 
 permissions:
   contents: write

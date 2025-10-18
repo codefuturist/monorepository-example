@@ -3,9 +3,12 @@ name: Release
 on:
   push:
     tags:
-      - 'v*.*.*'              # Root monorepo releases (e.g., v1.0.0)
-      - 'package-[abc]@v*.*.*'  # Python packages only (a, b, c)
-      # Note: package-d through package-i have dedicated release workflows
+      - 'v*.*.*'              # Root monorepo releases only (e.g., v1.0.0)
+      # Note: Individual packages now have dedicated release workflows:
+      #   Python (a,b,c): package-{a,b,c}-release.yml
+      #   Rust (e,i): package-{e,i}-release.yml
+      #   Go (g): package-g-release.yml
+      #   C++ (d): package-d-release.yml
 
 permissions:
   contents: write
