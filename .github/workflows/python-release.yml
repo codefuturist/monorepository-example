@@ -3,7 +3,7 @@ name: Python Release
 on:
   push:
     tags:
-      - "package-*@v*.*.*" # Individual package releases
+      - "package-[abc]@v*.*.*" # Python packages only (a, b, c)
       - "v*.*.*" # Monorepo releases
 
 permissions:
