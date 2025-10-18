@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.5] - 2025-10-18
+### Changed
+- Migrated to new reusable workflow pattern (python-package-release.yml)
+- Package now has dedicated workflow file (package-a-release.yml)
+- Improved consistency with Rust/Go/C++ package workflows
+
 ## [1.2.4] - 2025-10-18
 ### Fixed
 - Windows zip creation using PowerShell Compress-Archive
