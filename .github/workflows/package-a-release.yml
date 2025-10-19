@@ -5,6 +5,9 @@ on:
         tags:
             - "package-a@v*.*.*"
 
+permissions:
+    contents: write
+
 jobs:
     release:
         uses: ./.github/workflows/python-package-release.yml
