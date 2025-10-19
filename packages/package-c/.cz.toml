@@ -1,0 +1,15 @@
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "1.2.0"
+tag_format = "package-c@v$version"
+version_files = [
+    "pyproject.toml:version",
+    "src/__version__.py:__version__"
+]
+update_changelog_on_bump = true
+changelog_file = "CHANGELOG.md"
+changelog_incremental = true
+changelog_start_rev = "package-c@v1.0.0"
+
+[tool.commitizen.change_type_order]
+order = ["BREAKING CHANGE", "feat", "fix", "refactor", "perf", "docs", "style", "build", "ci", "test", "chore"]

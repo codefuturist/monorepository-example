@@ -26,7 +26,7 @@ This document provides a comprehensive analysis of dependency management require
 **Why:**
 - npm packages require `node_modules/` to be populated before build
 - Even with placeholder build scripts, dependencies declared in `package.json` may be imported
-- Workspace dependencies (like `release-it`) must be installed at root level
+- Workspace dependencies (like `commitizen`) must be installed at root level
 
 **How to Install:**
 ```bash

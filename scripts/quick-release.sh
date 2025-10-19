@@ -203,19 +203,25 @@ git flow release start "$NEW_VERSION"
 success "Release branch: release/$NEW_VERSION"
 echo ""
 
-# Step 3: Run release-it
-header "🔧 STEP 3: Run release-it"
+# Step 3: Run commitizen bump
+header "🔧 STEP 3: Run commitizen bump"
 echo ""
 cd "packages/$PACKAGE"
 
-npx release-it "$BUMP" \
-    --ci \
-    --no-git.requireUpstream \
-    --no-git.push \
-    --no-github.release \
-    --git.commitMessage="chore(release): ${PACKAGE} v\${version}" \
-    --git.tagName="${PACKAGE}@v\${version}" \
-    ${AUTO_YES:+--no-git.requireCleanWorkingDir}
+# Determine increment type
+case "$BUMP" in
+    patch|minor|major)
+        INCREMENT="--increment $BUMP"
+        ;;
+    *)
+        INCREMENT="$NEW_VERSION"
+        ;;
+esac
+
+cz bump --yes \
+    --changelog \
+    --git-output-to-stderr \
+    $INCREMENT || true
 
 cd - > /dev/null
 success "Version bumped and tagged"

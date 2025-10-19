@@ -5,7 +5,7 @@
 # ========================================
 # This script automates the entire release process:
 # 1. Uses git-flow to start release
-# 2. Runs release-it for versioning
+# 2. Runs commitizen for versioning and changelog
 # 3. Uses git-flow to finish release
 # 4. Pushes to GitHub automatically
 
@@ -182,23 +182,33 @@ success "Release branch created: release/$NEW_VERSION"
 echo ""
 
 info "=========================================="
-info "STEP 2: Run release-it"
+info "STEP 2: Run commitizen bump"
 info "=========================================="
 echo ""
 
 cd "$PACKAGE_DIR"
 
-# Run release-it with calculated version
-info "Running release-it for $PACKAGE_NAME..."
-npx release-it "$VERSION_BUMP" \
-    --ci \
-    --no-git.requireUpstream \
-    --no-git.push \
-    --no-github.release \
-    --git.commitMessage="chore(release): ${PACKAGE_NAME} v\${version}" \
-    --git.tagName="${PACKAGE_NAME}@v\${version}"
+# Run commitizen bump with calculated version
+info "Running commitizen bump for $PACKAGE_NAME..."
 
-success "release-it completed"
+# Determine the increment type for commitizen
+case "$VERSION_BUMP" in
+    patch|minor|major)
+        INCREMENT="--increment $VERSION_BUMP"
+        ;;
+    *)
+        # Specific version provided
+        INCREMENT="$NEW_VERSION"
+        ;;
+esac
+
+# Run commitizen bump
+cz bump --yes \
+    --changelog \
+    --git-output-to-stderr \
+    $INCREMENT || true
+
+success "commitizen bump completed"
 cd - > /dev/null
 echo ""
 

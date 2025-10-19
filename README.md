@@ -14,7 +14,9 @@
 [![Java Package (H)](https://github.com/codefuturist/monorepository-example/actions/workflows/java-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/java-release.yml)
 [![Rust Package (I)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-i-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-i-release.yml)
 
-Example monorepo demonstrating automated CD using `release-it`, GitHub Actions, and Git Flow.
+# Monorepository Example
+
+Example monorepo demonstrating automated CD using `commitizen`, GitHub Actions, and Git Flow.
 
 > **🚀 NEW HERE?** Start with **[MONOREPO_RELEASE_GUIDE.md](./MONOREPO_RELEASE_GUIDE.md)** - The complete practical reference!
 >
@@ -26,10 +28,12 @@ Example monorepo demonstrating automated CD using `release-it`, GitHub Actions, 
 monorepository-example/
 ├── packages/
 │   ├── package-a/          # Core functionality
+│   │   ├── pyproject.toml  # Python project config with commitizen
+│   │   └── .cz.toml        # Commitizen configuration
 │   ├── package-b/          # Utilities
 │   └── package-c/          # Helpers
 ├── .github/workflows/      # CI/CD workflows
-└── .release-it.json        # Release configuration
+└── package.json            # Node workspace with commitizen
 ```
 
 ## 🚀 Quick Start
@@ -77,14 +81,17 @@ git pull origin develop
 git checkout -b release/v1.1.0
 ```
 
-### 3. Run release-it (Dry Run First)
+### 3. Run commitizen bump (Dry Run First)
 
 ```bash
-# Test release process
-npm run release:dry
+# Navigate to package
+cd packages/package-a
 
-# Actual release (creates commit, tag, and changelog)
-npm run release
+# Test release process (dry run)
+cz bump --dry-run
+
+# Actual release (creates commit, tag, and updates changelog)
+cz bump --yes
 ```
 
 ### 4. Merge to Main
@@ -189,7 +196,7 @@ Each package can be released independently with its own version.
 
 ## 📚 Resources
 
-- [release-it Documentation](https://github.com/release-it/release-it)
+- [Commitizen Documentation](https://commitizen-tools.github.io/commitizen/)
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/)
 - [Semantic Versioning](https://semver.org/)
