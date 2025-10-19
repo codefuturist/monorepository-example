@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.8] - 2025-10-19
+### Changed
+- Migrated to uv for faster package installation (10-100x speedup)
+- Workflows now use astral-sh/setup-uv@v4 for dependency management
+- Improved build times with built-in caching
+
 ## [1.2.7] - 2025-10-19
 ### Fixed
 - Added missing permissions to workflow file (required for releases)
