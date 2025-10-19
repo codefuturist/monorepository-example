@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "package-a"
-version = "1.2.4"
+version = "1.2.9"
 description = "Core functionality package"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -86,7 +86,7 @@ dev = [
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "1.2.8"
+version = "1.2.9"
 tag_format = "package-a@v$version"
 version_files = [
     "pyproject.toml:version",
@@ -95,7 +95,6 @@ version_files = [
 update_changelog_on_bump = true
 changelog_file = "CHANGELOG.md"
 changelog_incremental = true
-changelog_start_rev = "package-a@v1.0.0"
+changelog_start_rev = "package-a@v1.2.8"
+change_type_order = ["BREAKING CHANGE", "feat", "fix", "refactor", "perf", "docs", "style", "build", "ci", "test", "chore"]
 
-[tool.commitizen.change_type_order]
-order = ["BREAKING CHANGE", "feat", "fix", "refactor", "perf", "docs", "style", "build", "ci", "test", "chore"]

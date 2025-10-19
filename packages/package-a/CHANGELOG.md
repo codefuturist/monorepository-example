@@ -71,3 +71,13 @@ All notable changes to package-a will be documented in this file.
 ### Added
 
 - Initial release of package-a
+
+## package-a@v1.2.9 (2025-10-19)
+
+### BREAKING CHANGE
+
+- Migration from JavaScript release-it to Python commitizen for version management and changelog generation.
+
+### Feat
+
+- replace release-it with Python commitizen
