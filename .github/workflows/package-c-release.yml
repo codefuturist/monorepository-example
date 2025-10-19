@@ -17,13 +17,11 @@ jobs:
                 - Standalone binary distribution
                 - Multi-platform support
             usage-examples: |
-                ```bash
-                # Run package-c
-                ./package-c-<platform>
+                Run package-c:
+                  ./package-c-<platform>
 
-                # Example: macOS Intel
-                ./package-c-x86_64-apple-darwin
+                Example (macOS Intel):
+                  ./package-c-x86_64-apple-darwin
 
-                # Example: Windows ARM64
-                .\package-c-aarch64-pc-windows-msvc.exe
-                ```
+                Example (Windows ARM64):
+                  .\package-c-aarch64-pc-windows-msvc.exe

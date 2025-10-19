@@ -17,13 +17,11 @@ jobs:
                 - Configuration management
                 - Cross-platform compatibility
             usage-examples: |
-                ```bash
-                # Run package-a
-                ./package-a-<platform>
+                Run package-a:
+                  ./package-a-<platform>
 
-                # Example: macOS Apple Silicon
-                ./package-a-aarch64-apple-darwin
+                Example (macOS Apple Silicon):
+                  ./package-a-aarch64-apple-darwin
 
-                # Example: Windows x64
-                .\package-a-x86_64-pc-windows-msvc.exe
-                ```
+                Example (Windows x64):
+                  .\package-a-x86_64-pc-windows-msvc.exe

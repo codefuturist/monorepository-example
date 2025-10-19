@@ -17,13 +17,11 @@ jobs:
                 - Cross-platform support
                 - Standalone executable
             usage-examples: |
-                ```bash
-                # Run package-b
-                ./package-b-<platform>
+                Run package-b:
+                  ./package-b-<platform>
 
-                # Example: Linux x86_64
-                ./package-b-x86_64-unknown-linux-gnu
+                Example (Linux x86_64):
+                  ./package-b-x86_64-unknown-linux-gnu
 
-                # Example: Windows x64
-                .\package-b-x86_64-pc-windows-msvc.exe
-                ```
+                Example (Windows x64):
+                  .\package-b-x86_64-pc-windows-msvc.exe
