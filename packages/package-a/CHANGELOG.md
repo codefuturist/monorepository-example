@@ -92,6 +92,92 @@ All notable changes to package-a will be documented in this file.
 
 - Initial release of package-a
 
+## package-a@v1.2.11 (2025-10-28)
+
+### Fix
+
+- add commitizen config to root package.json
+
+### Refactor
+
+- **workflows**: move package-a workflow to package directory
+- remove redundant .cz.toml files, use pyproject.toml for all commitizen config
+
+## package-a@v1.2.9 (2025-10-19)
+
+### BREAKING CHANGE
+
+- Migration from JavaScript release-it to Python commitizen for version management and changelog generation.
+
+### Feat
+
+- replace release-it with Python commitizen
+
+## package-a@v1.2.8 (2025-10-19)
+
+### Feat
+
+- **workflows**: migrate Python workflows to use uv
+
+## package-a@v1.2.7 (2025-10-19)
+
+### Fix
+
+- **workflows**: add permissions to Python package workflows
+
+## package-a@v1.2.6 (2025-10-19)
+
+### Fix
+
+- **workflows**: remove nested code blocks from YAML multiline strings
+- **workflows**: remove duplicate triggers for package-a/b/c
+
+## package-a@v1.2.5 (2025-10-18)
+
+### BREAKING CHANGE
+
+- python-binaries.yml is deprecated. Use package-specific
+workflows (package-a-release.yml, etc.) instead.
+
+### Feat
+
+- **workflows**: implement reusable Python package workflow pattern
+
+### Fix
+
+- **workflow**: prevent Release workflow from duplicating package-specific workflows
+- **build**: ensure ls command always returns success to prevent set -e exit
+- **workflow**: disable cross-compilation in Rust matrix builds - each job builds its specific target
+
+## package-a@v1.2.4 (2025-10-18)
+
+### Fix
+
+- **build**: use PowerShell Compress-Archive for Windows zip creation
+
+## package-a@v1.2.3 (2025-10-18)
+
+### Fix
+
+- **build**: support Windows virtual environment activation path (Scripts/activate)
+
+## package-a@v1.2.2 (2025-10-18)
+
+### Fix
+
+- **deps**: add conventional-commits packages to resolve npm ci errors
+
+## package-a@v1.2.10 (2025-10-28)
+
+### Fix
+
+- add commitizen config to root package.json
+
+### Refactor
+
+- **workflows**: move package-a workflow to package directory
+- remove redundant .cz.toml files, use pyproject.toml for all commitizen config
+
 ## package-a@v1.2.9 (2025-10-19)
 
 ### BREAKING CHANGE
