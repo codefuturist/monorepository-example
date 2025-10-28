@@ -1,0 +1,97 @@
+{
+  "": {
+    "dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Rainbow.d",
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Rainbow.o",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/master.swiftdeps"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/BackgroundColor.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/BackgroundColor.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/BackgroundColor~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/BackgroundColor.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/BackgroundColor.dia"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/CodesParser.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/CodesParser.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/CodesParser~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/CodesParser.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/CodesParser.dia"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Color.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Color.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Color~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Color.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Color.dia"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ColorApproximation.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ColorApproximation.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ColorApproximation~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ColorApproximation.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ColorApproximation.dia"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ConditionalStyleBuilder.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ConditionalStyleBuilder.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ConditionalStyleBuilder~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ConditionalStyleBuilder.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ConditionalStyleBuilder.dia"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ControlCode.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ControlCode.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ControlCode~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ControlCode.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ControlCode.dia"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/HSLColorConverter.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/HSLColorConverter.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/HSLColorConverter~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/HSLColorConverter.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/HSLColorConverter.dia"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ModesExtractor.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ModesExtractor.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ModesExtractor~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ModesExtractor.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ModesExtractor.dia"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/OutputTarget.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/OutputTarget.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/OutputTarget~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/OutputTarget.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/OutputTarget.dia"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Rainbow.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Rainbow.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Rainbow~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Rainbow.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Rainbow.dia"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/String+ConditionalStyling.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/String+ConditionalStyling.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/String+ConditionalStyling~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/String+ConditionalStyling.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/String+ConditionalStyling.dia"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/String+Rainbow.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/String+Rainbow.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/String+Rainbow~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/String+Rainbow.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/String+Rainbow.dia"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/StringGenerator.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/StringGenerator.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/StringGenerator~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/StringGenerator.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/StringGenerator.dia"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Style.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Style.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Style~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Style.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Style.dia"
+  },
+  "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/StyledStringBuilder.swift": {
+    "object": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/StyledStringBuilder.swift.o",
+    "swiftmodule": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/StyledStringBuilder~partial.swiftmodule",
+    "swift-dependencies": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/StyledStringBuilder.swiftdeps",
+    "diagnostics": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/StyledStringBuilder.dia"
+  }
+}

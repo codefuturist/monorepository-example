@@ -11,7 +11,8 @@
     "build": "echo 'Building package-c...'",
     "test": "echo 'Testing package-c...'",
     "lint": "echo 'Linting package-c...'",
-    "release": "release-it"
+    "release": "cz bump --yes",
+    "changelog": "cz changelog"
   },
   "keywords": [
     "example",

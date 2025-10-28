@@ -1,0 +1,32 @@
+# =============================================================================
+# CONFIGURATION - Package-specific settings
+# =============================================================================
+# Package: package-d (C++ Math Utilities)
+# Trigger: Tags matching pattern "package-d@v*.*.*"
+# Example: package-d@v1.0.0
+# =============================================================================
+
+name: Package D Release
+
+on:
+    push:
+        tags:
+            - "package-d@v*.*.*" # CONFIGURATION: Update package name if changed
+
+jobs:
+    release:
+        uses: ./.github/workflows/cpp-package-release.yml
+        with:
+            # CONFIGURATION: Update these values when package changes
+            package-name: package-d
+            package-description: C++ Math Utilities
+            package-features: |
+                - factorial(): Calculate factorial of a number
+                - is_prime(): Check if a number is prime
+                - gcd(): Find greatest common divisor
+                - JSON output support (nlohmann/json)
+            usage-examples: |
+                ```bash
+                tar -xzf package-d-<platform>.tar.gz
+                ./package-d-<platform>
+                ```

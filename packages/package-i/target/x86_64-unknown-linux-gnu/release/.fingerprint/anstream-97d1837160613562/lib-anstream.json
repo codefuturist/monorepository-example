@@ -1,0 +1,57 @@
+{
+  "rustc": 16285725380928457773,
+  "features": "[\"auto\", \"default\", \"wincon\"]",
+  "declared_features": "[\"auto\", \"default\", \"test\", \"wincon\"]",
+  "target": 11278316191512382530,
+  "profile": 8954424932545832044,
+  "path": 4945682841933385571,
+  "deps": [
+    [
+      384403243491392785,
+      "colorchoice",
+      false,
+      1898177409225525326
+    ],
+    [
+      6062327512194961595,
+      "is_terminal_polyfill",
+      false,
+      13539454714613884013
+    ],
+    [
+      7483871650937086505,
+      "anstyle",
+      false,
+      15498067506800711738
+    ],
+    [
+      11410867133969439143,
+      "anstyle_parse",
+      false,
+      4627606777746187895
+    ],
+    [
+      17716308468579268865,
+      "utf8parse",
+      false,
+      14442707648512945308
+    ],
+    [
+      18321257514705447331,
+      "anstyle_query",
+      false,
+      15577997623969800541
+    ]
+  ],
+  "local": [
+    {
+      "CheckDepInfo": {
+        "dep_info": "x86_64-unknown-linux-gnu/release/.fingerprint/anstream-97d1837160613562/dep-lib-anstream",
+        "checksum": false
+      }
+    }
+  ],
+  "rustflags": [],
+  "config": 2069994364910194474,
+  "compile_kind": 13270707523875659407
+}

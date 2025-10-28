@@ -3,8 +3,12 @@ name: Release
 on:
   push:
     tags:
-      - 'v*.*.*'              # Root monorepo releases (e.g., v1.0.0)
-      - 'package-*@v*.*.*'    # Individual package releases (e.g., package-a@v1.0.0)
+      - "v*.*.*" # Root monorepo releases only (e.g., v1.0.0)
+      # Note: Individual packages now have dedicated release workflows:
+      #   Python (a,b,c): package-{a,b,c}-release.yml
+      #   Rust (e,i): package-{e,i}-release.yml
+      #   Go (g): package-g-release.yml
+      #   C++ (d): package-d-release.yml
 
 permissions:
   contents: write
@@ -15,7 +19,7 @@ jobs:
   release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -25,8 +29,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -42,7 +46,7 @@ jobs:
         run: |
           TAG=${GITHUB_REF#refs/tags/}
           echo "tag=$TAG" >> $GITHUB_OUTPUT
-          
+
           if [[ $TAG == package-*@v* ]]; then
             PACKAGE_NAME=$(echo $TAG | cut -d'@' -f1)
             VERSION=$(echo $TAG | cut -d'@' -f2)

@@ -1,0 +1,1251 @@
+{
+  "builtTestProducts": [
+    {
+      "binaryPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.xctest/Contents/MacOS/PackageFPackageTests",
+      "packagePath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f",
+      "productName": "PackageFPackageTests"
+    }
+  ],
+  "copyCommands": {},
+  "explicitTargetDependencyImportCheckingMode": {
+    "none": {}
+  },
+  "generatedSourceTargetSet": [],
+  "pluginDescriptions": [],
+  "swiftCommands": {
+    "C.PackageF-arm64-apple-macosx26.0-release.module": {
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageF.build/sources",
+      "importPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules",
+      "inputs": [
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/Sources/PackageF/ArrayUtils.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageF.build/sources"
+        }
+      ],
+      "isLibrary": true,
+      "moduleName": "PackageF",
+      "moduleOutputPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules/PackageF.swiftmodule",
+      "objects": [
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageF.build/ArrayUtils.swift.o"
+      ],
+      "otherArguments": [
+        "-target",
+        "arm64-apple-macosx13.0",
+        "-whole-module-optimization",
+        "-num-threads",
+        "10",
+        "-serialize-diagnostics",
+        "-O",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageF.build/include/PackageF-Swift.h",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "package_f"
+      ],
+      "outputFileMapPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageF.build/output-file-map.json",
+      "outputs": [
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageF.build/ArrayUtils.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules/PackageF.swiftmodule"
+        }
+      ],
+      "prepareForIndexing": false,
+      "sources": [
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/Sources/PackageF/ArrayUtils.swift"
+      ],
+      "tempsPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageF.build",
+      "wholeModuleOptimization": true
+    },
+    "C.PackageFCLI-arm64-apple-macosx26.0-release.module": {
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFCLI.build/sources",
+      "importPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules",
+      "inputs": [
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/Sources/PackageFCLI/main.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules/PackageF.swiftmodule"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules/Rainbow.swiftmodule"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFCLI.build/sources"
+        }
+      ],
+      "isLibrary": false,
+      "moduleName": "PackageFCLI",
+      "moduleOutputPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules/PackageFCLI.swiftmodule",
+      "objects": [
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFCLI.build/main.swift.o"
+      ],
+      "otherArguments": [
+        "-target",
+        "arm64-apple-macosx13.0",
+        "-whole-module-optimization",
+        "-num-threads",
+        "10",
+        "-serialize-diagnostics",
+        "-O",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/ModuleCache",
+        "-parseable-output",
+        "-Xfrontend",
+        "-entry-point-function-name",
+        "-Xfrontend",
+        "PackageFCLI_main",
+        "-parse-as-library",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "package_f"
+      ],
+      "outputFileMapPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFCLI.build/output-file-map.json",
+      "outputs": [
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFCLI.build/main.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules/PackageFCLI.swiftmodule"
+        }
+      ],
+      "prepareForIndexing": false,
+      "sources": [
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/Sources/PackageFCLI/main.swift"
+      ],
+      "tempsPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFCLI.build",
+      "wholeModuleOptimization": true
+    },
+    "C.PackageFPackageTests-arm64-apple-macosx26.0-release.module": {
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.build/sources",
+      "importPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules",
+      "inputs": [
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.derived/runner.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules/PackageFTests.swiftmodule"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.build/sources"
+        }
+      ],
+      "isLibrary": true,
+      "moduleName": "PackageFPackageTests",
+      "moduleOutputPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules/PackageFPackageTests.swiftmodule",
+      "objects": [
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.build/runner.swift.o"
+      ],
+      "otherArguments": [
+        "-target",
+        "arm64-apple-macosx13.0",
+        "-whole-module-optimization",
+        "-num-threads",
+        "10",
+        "-serialize-diagnostics",
+        "-O",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.build/include/PackageFPackageTests-Swift.h",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "package_f"
+      ],
+      "outputFileMapPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.build/output-file-map.json",
+      "outputs": [
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules/PackageFPackageTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing": false,
+      "sources": [
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.derived/runner.swift"
+      ],
+      "tempsPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.build",
+      "wholeModuleOptimization": true
+    },
+    "C.PackageFTests-arm64-apple-macosx26.0-release.module": {
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/sources",
+      "importPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules",
+      "inputs": [
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/Tests/PackageFTests/ArrayUtilsTests.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules/PackageF.swiftmodule"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/sources"
+        }
+      ],
+      "isLibrary": true,
+      "moduleName": "PackageFTests",
+      "moduleOutputPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules/PackageFTests.swiftmodule",
+      "objects": [
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/ArrayUtilsTests.swift.o"
+      ],
+      "otherArguments": [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-whole-module-optimization",
+        "-num-threads",
+        "10",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/index/store",
+        "-O",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "package_f"
+      ],
+      "outputFileMapPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/output-file-map.json",
+      "outputs": [
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/ArrayUtilsTests.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules/PackageFTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing": false,
+      "sources": [
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/Tests/PackageFTests/ArrayUtilsTests.swift"
+      ],
+      "tempsPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build",
+      "wholeModuleOptimization": true
+    },
+    "C.Rainbow-arm64-apple-macosx26.0-release.module": {
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/sources",
+      "importPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules",
+      "inputs": [
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/BackgroundColor.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/CodesParser.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Color.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ColorApproximation.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ConditionalStyleBuilder.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ControlCode.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/HSLColorConverter.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ModesExtractor.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/OutputTarget.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Rainbow.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/String+ConditionalStyling.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/String+Rainbow.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/StringGenerator.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Style.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/StyledStringBuilder.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/sources"
+        }
+      ],
+      "isLibrary": true,
+      "moduleName": "Rainbow",
+      "moduleOutputPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules/Rainbow.swiftmodule",
+      "objects": [
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/BackgroundColor.swift.o",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/CodesParser.swift.o",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Color.swift.o",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ColorApproximation.swift.o",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ConditionalStyleBuilder.swift.o",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ControlCode.swift.o",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/HSLColorConverter.swift.o",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ModesExtractor.swift.o",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/OutputTarget.swift.o",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Rainbow.swift.o",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/String+ConditionalStyling.swift.o",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/String+Rainbow.swift.o",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/StringGenerator.swift.o",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Style.swift.o",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/StyledStringBuilder.swift.o"
+      ],
+      "otherArguments": [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-whole-module-optimization",
+        "-num-threads",
+        "10",
+        "-serialize-diagnostics",
+        "-O",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/include/Rainbow-Swift.h",
+        "-swift-version",
+        "4",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-suppress-warnings"
+      ],
+      "outputFileMapPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/output-file-map.json",
+      "outputs": [
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/BackgroundColor.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/CodesParser.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Color.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ColorApproximation.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ConditionalStyleBuilder.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ControlCode.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/HSLColorConverter.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ModesExtractor.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/OutputTarget.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Rainbow.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/String+ConditionalStyling.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/String+Rainbow.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/StringGenerator.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Style.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/StyledStringBuilder.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules/Rainbow.swiftmodule"
+        }
+      ],
+      "prepareForIndexing": false,
+      "sources": [
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/BackgroundColor.swift",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/CodesParser.swift",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Color.swift",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ColorApproximation.swift",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ConditionalStyleBuilder.swift",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ControlCode.swift",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/HSLColorConverter.swift",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ModesExtractor.swift",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/OutputTarget.swift",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Rainbow.swift",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/String+ConditionalStyling.swift",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/String+Rainbow.swift",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/StringGenerator.swift",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Style.swift",
+        "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/StyledStringBuilder.swift"
+      ],
+      "tempsPath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build",
+      "wholeModuleOptimization": true
+    }
+  },
+  "swiftFrontendCommands": {},
+  "swiftTargetScanArgs": {
+    "PackageF": [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "PackageF",
+      "-package-name",
+      "package_f",
+      "-c",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/Sources/PackageF/ArrayUtils.swift",
+      "-I",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules",
+      "-target",
+      "arm64-apple-macosx13.0",
+      "-whole-module-optimization",
+      "-num-threads",
+      "10",
+      "-serialize-diagnostics",
+      "-O",
+      "-j10",
+      "-DSWIFT_PACKAGE",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageF.build/include/PackageF-Swift.h",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "package_f",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "PackageFCLI": [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "PackageFCLI",
+      "-package-name",
+      "package_f",
+      "-c",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/Sources/PackageFCLI/main.swift",
+      "-I",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules",
+      "-target",
+      "arm64-apple-macosx13.0",
+      "-whole-module-optimization",
+      "-num-threads",
+      "10",
+      "-serialize-diagnostics",
+      "-O",
+      "-j10",
+      "-DSWIFT_PACKAGE",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/ModuleCache",
+      "-parseable-output",
+      "-Xfrontend",
+      "-entry-point-function-name",
+      "-Xfrontend",
+      "PackageFCLI_main",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "package_f",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "PackageFPackageTests": [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "PackageFPackageTests",
+      "-package-name",
+      "package_f",
+      "-c",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.derived/runner.swift",
+      "-I",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules",
+      "-target",
+      "arm64-apple-macosx13.0",
+      "-whole-module-optimization",
+      "-num-threads",
+      "10",
+      "-serialize-diagnostics",
+      "-O",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j10",
+      "-DSWIFT_PACKAGE",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.build/include/PackageFPackageTests-Swift.h",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "package_f",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "PackageFTests": [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "PackageFTests",
+      "-package-name",
+      "package_f",
+      "-c",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/Tests/PackageFTests/ArrayUtilsTests.swift",
+      "-I",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-whole-module-optimization",
+      "-num-threads",
+      "10",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/index/store",
+      "-O",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j10",
+      "-DSWIFT_PACKAGE",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "package_f",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "Rainbow": [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "Rainbow",
+      "-c",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/BackgroundColor.swift",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/CodesParser.swift",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Color.swift",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ColorApproximation.swift",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ConditionalStyleBuilder.swift",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ControlCode.swift",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/HSLColorConverter.swift",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ModesExtractor.swift",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/OutputTarget.swift",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Rainbow.swift",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/String+ConditionalStyling.swift",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/String+Rainbow.swift",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/StringGenerator.swift",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Style.swift",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/StyledStringBuilder.swift",
+      "-I",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Modules",
+      "-target",
+      "arm64-apple-macosx10.13",
+      "-whole-module-optimization",
+      "-num-threads",
+      "10",
+      "-serialize-diagnostics",
+      "-O",
+      "-j10",
+      "-DSWIFT_PACKAGE",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/include/Rainbow-Swift.h",
+      "-swift-version",
+      "4",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-suppress-warnings",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap": {
+    "PackageF": [],
+    "PackageFCLI": [
+      "Rainbow",
+      "PackageF"
+    ],
+    "PackageFPackageTests": [
+      "PackageFTests",
+      "PackageF"
+    ],
+    "PackageFTests": [
+      "PackageF"
+    ],
+    "Rainbow": []
+  },
+  "testDiscoveryCommands": {},
+  "testEntryPointCommands": {
+    "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.derived/runner.swift": {
+      "inputs": [],
+      "outputs": [
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.derived/runner.swift"
+        }
+      ]
+    }
+  },
+  "traitConfiguration": {
+    "default": {}
+  },
+  "writeCommands": {
+    "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageF.build/sources": {
+      "alwaysOutOfDate": false,
+      "inputs": [
+        {
+          "kind": "virtual",
+          "name": "<sources-file-list>"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/Sources/PackageF/ArrayUtils.swift"
+        }
+      ],
+      "outputFilePath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageF.build/sources"
+    },
+    "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFCLI.build/sources": {
+      "alwaysOutOfDate": false,
+      "inputs": [
+        {
+          "kind": "virtual",
+          "name": "<sources-file-list>"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/Sources/PackageFCLI/main.swift"
+        }
+      ],
+      "outputFilePath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFCLI.build/sources"
+    },
+    "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.build/sources": {
+      "alwaysOutOfDate": false,
+      "inputs": [
+        {
+          "kind": "virtual",
+          "name": "<sources-file-list>"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.derived/runner.swift"
+        }
+      ],
+      "outputFilePath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.build/sources"
+    },
+    "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.product/Objects.LinkFileList": {
+      "alwaysOutOfDate": false,
+      "inputs": [
+        {
+          "kind": "virtual",
+          "name": "<link-file-list>"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageF.build/ArrayUtils.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/ArrayUtilsTests.swift.o"
+        }
+      ],
+      "outputFilePath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFPackageTests.product/Objects.LinkFileList"
+    },
+    "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/sources": {
+      "alwaysOutOfDate": false,
+      "inputs": [
+        {
+          "kind": "virtual",
+          "name": "<sources-file-list>"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/Tests/PackageFTests/ArrayUtilsTests.swift"
+        }
+      ],
+      "outputFilePath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFTests.build/sources"
+    },
+    "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/sources": {
+      "alwaysOutOfDate": false,
+      "inputs": [
+        {
+          "kind": "virtual",
+          "name": "<sources-file-list>"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/BackgroundColor.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/CodesParser.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Color.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ColorApproximation.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ConditionalStyleBuilder.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ControlCode.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/HSLColorConverter.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/ModesExtractor.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/OutputTarget.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Rainbow.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/String+ConditionalStyling.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/String+Rainbow.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/StringGenerator.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/Style.swift"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/checkouts/Rainbow/Sources/StyledStringBuilder.swift"
+        }
+      ],
+      "outputFilePath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/sources"
+    },
+    "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/package-f.product/Objects.LinkFileList": {
+      "alwaysOutOfDate": false,
+      "inputs": [
+        {
+          "kind": "virtual",
+          "name": "<link-file-list>"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageF.build/ArrayUtils.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageFCLI.build/main.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/BackgroundColor.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/CodesParser.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Color.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ColorApproximation.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ConditionalStyleBuilder.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ControlCode.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/HSLColorConverter.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/ModesExtractor.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/OutputTarget.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Rainbow.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/String+ConditionalStyling.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/String+Rainbow.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/StringGenerator.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/Style.swift.o"
+        },
+        {
+          "kind": "file",
+          "name": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/Rainbow.build/StyledStringBuilder.swift.o"
+        }
+      ],
+      "outputFilePath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/package-f.product/Objects.LinkFileList"
+    },
+    "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt": {
+      "alwaysOutOfDate": true,
+      "inputs": [
+        {
+          "kind": "virtual",
+          "name": "<swift-get-version>"
+        },
+        {
+          "kind": "file",
+          "name": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath": "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}

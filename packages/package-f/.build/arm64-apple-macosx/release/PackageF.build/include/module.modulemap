@@ -1,0 +1,3 @@
+module PackageF {
+    header "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-f/.build/arm64-apple-macosx/release/PackageF.build/include/PackageF-Swift.h"
+}

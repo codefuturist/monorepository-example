@@ -1,0 +1,12 @@
+pyproject.toml
+src/package_c/__init__.py
+src/package_c/__main__.py
+src/package_c/__version__.py
+src/package_c/math_helpers.py
+src/package_c.egg-info/PKG-INFO
+src/package_c.egg-info/SOURCES.txt
+src/package_c.egg-info/dependency_links.txt
+src/package_c.egg-info/entry_points.txt
+src/package_c.egg-info/requires.txt
+src/package_c.egg-info/top_level.txt
+tests/test_math_helpers.py

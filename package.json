@@ -2,7 +2,7 @@
   "name": "monorepository-example",
   "version": "1.0.0",
   "private": true,
-  "description": "Example monorepo with automated releases using release-it",
+  "description": "Example monorepo with automated releases using commitizen",
   "workspaces": [
     "packages/*"
   ],
@@ -10,15 +10,21 @@
     "test": "npm run test --workspaces --if-present",
     "build": "npm run build --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
-    "release": "release-it",
-    "release:dry": "release-it --dry-run",
-    "release:package-a": "npm run release --workspace=packages/package-a",
-    "release:package-b": "npm run release --workspace=packages/package-b",
-    "release:package-c": "npm run release --workspace=packages/package-c"
+    "cz": "cz",
+    "release:package-a": "cd packages/package-a && cz bump --yes",
+    "release:package-b": "cd packages/package-b && cz bump --yes",
+    "release:package-c": "cd packages/package-c && cz bump --yes"
   },
   "devDependencies": {
-    "release-it": "^17.0.0",
-    "@release-it/conventional-changelog": "^8.0.0"
+    "commitizen": "^4.3.1",
+    "conventional-commits-filter": "^5.0.0",
+    "conventional-commits-parser": "^6.2.0",
+    "cz-conventional-changelog": "^3.3.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "engines": {
     "node": ">=18.0.0",

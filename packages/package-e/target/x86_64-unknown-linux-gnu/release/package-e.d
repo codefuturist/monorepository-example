@@ -1,0 +1,1 @@
+/target/x86_64-unknown-linux-gnu/release/package-e: /Users/colin/Developer/Projects/personal/monorepository-example/packages/package-e/src/lib.rs /Users/colin/Developer/Projects/personal/monorepository-example/packages/package-e/src/main.rs

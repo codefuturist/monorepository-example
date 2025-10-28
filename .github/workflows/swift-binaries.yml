@@ -1,0 +1,121 @@
+name: Swift Binaries
+
+on:
+    push:
+        tags:
+            - "package-f@v*.*.*"
+
+permissions:
+    contents: write
+
+jobs:
+    build-binaries:
+        name: Build Swift Binary (${{ matrix.target }})
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                include:
+                    - os: macos-13
+                      target: x86_64-apple-darwin
+                      arch: x86_64
+                    - os: macos-latest
+                      target: aarch64-apple-darwin
+                      arch: arm64
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Extract version
+              id: version
+              run: echo "VERSION=${GITHUB_REF#refs/tags/package-f@v}" >> $GITHUB_OUTPUT
+
+            - name: Build with build script
+              run: |
+                  cd packages/package-f
+                  chmod +x build.sh
+                  ./build.sh
+
+            - name: Test binary
+              run: |
+                  cd packages/package-f
+                  ./release/package-f-${{ matrix.target }}
+
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: package-f-${{ matrix.target }}
+                  path: |
+                      packages/package-f/release/package-f-${{ matrix.target }}*
+
+    publish:
+        name: Publish Swift Package
+        needs: build-binaries
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Extract version
+              id: version
+              run: echo "VERSION=${GITHUB_REF#refs/tags/package-f@v}" >> $GITHUB_OUTPUT
+
+            - name: Download all artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  path: dist/
+
+            - name: Organize release files
+              run: |
+                  mkdir -p release
+                  find dist -type f -exec mv {} release/ \;
+                  ls -lh release/
+
+            - name: Create GitHub Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: ${{ github.ref_name }}
+                  name: package-f v${{ steps.version.outputs.VERSION }}
+                  body: |
+                      ## Package F v${{ steps.version.outputs.VERSION }}
+
+                      Swift File I/O Utilities
+
+                      ### Features
+                      - read_file(): Read file contents
+                      - write_file(): Write content to file
+                      - file_exists(): Check if file exists
+                      - Colored terminal output
+
+                      ### Downloads
+
+                      **Note:** Swift binaries are macOS-only
+
+                      | Platform | Architecture | Archive |
+                      |----------|--------------|---------|
+                      | macOS | x86_64 (Intel) | `package-f-x86_64-apple-darwin.tar.gz` |
+                      | macOS | aarch64 (Apple Silicon) | `package-f-aarch64-apple-darwin.tar.gz` |
+
+                      ### Verification
+
+                      ```bash
+                      sha256sum -c package-f-<platform>.tar.gz.sha256
+                      ```
+
+                      ### Installation
+                      ```bash
+                      tar -xzf package-f-<platform>.tar.gz
+                      sudo mv package-f-<platform> /usr/local/bin/package-f
+                      ```
+
+                      ### Usage
+                      ```bash
+                      package-f
+                      ```
+                  files: |
+                      release/*
+                  draft: false
+                  prerelease: false
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

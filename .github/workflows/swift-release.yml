@@ -1,0 +1,80 @@
+name: Swift Release
+
+on:
+    push:
+        tags:
+            - "package-f@v*.*.*"
+
+permissions:
+    contents: write
+
+jobs:
+    build-and-test:
+        name: Build & Test Swift Package
+        runs-on: macos-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Xcode
+              uses: maxim-lobanov/setup-xcode@v1
+              with:
+                  xcode-version: latest-stable
+
+            - name: Build
+              run: |
+                  cd packages/package-f
+                  swift build -c release
+
+            - name: Test
+              run: |
+                  cd packages/package-f
+                  swift test
+
+            - name: Create archive
+              run: |
+                  cd packages/package-f
+                  tar -czf package-f-${{ github.ref_name }}-macos.tar.gz \
+                      Sources/ \
+                      Package.swift \
+                      README.md
+
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: swift-package
+                  path: packages/package-f/*.tar.gz
+
+    publish:
+        name: Publish Swift Package
+        needs: build-and-test
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Download artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: swift-package
+                  path: dist/
+
+            - name: Create GitHub Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: ${{ github.ref_name }}
+                  name: package-f ${{ github.ref_name }}
+                  body: |
+                      ## Swift Package Release
+
+                      **Package:** package-f
+                      **Version:** ${{ github.ref_name }}
+
+                      Built and tested on macOS
+
+                      Compatible with Swift Package Manager
+                  files: dist/*.tar.gz
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

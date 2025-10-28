@@ -1,0 +1,22 @@
+flowchart TB
+    Start[Push/PR to<br/>main/develop]
+    
+    subgraph ci["CI Pipeline"]
+        Job[CI Job]
+        
+        subgraph steps["Build & Test Steps"]
+            Checkout[Checkout Code]
+            Setup[Setup Node.js 20]
+            Install[Install Dependencies]
+            Lint[Run Linter]
+            Test[Run Tests]
+            Build[Build Packages]
+        end
+    end
+    
+    Start --> Job
+    Job --> Checkout --> Setup --> Install
+    Install --> Lint --> Test --> Build
+    
+    style ci fill:#e3f2fd,stroke:#1976d2
+    style steps fill:#fff3e0,stroke:#f57c00

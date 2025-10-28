@@ -1,0 +1,30 @@
+name: Package B Release
+
+on:
+    push:
+        tags:
+            - "package-b@v*.*.*"
+
+permissions:
+    contents: write
+
+jobs:
+    release:
+        uses: ./.github/workflows/python-package-release.yml
+        with:
+            package-name: package-b
+            package-description: "Python utility package B with enhanced functionality"
+            package-features: |
+                - Core utilities and helpers
+                - Data processing capabilities
+                - Cross-platform support
+                - Standalone executable
+            usage-examples: |
+                Run package-b:
+                  ./package-b-<platform>
+
+                Example (Linux x86_64):
+                  ./package-b-x86_64-unknown-linux-gnu
+
+                Example (Windows x64):
+                  .\package-b-x86_64-pc-windows-msvc.exe

@@ -1,0 +1,39 @@
+# =============================================================================
+# CONFIGURATION - Package-specific settings
+# =============================================================================
+# Package: package-e (Rust Web Scraper)
+# Trigger: Tags matching pattern "package-e@v*.*.*"
+# Example: package-e@v1.0.0
+# =============================================================================
+
+name: Package E Release
+
+on:
+    push:
+        tags:
+            - "package-e@v*.*.*" # CONFIGURATION: Update package name if changed
+
+permissions:
+    contents: write
+
+jobs:
+    release:
+        uses: ./.github/workflows/rust-package-release.yml
+        with:
+            # CONFIGURATION: Update these values when package changes
+            package-name: package-e
+            package-description: Rust-based web scraper CLI
+            package-features: |
+                - reverse_string(): Reverse a string
+                - count_vowels(): Count vowels in a string
+                - is_palindrome(): Check if string is a palindrome
+                - Colored terminal output
+                - JSON output support
+            usage-examples: |
+                ```bash
+                # Extract
+                tar -xzf package-e-<platform>.tar.gz  # or unzip for Windows
+
+                # Run
+                ./package-e-<platform>
+                ```

@@ -1,0 +1,210 @@
+name: Python Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*" # Monorepo releases only
+      # Note: Individual package releases now use dedicated workflows:
+      #   - package-a-release.yml
+      #   - package-b-release.yml
+      #   - package-c-release.yml
+
+permissions:
+  contents: write
+  packages: write
+  id-token: write # For PyPI trusted publishing
+
+jobs:
+  build-and-test:
+    name: Build & Test Python Package
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      # 1. Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2. Setup Python
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # 2b. Install uv
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+
+      # 3. Install build tools
+      - name: Install build tools
+        run: |
+          uv pip install --system build twine
+          uv pip install --system pytest pytest-cov black ruff mypy
+
+      # 4. Extract tag info
+      - name: Extract tag info
+        id: tag_info
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+          if [[ $TAG == package-*@v* ]]; then
+            PACKAGE_NAME=$(echo $TAG | cut -d'@' -f1)
+            VERSION=$(echo $TAG | cut -d'@' -f2)
+            echo "package=$PACKAGE_NAME" >> $GITHUB_OUTPUT
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "is_package=true" >> $GITHUB_OUTPUT
+            echo "package_path=packages/$PACKAGE_NAME" >> $GITHUB_OUTPUT
+          else
+            echo "version=$TAG" >> $GITHUB_OUTPUT
+            echo "is_package=false" >> $GITHUB_OUTPUT
+          fi
+          echo "Full tag: $TAG"
+
+      # 5. Install package dependencies
+      - name: Install package dependencies
+        run: |
+          if [ "${{ steps.tag_info.outputs.is_package }}" = "true" ]; then
+            cd ${{ steps.tag_info.outputs.package_path }}
+            uv pip install --system -e ".[test]"
+          else
+            # Install all packages for monorepo release
+            for pkg in packages/*/; do
+              cd "$pkg"
+              uv pip install --system -e ".[test]"
+              cd ../..
+            done
+          fi
+
+      # 6. Run linting
+      - name: Lint with ruff
+        if: matrix.python-version == '3.12'
+        run: |
+          if [ "${{ steps.tag_info.outputs.is_package }}" = "true" ]; then
+            ruff check ${{ steps.tag_info.outputs.package_path }}/src
+          else
+            ruff check packages/*/src
+          fi
+        continue-on-error: true
+
+      # 7. Type checking
+      - name: Type check with mypy
+        if: matrix.python-version == '3.12'
+        run: |
+          if [ "${{ steps.tag_info.outputs.is_package }}" = "true" ]; then
+            mypy ${{ steps.tag_info.outputs.package_path }}/src
+          else
+            for pkg in packages/*/src; do
+              mypy "$pkg"
+            done
+          fi
+        continue-on-error: true
+
+      # 8. Run tests
+      - name: Run pytest
+        run: |
+          if [ "${{ steps.tag_info.outputs.is_package }}" = "true" ]; then
+            cd ${{ steps.tag_info.outputs.package_path }}
+            pytest
+          else
+            for pkg in packages/*/; do
+              cd "$pkg"
+              pytest
+              cd ../..
+            done
+          fi
+
+      # 9. Build distribution
+      - name: Build distribution package
+        run: |
+          if [ "${{ steps.tag_info.outputs.is_package }}" = "true" ]; then
+            cd ${{ steps.tag_info.outputs.package_path }}
+            python -m build
+            echo "Built package at: ${{ steps.tag_info.outputs.package_path }}/dist"
+            ls -lh dist/
+          fi
+
+      # 10. Upload artifacts
+      - name: Upload artifacts
+        if: steps.tag_info.outputs.is_package == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-packages-${{ matrix.python-version }}
+          path: ${{ steps.tag_info.outputs.package_path }}/dist/
+
+  publish:
+    name: Publish Python Package
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Extract tag info
+        id: tag_info
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+          if [[ $TAG == package-*@v* ]]; then
+            PACKAGE_NAME=$(echo $TAG | cut -d'@' -f1)
+            VERSION=$(echo $TAG | cut -d'@' -f2)
+            echo "package=$PACKAGE_NAME" >> $GITHUB_OUTPUT
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "package_path=packages/$PACKAGE_NAME" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: python-packages-3.12
+          path: dist/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag_info.outputs.tag }}
+          name: ${{ steps.tag_info.outputs.package }} ${{ steps.tag_info.outputs.version }}
+          body: |
+            ## Python Package Release
+
+            **Package:** ${{ steps.tag_info.outputs.package }}
+            **Version:** ${{ steps.tag_info.outputs.version }}
+
+            Built for Python 3.9, 3.10, 3.11, 3.12
+
+            [View CHANGELOG](https://github.com/${{ github.repository }}/blob/${{ steps.tag_info.outputs.tag }}/CHANGELOG.md)
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            dist/*.whl
+            dist/*.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Optional: Publish to PyPI
+      - name: Publish to PyPI
+        if: steps.tag_info.outputs.package != ''
+        run: |
+          pip install twine
+          python -m twine upload dist/* --skip-existing
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        continue-on-error: true

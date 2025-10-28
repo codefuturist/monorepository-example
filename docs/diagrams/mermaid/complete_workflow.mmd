@@ -1,0 +1,59 @@
+flowchart LR
+    subgraph dev["Development"]
+        DevPush[Push to<br/>feature/develop]
+        CI[CI Workflow]
+    end
+    
+    subgraph prep["Release Preparation"]
+        CreateTag[Create Release Tag]
+        TagTypes[Tag Type:<br/>v*.*.* or<br/>package-*@v*.*.*]
+    end
+    
+    subgraph releases["Release Workflows"]
+        subgraph root["Root Release"]
+            RootRelease[release.yml]
+        end
+        subgraph lang["Language-Specific Releases"]
+            Python[Python<br/>packages a,b,c]
+            Rust[Rust<br/>packages e,i]
+            Go[Go<br/>package g]
+            Cpp[C++<br/>package d]
+            Java[Java<br/>package h]
+            Swift[Swift<br/>package f]
+        end
+    end
+    
+    subgraph outputs["Outputs"]
+        GHRelease[GitHub Release]
+        Artifacts[Platform Artifacts]
+        Checksums[SHA256 Checksums]
+    end
+    
+    DevPush --> CI
+    CI -->|tests pass| CreateTag
+    CreateTag --> TagTypes
+    TagTypes -->|v*.*.*| RootRelease
+    TagTypes -->|package-*@v*| Python
+    TagTypes -->|package-*@v*| Rust
+    TagTypes -->|package-*@v*| Go
+    TagTypes -->|package-*@v*| Cpp
+    TagTypes -->|package-*@v*| Java
+    TagTypes -->|package-*@v*| Swift
+    
+    RootRelease --> GHRelease
+    Python --> GHRelease
+    Rust --> GHRelease
+    Go --> GHRelease
+    Cpp --> GHRelease
+    Java --> GHRelease
+    Swift --> GHRelease
+    
+    GHRelease --> Artifacts
+    GHRelease --> Checksums
+    
+    style dev fill:#e3f2fd,stroke:#1976d2
+    style prep fill:#fff3e0,stroke:#f57c00
+    style releases fill:#f3e5f5,stroke:#7b1fa2
+    style root fill:#e1bee7,stroke:#8e24aa
+    style lang fill:#ce93d8,stroke:#ab47bc
+    style outputs fill:#c8e6c9,stroke:#388e3c

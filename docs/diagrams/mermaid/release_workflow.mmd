@@ -1,0 +1,25 @@
+flowchart TB
+    Trigger[Push Tag<br/>v*.*.*]
+    
+    subgraph release["Release Pipeline"]
+        Job[Release Job]
+        
+        subgraph steps["Build & Release Steps"]
+            Checkout[Checkout Code]
+            Setup[Setup Node.js 20]
+            Install[Install Dependencies]
+            Tests[Run Tests]
+            Build[Build Packages]
+            ExtractTag[Extract Tag Info]
+            CreateRelease[Create GitHub Release]
+            PublishNPM[Publish to npm<br/>optional]
+        end
+    end
+    
+    Trigger --> Job
+    Job --> Checkout --> Setup --> Install
+    Install --> Tests --> Build --> ExtractTag
+    ExtractTag --> CreateRelease --> PublishNPM
+    
+    style release fill:#f3e5f5,stroke:#7b1fa2
+    style steps fill:#fff3e0,stroke:#f57c00

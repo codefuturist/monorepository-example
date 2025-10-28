@@ -1,8 +1,24 @@
 # Monorepo Example with Automated Releases
 
-Example monorepo demonstrating automated CD using `release-it`, GitHub Actions, and Git Flow.
+[![CI](https://github.com/codefuturist/monorepository-example/actions/workflows/ci.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/ci.yml)
+[![Python CI](https://github.com/codefuturist/monorepository-example/actions/workflows/python-ci.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/python-ci.yml)
+[![Release](https://github.com/codefuturist/monorepository-example/actions/workflows/release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/release.yml)
 
-> **🚀 NEW HERE?** Start with **[GETTING_STARTED.md](./GETTING_STARTED.md)** for a 5-minute setup!
+**Package Releases:**
+
+[![Python Release](https://github.com/codefuturist/monorepository-example/actions/workflows/python-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/python-release.yml)
+[![C++ Package (D)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-d-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-d-release.yml)
+[![Rust Package (E)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-e-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-e-release.yml)
+[![Swift Package (F)](https://github.com/codefuturist/monorepository-example/actions/workflows/swift-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/swift-release.yml)
+[![Go Package (G)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-g-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-g-release.yml)
+[![Java Package (H)](https://github.com/codefuturist/monorepository-example/actions/workflows/java-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/java-release.yml)
+[![Rust Package (I)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-i-release.yml/badge.svg)](https://github.com/codefuturist/monorepository-example/actions/workflows/package-i-release.yml)
+
+# Monorepository Example
+
+Example monorepo demonstrating automated CD using `commitizen`, GitHub Actions, and Git Flow.
+
+> **🚀 NEW HERE?** Start with **[MONOREPO_RELEASE_GUIDE.md](./MONOREPO_RELEASE_GUIDE.md)** - The complete practical reference!
 >
 > **📚 DOCUMENTATION INDEX:** See **[INDEX.md](./INDEX.md)** for all available guides.
 
@@ -12,10 +28,12 @@ Example monorepo demonstrating automated CD using `release-it`, GitHub Actions, 
 monorepository-example/
 ├── packages/
 │   ├── package-a/          # Core functionality
+│   │   ├── pyproject.toml  # Python project config with commitizen
+│   │   └── .cz.toml        # Commitizen configuration
 │   ├── package-b/          # Utilities
 │   └── package-c/          # Helpers
 ├── .github/workflows/      # CI/CD workflows
-└── .release-it.json        # Release configuration
+└── package.json            # Node workspace with commitizen
 ```
 
 ## 🚀 Quick Start
@@ -63,14 +81,17 @@ git pull origin develop
 git checkout -b release/v1.1.0
 ```
 
-### 3. Run release-it (Dry Run First)
+### 3. Run commitizen bump (Dry Run First)
 
 ```bash
-# Test release process
-npm run release:dry
+# Navigate to package
+cd packages/package-a
 
-# Actual release (creates commit, tag, and changelog)
-npm run release
+# Test release process (dry run)
+cz bump --dry-run
+
+# Actual release (creates commit, tag, and updates changelog)
+cz bump --yes
 ```
 
 ### 4. Merge to Main
@@ -86,6 +107,7 @@ git push origin release/v1.1.0
 ### 5. Tag Triggers GitHub Action
 
 When you push a tag (e.g., `v1.1.0`), the GitHub Action automatically:
+
 - ✅ Runs tests
 - 🏗️ Builds packages
 - 📦 Creates GitHub release
@@ -137,6 +159,7 @@ Use these prefixes for automatic changelog generation:
 - `perf:` - Performance improvement
 
 **Examples:**
+
 ```bash
 git commit -m "feat(package-a): add authentication"
 git commit -m "fix(package-b): resolve memory leak"
@@ -165,6 +188,7 @@ npm run lint             # Lint all packages
 ## 🎯 Versioning Strategy
 
 This monorepo uses **independent versioning**:
+
 - Root releases: `v1.0.0`
 - Package releases: `package-a@v1.0.0`
 
@@ -172,7 +196,7 @@ Each package can be released independently with its own version.
 
 ## 📚 Resources
 
-- [release-it Documentation](https://github.com/release-it/release-it)
+- [Commitizen Documentation](https://commitizen-tools.github.io/commitizen/)
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/)
 - [Semantic Versioning](https://semver.org/)
