@@ -111,4 +111,3 @@ tests/CMakeFiles/test_math_utils.dir/clean:
 tests/CMakeFiles/test_math_utils.dir/depend:
 	cd /Users/colin/Developer/Projects/personal/monorepository-example/packages/package-d/build-release && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/colin/Developer/Projects/personal/monorepository-example/packages/package-d /Users/colin/Developer/Projects/personal/monorepository-example/packages/package-d/tests /Users/colin/Developer/Projects/personal/monorepository-example/packages/package-d/build-release /Users/colin/Developer/Projects/personal/monorepository-example/packages/package-d/build-release/tests /Users/colin/Developer/Projects/personal/monorepository-example/packages/package-d/build-release/tests/CMakeFiles/test_math_utils.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : tests/CMakeFiles/test_math_utils.dir/depend
-

@@ -81,7 +81,7 @@ info "Pushing tags..."
 if git push origin --tags; then
     success "All tags pushed to GitHub!"
     echo ""
-    
+
     # Show GitHub URL
     REPO_PATH=$(echo "$REMOTE_URL" | sed 's/.*github.com[:/]\(.*\)\.git/\1/' | sed 's/.*github.com[:/]\(.*\)/\1/')
     if [[ -n "$REPO_PATH" ]]; then

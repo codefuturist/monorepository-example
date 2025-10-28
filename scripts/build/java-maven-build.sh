@@ -56,18 +56,18 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
     echo "Installing Build Tools"
     echo "======================================"
     echo ""
-    
+
     # Detect OS
     if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "Platform: macOS"
         echo ""
-        
+
         # Check if Homebrew is installed
         if ! command -v brew &> /dev/null; then
             echo "Installing Homebrew..."
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         fi
-        
+
         # Check if Java is installed
         if ! command -v java &> /dev/null; then
             echo "Installing Java (OpenJDK)..."
@@ -75,7 +75,7 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
         else
             echo "✓ Java already installed: $(java -version 2>&1 | head -1)"
         fi
-        
+
         # Check if Maven is installed
         if ! command -v mvn &> /dev/null; then
             echo "Installing Maven..."
@@ -83,15 +83,15 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
         else
             echo "✓ Maven already installed: $(mvn -version | head -1)"
         fi
-        
+
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         echo "Platform: Linux"
         echo ""
-        
+
         # Detect package manager
         if command -v apt-get &> /dev/null; then
             echo "Using apt (Debian/Ubuntu)..."
-            
+
             if ! command -v java &> /dev/null; then
                 echo "Installing Java (OpenJDK)..."
                 sudo apt-get update
@@ -99,49 +99,49 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
             else
                 echo "✓ Java already installed: $(java -version 2>&1 | head -1)"
             fi
-            
+
             if ! command -v mvn &> /dev/null; then
                 echo "Installing Maven..."
                 sudo apt-get install -y maven
             else
                 echo "✓ Maven already installed: $(mvn -version | head -1)"
             fi
-            
+
         elif command -v yum &> /dev/null; then
             echo "Using yum (RHEL/CentOS)..."
-            
+
             if ! command -v java &> /dev/null; then
                 sudo yum install -y java-17-openjdk-devel
             else
                 echo "✓ Java already installed"
             fi
-            
+
             if ! command -v mvn &> /dev/null; then
                 sudo yum install -y maven
             else
                 echo "✓ Maven already installed"
             fi
-            
+
         elif command -v dnf &> /dev/null; then
             echo "Using dnf (Fedora)..."
-            
+
             if ! command -v java &> /dev/null; then
                 sudo dnf install -y java-17-openjdk-devel
             else
                 echo "✓ Java already installed"
             fi
-            
+
             if ! command -v mvn &> /dev/null; then
                 sudo dnf install -y maven
             else
                 echo "✓ Maven already installed"
             fi
         fi
-        
+
     elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" || "$OSTYPE" == "cygwin" ]]; then
         echo "Platform: Windows"
         echo ""
-        
+
         # Check if Chocolatey is installed
         if ! command -v choco &> /dev/null; then
             echo "⚠ Chocolatey not found."
@@ -158,7 +158,7 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
             else
                 echo "✓ Java already installed"
             fi
-            
+
             if ! command -v mvn &> /dev/null; then
                 echo "Installing Maven..."
                 choco install maven -y
@@ -167,7 +167,7 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
             fi
         fi
     fi
-    
+
     echo ""
     echo "✓ Build tools check complete"
     echo ""
@@ -181,7 +181,7 @@ if [ "$USE_DOCKER" = "true" ]; then
     echo "Docker Build Mode"
     echo "======================================"
     echo ""
-    
+
     # Source Docker utilities
     DOCKER_UTILS="${SCRIPT_DIR}/docker-build-utils.sh"
     if [ -f "$DOCKER_UTILS" ]; then
@@ -190,15 +190,15 @@ if [ "$USE_DOCKER" = "true" ]; then
         echo "ERROR: Docker utilities not found at $DOCKER_UTILS"
         exit 1
     fi
-    
+
     # Check Docker availability
     if ! check_docker; then
         exit 1
     fi
-    
+
     # Setup cleanup trap
     DOCKER_CONTAINER_NAME="build-java-${PACKAGE_NAME}-$$"
-    
+
     cleanup_java_docker() {
         echo ""
         echo "Cleaning up Docker resources..."
@@ -207,16 +207,16 @@ if [ "$USE_DOCKER" = "true" ]; then
         echo "✓ Docker cleanup complete"
     }
     trap cleanup_java_docker EXIT INT TERM
-    
+
     # Ensure image is available
     ensure_docker_image "$DOCKER_IMAGE"
-    
+
     echo "Building in Docker container using: $DOCKER_IMAGE"
     echo ""
-    
+
     # Create release directory on host
     mkdir -p "$RELEASE_DIR"
-    
+
     # Build command to run inside Docker
     BUILD_CMD="set -e && \
         cd /workspace && \
@@ -227,7 +227,7 @@ if [ "$USE_DOCKER" = "true" ]; then
         sha256sum ${PACKAGE_NAME}-universal.jar > ${PACKAGE_NAME}-universal.jar.sha256 && \
         tar -czf ${PACKAGE_NAME}-universal.tar.gz ${PACKAGE_NAME}-universal.jar && \
         sha256sum ${PACKAGE_NAME}-universal.tar.gz > ${PACKAGE_NAME}-universal.tar.gz.sha256"
-    
+
     # Run build in Docker
     BUILD_SUCCESS=false
     if docker run --name "$DOCKER_CONTAINER_NAME" --rm \
@@ -238,7 +238,7 @@ if [ "$USE_DOCKER" = "true" ]; then
         sh -c "$BUILD_CMD"; then
         BUILD_SUCCESS=true
     fi
-    
+
     if [ "$BUILD_SUCCESS" = "true" ]; then
         echo ""
         echo "======================================"
@@ -351,7 +351,7 @@ if [ "$CREATE_UNIVERSAL" = "true" ]; then
         echo "ERROR: JAR not found at $JAR_FILE"
         exit 1
     fi
-    
+
     # Verify it's a valid JAR (ZIP format)
     if command -v file &> /dev/null; then
         FILE_TYPE=$(file "$JAR_FILE")
@@ -381,7 +381,7 @@ if [ "$CREATE_PLATFORM_TAGGED" = "true" ]; then
         echo "ERROR: JAR not found at $JAR_FILE"
         exit 1
     fi
-    
+
     # Verify it's a valid JAR (ZIP format)
     if command -v file &> /dev/null; then
         FILE_TYPE=$(file "$JAR_FILE")
@@ -418,7 +418,7 @@ cd "$RELEASE_DIR"
 if [ "$CREATE_UNIVERSAL" = "true" ]; then
     echo "Creating universal JAR archive and checksums..."
     tar -czf "${PACKAGE_NAME}-universal.tar.gz" "${PACKAGE_NAME}-universal.jar"
-    
+
     if command -v sha256sum &> /dev/null; then
         sha256sum "${PACKAGE_NAME}-universal.jar" > "${PACKAGE_NAME}-universal.jar.sha256"
         sha256sum "${PACKAGE_NAME}-universal.tar.gz" > "${PACKAGE_NAME}-universal.tar.gz.sha256"
@@ -432,7 +432,7 @@ fi
 if [ "$CREATE_PLATFORM_TAGGED" = "true" ]; then
     echo "Creating platform-tagged JAR archive and checksums..."
     tar -czf "${PACKAGE_NAME}-${TARGET}.tar.gz" "${PACKAGE_NAME}-${TARGET}.jar"
-    
+
     if command -v sha256sum &> /dev/null; then
         sha256sum "${PACKAGE_NAME}-${TARGET}.jar" > "${PACKAGE_NAME}-${TARGET}.jar.sha256"
         sha256sum "${PACKAGE_NAME}-${TARGET}.tar.gz" > "${PACKAGE_NAME}-${TARGET}.tar.gz.sha256"

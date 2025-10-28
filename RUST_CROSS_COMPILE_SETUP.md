@@ -2,7 +2,7 @@
 
 ## Status
 
-✅ **Installed**: `cross` tool for Docker-based cross-compilation  
+✅ **Installed**: `cross` tool for Docker-based cross-compilation
 ⏳ **Pending**: Docker Desktop needs to be running
 
 ## What Was Done

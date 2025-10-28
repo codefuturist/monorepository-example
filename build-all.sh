@@ -33,7 +33,7 @@ SUCCEEDED=()
 
 for pkg in "${PACKAGES[@]}"; do
     echo "→ Building $pkg..."
-    
+
     if [ -f "packages/$pkg/build.sh" ]; then
         LOG_FILE="/tmp/${pkg}-build.log"
         if (cd "packages/$pkg" && bash build.sh > "$LOG_FILE" 2>&1); then

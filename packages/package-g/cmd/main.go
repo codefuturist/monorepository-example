@@ -89,7 +89,7 @@ func runTests() error {
 	if client == nil {
 		return fmt.Errorf("failed to create HTTP client")
 	}
-	
+
 	green := color.New(color.FgGreen)
 	green.Println("✓ HTTPClient created successfully")
 	green.Printf("✓ Client base URL: https://api.example.com\n")
@@ -99,7 +99,7 @@ func runTests() error {
 	fmt.Println("\n" + color.CyanString("BuildURL Test:"))
 	testURL := packageg.BuildURL("https://api.example.com", "/v1/users")
 	green.Printf("BuildURL result: %s\n", testURL)
-	
+
 	// Error handling test
 	fmt.Println("\n" + color.CyanString("Error Handling Test:"))
 	emptyURL := packageg.BuildURL("", "")

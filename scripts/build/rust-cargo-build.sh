@@ -81,18 +81,18 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
     echo "Installing Build Tools"
     echo "======================================"
     echo ""
-    
+
     # Detect OS
     if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "Platform: macOS"
         echo ""
-        
+
         # Check if Homebrew is installed
         if ! command -v brew &> /dev/null; then
             echo "Installing Homebrew..."
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         fi
-        
+
         # Check if Rust is installed
         if ! command -v rustc &> /dev/null || ! command -v cargo &> /dev/null; then
             echo "Installing Rust..."
@@ -102,17 +102,17 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
             echo "✓ Rust already installed: $(rustc --version)"
             echo "✓ Cargo already installed: $(cargo --version)"
         fi
-        
+
         # Check if 'cross' is installed (for cross-compilation)
         if [ "$CROSS_COMPILE" = "true" ] && ! command -v cross &> /dev/null; then
             echo "Installing 'cross' tool for cross-compilation..."
             cargo install cross --git https://github.com/cross-rs/cross
         fi
-        
+
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         echo "Platform: Linux"
         echo ""
-        
+
         if ! command -v rustc &> /dev/null || ! command -v cargo &> /dev/null; then
             echo "Installing Rust..."
             curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -121,11 +121,11 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
             echo "✓ Rust already installed: $(rustc --version)"
             echo "✓ Cargo already installed: $(cargo --version)"
         fi
-        
+
         # Install cross-compilation dependencies
         if [ "$CROSS_COMPILE" = "true" ]; then
             echo "Installing cross-compilation dependencies..."
-            
+
             # Detect package manager
             if command -v apt-get &> /dev/null; then
                 sudo apt-get update
@@ -135,18 +135,18 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
             elif command -v dnf &> /dev/null; then
                 sudo dnf install -y mingw64-gcc gcc-aarch64-linux-gnu
             fi
-            
+
             # Install 'cross' tool
             if ! command -v cross &> /dev/null; then
                 echo "Installing 'cross' tool..."
                 cargo install cross --git https://github.com/cross-rs/cross
             fi
         fi
-        
+
     elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" || "$OSTYPE" == "cygwin" ]]; then
         echo "Platform: Windows"
         echo ""
-        
+
         if ! command -v rustc &> /dev/null || ! command -v cargo &> /dev/null; then
             echo "Installing Rust..."
             echo "Please download and run the installer from:"
@@ -159,7 +159,7 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
             echo "✓ Cargo already installed: $(cargo --version)"
         fi
     fi
-    
+
     echo ""
     echo "✓ Build tools check complete"
     echo ""
@@ -176,7 +176,7 @@ if [ "$USE_DOCKER" = "true" ]; then
     echo "Note: Rust Docker builds will use the 'cross' tool for cross-compilation"
     echo "      This provides consistent, reproducible builds across platforms"
     echo ""
-    
+
     # Source Docker utilities
     DOCKER_UTILS="${SCRIPT_DIR}/docker-build-utils.sh"
     if [ -f "$DOCKER_UTILS" ]; then
@@ -185,12 +185,12 @@ if [ "$USE_DOCKER" = "true" ]; then
         echo "ERROR: Docker utilities not found at $DOCKER_UTILS"
         exit 1
     fi
-    
+
     # Check Docker availability
     if ! check_docker; then
         exit 1
     fi
-    
+
     # Setup cleanup trap for cross tool containers
     cleanup_rust_docker() {
         echo ""
@@ -201,19 +201,19 @@ if [ "$USE_DOCKER" = "true" ]; then
         echo "✓ Docker cleanup complete"
     }
     trap cleanup_rust_docker EXIT INT TERM
-    
+
     # For Rust, we'll use cross which is already Docker-based
     # Just ensure cross is installed and force its use
     if ! command -v cross &> /dev/null; then
         echo "Installing 'cross' tool for Docker-based builds..."
         cargo install cross --git https://github.com/cross-rs/cross
     fi
-    
+
     # Force cross usage when Docker mode is enabled
     # Note: 'cross' only has Docker images for Linux and Windows targets
     #       macOS targets will fall back to native cargo builds
     export USE_CROSS="true"
-    
+
     echo "✓ Docker mode enabled (using 'cross' tool)"
     echo "  Note: Docker images only available for Linux/Windows targets"
     echo "        macOS targets will use native builds"
@@ -263,9 +263,9 @@ FAILED_BUILDS=0
 
 for TARGET_SPEC in "${BUILD_TARGETS[@]}"; do
     IFS=':' read -r TARGET EXT <<< "$TARGET_SPEC"
-    
+
     echo "→ Building for $TARGET..."
-    
+
     # Try to install target if not present
     if ! rustup target list --installed | grep -q "^${TARGET}$"; then
         echo "  Installing Rust target $TARGET..."
@@ -277,7 +277,7 @@ for TARGET_SPEC in "${BUILD_TARGETS[@]}"; do
             continue
         fi
     fi
-    
+
     # Determine which build tool to use
     BUILD_CMD="cargo"
     if [[ "$USE_CROSS" == "true" ]] || [[ "$USE_CROSS" == "auto" && "$CROSS_COMPILE" == "true" ]]; then
@@ -293,40 +293,40 @@ for TARGET_SPEC in "${BUILD_TARGETS[@]}"; do
             fi
         fi
     fi
-    
+
     # Build for this target
     if $BUILD_CMD build --release --target "$TARGET" $CARGO_FLAGS 2>&1 | grep -v "^warning:" | grep -E "(error|Error|ERROR)" > /dev/null; then
         echo "  ✗ Build failed for $TARGET"
         ((FAILED_BUILDS++))
         continue
     fi
-    
+
     if ! $BUILD_CMD build --release --target "$TARGET" $CARGO_FLAGS > /dev/null 2>&1; then
         echo "  ✗ Build failed for $TARGET"
         ((FAILED_BUILDS++))
         continue
     fi
-    
+
     # Copy binary with proper naming
     BINARY_NAME="${PACKAGE_NAME}-${TARGET}${EXT}"
     SOURCE_BINARY="target/${TARGET}/release/${PACKAGE_NAME}${EXT}"
-    
+
     if [ ! -f "$SOURCE_BINARY" ]; then
         echo "  ✗ Binary not found at $SOURCE_BINARY"
         ((FAILED_BUILDS++))
         continue
     fi
-    
+
     cp "$SOURCE_BINARY" "$RELEASE_DIR/$BINARY_NAME"
     chmod +x "$RELEASE_DIR/$BINARY_NAME" 2>/dev/null || true
-    
+
     # Verify binary
     if [ ! -f "$RELEASE_DIR/$BINARY_NAME" ]; then
         echo "  ✗ Failed to copy binary"
         ((FAILED_BUILDS++))
         continue
     fi
-    
+
     # Get binary size
     BINARY_SIZE=$(stat -f%z "$RELEASE_DIR/$BINARY_NAME" 2>/dev/null || stat -c%s "$RELEASE_DIR/$BINARY_NAME" 2>/dev/null || echo "0")
     if [ "$BINARY_SIZE" -eq 0 ]; then
@@ -334,7 +334,7 @@ for TARGET_SPEC in "${BUILD_TARGETS[@]}"; do
         ((FAILED_BUILDS++))
         continue
     fi
-    
+
     # Create archives and checksums
     cd "$RELEASE_DIR"
     if [[ "$EXT" == ".exe" ]]; then
@@ -357,7 +357,7 @@ for TARGET_SPEC in "${BUILD_TARGETS[@]}"; do
         fi
     fi
     cd "$PACKAGE_DIR"
-    
+
     echo "  ✓ $TARGET built successfully (size: $BINARY_SIZE bytes)"
     ((SUCCESSFUL_BUILDS++))
     echo ""

@@ -59,18 +59,18 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
     echo "Installing Build Tools"
     echo "======================================"
     echo ""
-    
+
     # Detect OS
     if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "Platform: macOS"
         echo ""
-        
+
         # Check if Homebrew is installed
         if ! command -v brew &> /dev/null; then
             echo "Installing Homebrew..."
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         fi
-        
+
         # Check if CMake is installed
         if ! command -v cmake &> /dev/null; then
             echo "Installing CMake..."
@@ -78,7 +78,7 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
         else
             echo "✓ CMake already installed: $(cmake --version | head -1)"
         fi
-        
+
         # Check if compiler is available
         if ! command -v clang++ &> /dev/null && ! command -v g++ &> /dev/null; then
             echo "Installing Xcode Command Line Tools..."
@@ -86,15 +86,15 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
         else
             echo "✓ C++ compiler available"
         fi
-        
+
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         echo "Platform: Linux"
         echo ""
-        
+
         # Detect package manager
         if command -v apt-get &> /dev/null; then
             echo "Using apt (Debian/Ubuntu)..."
-            
+
             if ! command -v cmake &> /dev/null; then
                 echo "Installing CMake..."
                 sudo apt-get update
@@ -102,49 +102,49 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
             else
                 echo "✓ CMake already installed: $(cmake --version | head -1)"
             fi
-            
+
             if ! command -v g++ &> /dev/null; then
                 echo "Installing build essentials..."
                 sudo apt-get install -y build-essential
             else
                 echo "✓ C++ compiler available: $(g++ --version | head -1)"
             fi
-            
+
         elif command -v yum &> /dev/null; then
             echo "Using yum (RHEL/CentOS)..."
-            
+
             if ! command -v cmake &> /dev/null; then
                 sudo yum install -y cmake
             else
                 echo "✓ CMake already installed: $(cmake --version | head -1)"
             fi
-            
+
             if ! command -v g++ &> /dev/null; then
                 sudo yum groupinstall -y "Development Tools"
             else
                 echo "✓ C++ compiler available"
             fi
-            
+
         elif command -v dnf &> /dev/null; then
             echo "Using dnf (Fedora)..."
-            
+
             if ! command -v cmake &> /dev/null; then
                 sudo dnf install -y cmake
             else
                 echo "✓ CMake already installed: $(cmake --version | head -1)"
             fi
-            
+
             if ! command -v g++ &> /dev/null; then
                 sudo dnf groupinstall -y "Development Tools"
             else
                 echo "✓ C++ compiler available"
             fi
         fi
-        
+
     elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" || "$OSTYPE" == "cygwin" ]]; then
         echo "Platform: Windows"
         echo ""
-        
+
         # Check if Chocolatey is installed
         if ! command -v choco &> /dev/null; then
             echo "⚠ Chocolatey not found."
@@ -162,7 +162,7 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
             else
                 echo "✓ CMake already installed"
             fi
-            
+
             # Install MinGW as C++ compiler
             if ! command -v g++ &> /dev/null; then
                 echo "Installing MinGW..."
@@ -172,7 +172,7 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
             fi
         fi
     fi
-    
+
     echo ""
     echo "✓ Build tools check complete"
     echo ""
@@ -186,7 +186,7 @@ if [ "$USE_DOCKER" = "true" ]; then
     echo "Docker Build Mode"
     echo "======================================"
     echo ""
-    
+
     # Source Docker utilities
     DOCKER_UTILS="${SCRIPT_DIR}/docker-build-utils.sh"
     if [ -f "$DOCKER_UTILS" ]; then
@@ -195,15 +195,15 @@ if [ "$USE_DOCKER" = "true" ]; then
         echo "ERROR: Docker utilities not found at $DOCKER_UTILS"
         exit 1
     fi
-    
+
     # Check Docker availability
     if ! check_docker; then
         exit 1
     fi
-    
+
     # Setup cleanup trap
     DOCKER_CONTAINER_NAME="build-cpp-${PACKAGE_NAME}-$$"
-    
+
     cleanup_cpp_docker() {
         echo ""
         echo "Cleaning up Docker resources..."
@@ -212,16 +212,16 @@ if [ "$USE_DOCKER" = "true" ]; then
         echo "✓ Docker cleanup complete"
     }
     trap cleanup_cpp_docker EXIT INT TERM
-    
+
     # Ensure image is available
     ensure_docker_image "$DOCKER_IMAGE"
-    
+
     echo "Building in Docker container using: $DOCKER_IMAGE"
     echo ""
-    
+
     # Create release directory on host
     mkdir -p "$RELEASE_DIR"
-    
+
     # Build command to run inside Docker
     BUILD_CMD="set -e && \
         apt-get update -qq && apt-get install -y -qq cmake make > /dev/null 2>&1 && \
@@ -238,7 +238,7 @@ if [ "$USE_DOCKER" = "true" ]; then
         tar -czf \${BINARY_NAME}.tar.gz \$BINARY_NAME && \
         sha256sum \${BINARY_NAME}.tar.gz > \${BINARY_NAME}.tar.gz.sha256 && \
         sha256sum \$BINARY_NAME > \${BINARY_NAME}.sha256"
-    
+
     # Run build in Docker
     BUILD_SUCCESS=false
     if docker run --name "$DOCKER_CONTAINER_NAME" --rm \
@@ -248,10 +248,10 @@ if [ "$USE_DOCKER" = "true" ]; then
         sh -c "$BUILD_CMD"; then
         BUILD_SUCCESS=true
     fi
-    
+
     # Clean up intermediate artifacts
     rm -rf build-release/ 2>/dev/null || true
-    
+
     if [ "$BUILD_SUCCESS" = "true" ]; then
         echo ""
         echo "======================================"

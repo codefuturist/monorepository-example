@@ -42,10 +42,10 @@ class CollectionUtilsTest {
     @DisplayName("chunk should throw exception for size < 1")
     void testChunkInvalidSize() {
         List<Integer> input = Arrays.asList(1, 2, 3);
-        assertThrows(IllegalArgumentException.class, () -> 
+        assertThrows(IllegalArgumentException.class, () ->
             CollectionUtils.chunk(input, 0)
         );
-        assertThrows(IllegalArgumentException.class, () -> 
+        assertThrows(IllegalArgumentException.class, () ->
             CollectionUtils.chunk(input, -1)
         );
     }
@@ -66,7 +66,7 @@ class CollectionUtilsTest {
     void testChunk() {
         List<Integer> input = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
         List<List<Integer>> result = CollectionUtils.chunk(input, 3);
-        
+
         assertEquals(3, result.size());
         assertEquals(Arrays.asList(1, 2, 3), result.get(0));
         assertEquals(Arrays.asList(4, 5, 6), result.get(1));

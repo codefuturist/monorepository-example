@@ -103,18 +103,18 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
     echo "Installing Build Tools"
     echo "======================================"
     echo ""
-    
+
     # Detect OS
     if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "Platform: macOS"
         echo ""
-        
+
         # Check if Homebrew is installed
         if ! command -v brew &> /dev/null; then
             echo "Installing Homebrew..."
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         fi
-        
+
         # Check if Go is installed
         if ! command -v go &> /dev/null; then
             echo "Installing Go..."
@@ -122,36 +122,36 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
         else
             echo "✓ Go already installed: $(go version)"
         fi
-        
+
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         echo "Platform: Linux"
         echo ""
-        
+
         if ! command -v go &> /dev/null; then
             echo "Go not found. Installing latest version..."
-            
+
             # Download and install Go
             GO_VERSION="1.21.5"  # Update as needed
             wget "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" -O /tmp/go.tar.gz
             sudo rm -rf /usr/local/go
             sudo tar -C /usr/local -xzf /tmp/go.tar.gz
             rm /tmp/go.tar.gz
-            
+
             # Add to PATH
             if ! grep -q '/usr/local/go/bin' ~/.bashrc; then
                 echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
             fi
             export PATH=$PATH:/usr/local/go/bin
-            
+
             echo "✓ Go installed: $(go version)"
         else
             echo "✓ Go already installed: $(go version)"
         fi
-        
+
     elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" || "$OSTYPE" == "cygwin" ]]; then
         echo "Platform: Windows"
         echo ""
-        
+
         # Check if Chocolatey is installed
         if ! command -v choco &> /dev/null; then
             echo "⚠ Chocolatey not found."
@@ -168,7 +168,7 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
             fi
         fi
     fi
-    
+
     echo ""
     echo "✓ Build tools check complete"
     echo ""
@@ -182,7 +182,7 @@ if [ "$USE_DOCKER" = "true" ]; then
     echo "Docker Build Mode"
     echo "======================================"
     echo ""
-    
+
     # Source Docker utilities
     DOCKER_UTILS="${SCRIPT_DIR}/docker-build-utils.sh"
     if [ -f "$DOCKER_UTILS" ]; then
@@ -191,12 +191,12 @@ if [ "$USE_DOCKER" = "true" ]; then
         echo "ERROR: Docker utilities not found at $DOCKER_UTILS"
         exit 1
     fi
-    
+
     # Check Docker availability
     if ! check_docker; then
         exit 1
     fi
-    
+
     # Setup cleanup trap
     DOCKER_CONTAINER_NAME="build-go-${PACKAGE_NAME}-$$"
     cleanup_go_docker() {
@@ -206,24 +206,24 @@ if [ "$USE_DOCKER" = "true" ]; then
         echo "✓ Docker cleanup complete"
     }
     trap cleanup_go_docker EXIT INT TERM
-    
+
     # Ensure image is available
     ensure_docker_image "$DOCKER_IMAGE"
-    
+
     echo "Building in Docker container using: $DOCKER_IMAGE"
     echo "Cross-compilation: $([ "$CROSS_COMPILE" = "true" ] && echo "ENABLED" || echo "DISABLED")"
     echo ""
-    
+
     # Create release directory on host
     mkdir -p "$RELEASE_DIR"
-    
+
     # Prepare target list for Docker build
     TARGET_LIST=""
     for target_spec in "${TARGETS[@]}"; do
         IFS=':' read -r GOOS GOARCH TARGET_NAME <<< "$target_spec"
         TARGET_LIST="$TARGET_LIST$GOOS:$GOARCH:$TARGET_NAME "
     done
-    
+
     # Build command to run inside Docker
     BUILD_CMD="set -e && \
         apk add --no-cache bash tar gzip coreutils > /dev/null 2>&1 && \
@@ -248,7 +248,7 @@ if [ "$USE_DOCKER" = "true" ]; then
             fi && \
             cd ..; \
         done"
-    
+
     # Run build in Docker
     BUILD_SUCCESS=false
     if docker run --name "$DOCKER_CONTAINER_NAME" --rm \
@@ -258,7 +258,7 @@ if [ "$USE_DOCKER" = "true" ]; then
         sh -c "$BUILD_CMD"; then
         BUILD_SUCCESS=true
     fi
-    
+
     if [ "$BUILD_SUCCESS" = "true" ]; then
         echo ""
         echo "======================================"
@@ -300,23 +300,23 @@ echo ""
 
 for TARGET_SPEC in "${TARGETS[@]}"; do
     IFS=':' read -r GOOS GOARCH RUST_TARGET <<< "$TARGET_SPEC"
-    
+
     OUTPUT_NAME="${PACKAGE_NAME}-${RUST_TARGET}"
     if [ "$GOOS" = "windows" ]; then
         OUTPUT_NAME="${OUTPUT_NAME}.exe"
     fi
-    
+
     echo "Building for $RUST_TARGET (GOOS=$GOOS GOARCH=$GOARCH)..."
-    
+
     if env GOOS="$GOOS" GOARCH="$GOARCH" go build -ldflags="$LDFLAGS" $BUILD_FLAGS -o "$RELEASE_DIR/$OUTPUT_NAME" "$MAIN_FILE"; then
         echo "  ✓ $OUTPUT_NAME built"
-        
+
         # Verify binary exists
         if [ ! -f "$RELEASE_DIR/$OUTPUT_NAME" ]; then
             echo "  ✗ ERROR: Binary not found at $RELEASE_DIR/$OUTPUT_NAME"
             continue
         fi
-        
+
         # Verify binary size (should be > 0)
         BINARY_SIZE=$(stat -f%z "$RELEASE_DIR/$OUTPUT_NAME" 2>/dev/null || stat -c%s "$RELEASE_DIR/$OUTPUT_NAME" 2>/dev/null || echo "0")
         if [ "$BINARY_SIZE" -eq 0 ]; then
@@ -324,7 +324,7 @@ for TARGET_SPEC in "${TARGETS[@]}"; do
             continue
         fi
         echo "  ✓ Binary verified (size: $BINARY_SIZE bytes)"
-        
+
         # Create archive and checksum
         cd "$RELEASE_DIR"
         if [ "$GOOS" = "windows" ]; then
@@ -336,14 +336,14 @@ for TARGET_SPEC in "${TARGETS[@]}"; do
             shasum -a 256 "${PACKAGE_NAME}-${RUST_TARGET}.tar.gz" > "${PACKAGE_NAME}-${RUST_TARGET}.tar.gz.sha256" 2>/dev/null || \
             sha256sum "${PACKAGE_NAME}-${RUST_TARGET}.tar.gz" > "${PACKAGE_NAME}-${RUST_TARGET}.tar.gz.sha256"
         fi
-        
+
         # Binary checksum
         if command -v sha256sum &> /dev/null; then
             sha256sum "$OUTPUT_NAME" > "${OUTPUT_NAME}.sha256"
         else
             shasum -a 256 "$OUTPUT_NAME" > "${OUTPUT_NAME}.sha256"
         fi
-        
+
         cd "$PACKAGE_DIR"
     else
         echo "  ✗ Failed to build for $RUST_TARGET"

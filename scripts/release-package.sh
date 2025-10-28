@@ -241,18 +241,18 @@ if [[ "$AUTO_PUSH" == true ]]; then
     info "STEP 4: Push to GitHub"
     info "=========================================="
     echo ""
-    
+
     info "Pushing main branch..."
     git checkout main
     git push origin main --follow-tags
-    
+
     info "Pushing develop branch..."
     git checkout develop
     git push origin develop
-    
+
     success "Pushed to GitHub!"
     echo ""
-    
+
     info "🎯 GitHub Actions should now be running!"
     REMOTE_URL=$(git remote get-url origin 2>/dev/null || echo "")
     if [[ -n "$REMOTE_URL" ]]; then
@@ -263,7 +263,7 @@ if [[ "$AUTO_PUSH" == true ]]; then
         echo "  Releases: https://github.com/$REPO_PATH/releases"
         echo "  Tags:     https://github.com/$REPO_PATH/tags"
         echo ""
-        
+
         # Check if gh CLI is available for watching workflow
         if command -v gh &>/dev/null; then
             echo ""
@@ -292,7 +292,7 @@ if [[ "$CLEANUP_BRANCH" == true ]]; then
     info "STEP 5: Cleanup"
     info "=========================================="
     echo ""
-    
+
     # Git flow already deletes the local branch, but clean remote if exists
     if git ls-remote --heads origin release/$NEW_VERSION &>/dev/null; then
         info "Deleting remote release branch..."

@@ -1,0 +1,46 @@
+flowchart TB
+    Trigger[Tag Push<br/>package-*@v*.*.*]
+    
+    subgraph matrix["Build Matrix"]
+        subgraph platform["Platform Setup"]
+            SetupMatrix[Setup Build Matrix]
+            Platforms[Linux x64/ARM64<br/>macOS x64/ARM64<br/>Windows x64]
+        end
+        
+        subgraph build["Build Steps"]
+            Checkout[Checkout Code]
+            SetupEnv[Setup Build Environment]
+            InstallDeps[Install Dependencies]
+            Compile[Compile Binary]
+            TestBinary[Test Binary]
+            Package[Package Binary]
+            GenChecksum[Generate SHA256]
+        end
+        
+        subgraph upload["Upload Artifacts"]
+            UploadBinary[Upload Binary]
+            UploadChecksum[Upload Checksum]
+        end
+    end
+    
+    subgraph release["Release Creation"]
+        CreateRelease[Create GitHub Release]
+        AttachArtifacts[Attach All Artifacts]
+        PublishRelease[Publish Release]
+    end
+    
+    Trigger --> SetupMatrix --> Platforms
+    Platforms --> Checkout --> SetupEnv --> InstallDeps
+    InstallDeps --> Compile --> TestBinary --> Package
+    Package --> GenChecksum
+    GenChecksum --> UploadBinary
+    GenChecksum --> UploadChecksum
+    UploadBinary --> CreateRelease
+    UploadChecksum --> CreateRelease
+    CreateRelease --> AttachArtifacts --> PublishRelease
+    
+    style matrix fill:#e3f2fd,stroke:#1976d2
+    style platform fill:#bbdefb,stroke:#1976d2
+    style build fill:#c5cae9,stroke:#303f9f
+    style upload fill:#d1c4e9,stroke:#512da8
+    style release fill:#c8e6c9,stroke:#388e3c

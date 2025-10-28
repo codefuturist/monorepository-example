@@ -94,13 +94,13 @@ case "$COMMAND" in
         sleep 1
         gh run watch || warn "No recent workflow runs found"
         ;;
-        
+
     list|ls)
         info "Recent workflow runs:"
         echo ""
         gh run list --limit 10
         ;;
-        
+
     view|v)
         if [[ -n "$2" ]]; then
             info "Viewing workflow run #$2..."
@@ -112,7 +112,7 @@ case "$COMMAND" in
             gh run view
         fi
         ;;
-        
+
     logs|log)
         if [[ -n "$2" ]]; then
             info "Fetching logs for workflow run #$2..."
@@ -124,13 +124,13 @@ case "$COMMAND" in
             gh run view --log
         fi
         ;;
-        
+
     status|s)
         info "Current workflow status:"
         echo ""
         gh run list --limit 5 | head -6
         echo ""
-        
+
         # Show detailed status of most recent run
         LATEST_RUN=$(gh run list --limit 1 --json databaseId --jq '.[0].databaseId')
         if [[ -n "$LATEST_RUN" ]]; then
@@ -139,12 +139,12 @@ case "$COMMAND" in
             gh run view "$LATEST_RUN" || true
         fi
         ;;
-        
+
     open|o)
         info "Opening GitHub Actions in browser..."
         gh browse --repo "$REPO_PATH" -b "actions"
         ;;
-        
+
     help|h|--help)
         cat << EOF
 GitHub Actions Workflow Monitor
@@ -178,7 +178,7 @@ GitHub CLI Features:
 
 EOF
         ;;
-        
+
     *)
         error "Unknown command: $COMMAND"
         echo ""

@@ -97,4 +97,3 @@ changelog_file = "CHANGELOG.md"
 changelog_incremental = true
 changelog_start_rev = "package-a@v1.2.8"
 change_type_order = ["BREAKING CHANGE", "feat", "fix", "refactor", "perf", "docs", "style", "build", "ci", "test", "chore"]
-

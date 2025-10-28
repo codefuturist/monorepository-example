@@ -38,12 +38,12 @@ func (c *HTTPClient) Get(path string) (*http.Response, error) {
 // Post performs a POST request with JSON body
 func (c *HTTPClient) Post(path string, body interface{}) (*http.Response, error) {
 	url := fmt.Sprintf("%s/%s", c.baseURL, strings.TrimLeft(path, "/"))
-	
+
 	jsonData, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return c.client.Post(url, "application/json", strings.NewReader(string(jsonData)))
 }
 
@@ -54,16 +54,16 @@ func (c *HTTPClient) FetchJSON(path string, target interface{}) error {
 		return err
 	}
 	defer resp.Body.Close()
-	
+
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("unexpected status code: %d", resp.StatusCode)
 	}
-	
+
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}
-	
+
 	return json.Unmarshal(body, target)
 }
 
@@ -77,12 +77,12 @@ func BuildURL(base, path string) string {
 // ParseQueryString parses a query string into a map
 func ParseQueryString(query string) map[string]string {
 	result := make(map[string]string)
-	
+
 	query = strings.TrimPrefix(query, "?")
 	if query == "" {
 		return result
 	}
-	
+
 	pairs := strings.Split(query, "&")
 	for _, pair := range pairs {
 		parts := strings.SplitN(pair, "=", 2)
@@ -90,6 +90,6 @@ func ParseQueryString(query string) map[string]string {
 			result[parts[0]] = parts[1]
 		}
 	}
-	
+
 	return result
 }

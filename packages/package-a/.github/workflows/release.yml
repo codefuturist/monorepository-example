@@ -10,7 +10,7 @@ permissions:
 
 jobs:
     release:
-        uses: ./.github/workflows/python-package-release.yml
+        uses: codefuturist/monorepository-example/.github/workflows/python-package-release.yml@main
         with:
             package-name: package-a
             package-description: "Python utility package A with logging and file management capabilities"

@@ -118,9 +118,9 @@ otool -L release/*-darwin    # macOS
 
 ## Summary
 
-✅ **Always 64-bit** - No 32-bit support  
-✅ **Both architectures** - x86_64 and ARM64 for each platform  
-✅ **Standalone executables** - No interpreter/runtime needed (except Java)  
+✅ **Always 64-bit** - No 32-bit support
+✅ **Both architectures** - x86_64 and ARM64 for each platform
+✅ **Standalone executables** - No interpreter/runtime needed (except Java)
 ✅ **Python is standalone too!** - PyInstaller bundles everything
 
 This ensures end users can simply download and run binaries without installing dependencies!

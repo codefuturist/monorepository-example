@@ -25,10 +25,10 @@ pub fn find_median(numbers: &mut [f64]) -> Option<f64> {
     if numbers.is_empty() {
         return None;
     }
-    
+
     numbers.sort_by(|a, b| a.partial_cmp(b).unwrap());
     let len = numbers.len();
-    
+
     if len % 2 == 0 {
         Some((numbers[len / 2 - 1] + numbers[len / 2]) / 2.0)
     } else {
@@ -39,14 +39,14 @@ pub fn find_median(numbers: &mut [f64]) -> Option<f64> {
 /// Count word frequency in text
 pub fn word_frequency(text: &str) -> HashMap<String, usize> {
     let mut freq = HashMap::new();
-    
+
     for word in text.split_whitespace() {
         let word = word.to_lowercase().trim_matches(|c: char| !c.is_alphanumeric()).to_string();
         if !word.is_empty() {
             *freq.entry(word).or_insert(0) += 1;
         }
     }
-    
+
     freq
 }
 
@@ -71,8 +71,8 @@ pub fn print_user(user: &User) {
     println!("  {}: {}", "ID".yellow(), user.id.to_string().green());
     println!("  {}: {}", "Name".yellow(), user.name.bright_white());
     println!("  {}: {}", "Email".yellow(), user.email.bright_white());
-    println!("  {}: {}", 
-        "Status".yellow(), 
+    println!("  {}: {}",
+        "Status".yellow(),
         if user.active { "Active".green() } else { "Inactive".red() }
     );
 }
@@ -85,7 +85,7 @@ mod tests {
     fn test_calculate_average() {
         let numbers = vec![1.0, 2.0, 3.0, 4.0, 5.0];
         assert_eq!(calculate_average(&numbers), Some(3.0));
-        
+
         let empty: Vec<f64> = vec![];
         assert_eq!(calculate_average(&empty), None);
     }
@@ -94,7 +94,7 @@ mod tests {
     fn test_find_median() {
         let mut numbers = vec![3.0, 1.0, 5.0, 2.0, 4.0];
         assert_eq!(find_median(&mut numbers), Some(3.0));
-        
+
         let mut even = vec![1.0, 2.0, 3.0, 4.0];
         assert_eq!(find_median(&mut even), Some(2.5));
     }
@@ -123,10 +123,10 @@ mod tests {
             email: "john@example.com".to_string(),
             active: true,
         };
-        
+
         let json = user_to_json(&user).unwrap();
         let parsed = json_to_user(&json).unwrap();
-        
+
         assert_eq!(user.id, parsed.id);
         assert_eq!(user.name, parsed.name);
         assert_eq!(user.email, parsed.email);

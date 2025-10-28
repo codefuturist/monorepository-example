@@ -15,7 +15,7 @@ export class Logger {
   private log(level: LogLevel, message: string, ...args: any[]): void {
     const timestamp = new Date().toISOString();
     const prefix = `[${timestamp}] [${level.toUpperCase()}] [${this.context}]`;
-    
+
     switch (level) {
       case LogLevel.ERROR:
         console.error(prefix, message, ...args);

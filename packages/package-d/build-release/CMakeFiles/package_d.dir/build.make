@@ -111,4 +111,3 @@ CMakeFiles/package_d.dir/clean:
 CMakeFiles/package_d.dir/depend:
 	cd /Users/colin/Developer/Projects/personal/monorepository-example/packages/package-d/build-release && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/colin/Developer/Projects/personal/monorepository-example/packages/package-d /Users/colin/Developer/Projects/personal/monorepository-example/packages/package-d /Users/colin/Developer/Projects/personal/monorepository-example/packages/package-d/build-release /Users/colin/Developer/Projects/personal/monorepository-example/packages/package-d/build-release /Users/colin/Developer/Projects/personal/monorepository-example/packages/package-d/build-release/CMakeFiles/package_d.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/package_d.dir/depend
-

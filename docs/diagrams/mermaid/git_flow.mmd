@@ -1,0 +1,37 @@
+flowchart LR
+    subgraph branches["Branches"]
+        Main[main<br/>production]
+        Develop[develop<br/>integration]
+        Feature[feature/*<br/>new features]
+        Release[release/*<br/>release prep]
+        Hotfix[hotfix/*<br/>urgent fixes]
+    end
+    
+    subgraph triggers["CI/CD Triggers"]
+        CITrigger[CI Workflow<br/>test & build]
+        ReleaseTrigger[Release Workflow<br/>publish]
+    end
+    
+    subgraph outputs["Outputs"]
+        GHRelease[GitHub Release]
+        NPMPublish[npm Publish<br/>optional]
+    end
+    
+    Feature -->|merge via PR| Develop
+    Develop -->|create release| Release
+    Release -->|merge when ready| Main
+    Release -->|merge back| Develop
+    Main -->|urgent fix| Hotfix
+    Hotfix -->|merge| Main
+    Hotfix -->|merge back| Develop
+    
+    Feature -->|push| CITrigger
+    Develop -->|push| CITrigger
+    Main -->|tag v*.*.*| ReleaseTrigger
+    
+    ReleaseTrigger --> GHRelease
+    ReleaseTrigger --> NPMPublish
+    
+    style branches fill:#e3f2fd,stroke:#1976d2
+    style triggers fill:#fff3e0,stroke:#f57c00
+    style outputs fill:#c8e6c9,stroke:#388e3c

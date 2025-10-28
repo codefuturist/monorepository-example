@@ -1,1 +1,51 @@
-{"rustc":16285725380928457773,"features":"[]","declared_features":"[]","target":12166906175082009618,"profile":2040997289075261528,"path":10763286916239946207,"deps":[[1852463361802237065,"anyhow",false,10389114592684770207],[8776160911163601492,"clap",false,4084382865705772251],[12832915883349295919,"serde_json",false,8464591321209792628],[13548984313718623784,"serde",false,12993006846425424904],[13731153033113646547,"colored",false,2335874827516927573]],"local":[{"CheckDepInfo":{"dep_info":"x86_64-unknown-linux-gnu/release/.fingerprint/package-i-a7c4f12fbf2c3195/dep-lib-package_i","checksum":false}}],"rustflags":[],"config":2069994364910194474,"compile_kind":13270707523875659407}
+{
+  "rustc": 16285725380928457773,
+  "features": "[]",
+  "declared_features": "[]",
+  "target": 12166906175082009618,
+  "profile": 2040997289075261528,
+  "path": 10763286916239946207,
+  "deps": [
+    [
+      1852463361802237065,
+      "anyhow",
+      false,
+      10389114592684770207
+    ],
+    [
+      8776160911163601492,
+      "clap",
+      false,
+      4084382865705772251
+    ],
+    [
+      12832915883349295919,
+      "serde_json",
+      false,
+      8464591321209792628
+    ],
+    [
+      13548984313718623784,
+      "serde",
+      false,
+      12993006846425424904
+    ],
+    [
+      13731153033113646547,
+      "colored",
+      false,
+      2335874827516927573
+    ]
+  ],
+  "local": [
+    {
+      "CheckDepInfo": {
+        "dep_info": "x86_64-unknown-linux-gnu/release/.fingerprint/package-i-a7c4f12fbf2c3195/dep-lib-package_i",
+        "checksum": false
+      }
+    }
+  ],
+  "rustflags": [],
+  "config": 2069994364910194474,
+  "compile_kind": 13270707523875659407
+}

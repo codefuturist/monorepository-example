@@ -308,8 +308,8 @@ set(init_submodules "TRUE")
 if(init_submodules)
   execute_process(
     COMMAND "/opt/homebrew/bin/git"
-            --git-dir=.git 
-            submodule update --recursive --init 
+            --git-dir=.git
+            submodule update --recursive --init
     WORKING_DIRECTORY "/Users/colin/Developer/Projects/personal/monorepository-example/packages/package-d/build-release/_deps/json-src"
     COMMAND_ERROR_IS_FATAL ANY
     ${maybe_show_command}

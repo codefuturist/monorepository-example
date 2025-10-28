@@ -91,7 +91,7 @@ else
     echo ""
     info "Installing git-flow..."
     echo ""
-    
+
     if ./scripts/install-git-flow.sh; then
         success "git-flow installed successfully!"
     else
@@ -102,7 +102,7 @@ else
         echo "  Ubuntu:  sudo apt-get install git-flow"
         exit 1
     fi
-    
+
     echo ""
     prompt "Press Enter to continue..."
     read
@@ -141,14 +141,14 @@ if git config --get gitflow.branch.master &>/dev/null; then
 else
     info "Initializing git-flow..."
     echo ""
-    
+
     if ./scripts/init-git-flow.sh; then
         success "git-flow initialized!"
     else
         error "Initialization failed"
         exit 1
     fi
-    
+
     echo ""
     prompt "Press Enter to continue..."
     read
@@ -170,16 +170,16 @@ echo ""
 cat << "EOF"
   🌿 start-feature.sh <name>
      Creates a new feature branch with git-flow
-     
+
   ✅ finish-feature.sh <name> --push
      Merges feature to develop automatically
-     
+
   🚀 quick-release.sh <package> <bump> --yes
      One-command release (fastest!)
-     
+
   📦 release-package.sh <package> <bump>
      Detailed release with more control
-     
+
 EOF
 
 echo ""
@@ -208,19 +208,19 @@ echo ""
 cat << 'EOF'
   # Start a feature
   ./scripts/start-feature.sh add-user-api
-  
+
   # Make changes
   git commit -m "feat: add user API"
-  
+
   # Finish feature (auto-merges to develop)
   ./scripts/finish-feature.sh add-user-api --push
-  
+
   # Release a package (full automation!)
   ./scripts/quick-release.sh package-a minor --yes
-  
+
   # Done! 🎉
   # Release created on GitHub automatically!
-  
+
 EOF
 
 echo ""
@@ -244,36 +244,36 @@ cat << 'EOF'
   ─────────────────────────────────────
   Start:   ./scripts/start-feature.sh <name>
   Finish:  ./scripts/finish-feature.sh <name> --push
-  
-  
+
+
   🚀 RELEASE
   ─────────────────────────────────────
   Quick:   ./scripts/quick-release.sh <pkg> <bump> --yes
-  
+
   Detailed: ./scripts/release-package.sh <pkg> <bump> \
               --push --cleanup
-  
-  
+
+
   📦 PACKAGES
   ─────────────────────────────────────
   package-a   Logger utility
   package-b   String utilities
   package-c   Math helpers
-  
-  
+
+
   📈 VERSION BUMPS
   ─────────────────────────────────────
   patch   1.0.0 → 1.0.1  (bug fixes)
   minor   1.0.0 → 1.1.0  (new features)
   major   1.0.0 → 2.0.0  (breaking changes)
-  
-  
+
+
   📚 DOCUMENTATION
   ─────────────────────────────────────
   AUTOMATION_GUIDE.md    Complete guide
   FULL_AUTOMATION.md     Success summary
   GITHUB_RELEASE.md      Push to GitHub
-  
+
 EOF
 
 echo ""

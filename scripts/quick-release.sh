@@ -255,20 +255,20 @@ echo ""
 if [[ "$DO_PUSH" == true ]]; then
     header "📤 STEP 5: Push to GitHub"
     echo ""
-    
+
     git checkout main
     info "Pushing main branch with tags..."
     git push origin main --follow-tags
     success "Main pushed"
-    
+
     git checkout develop
     info "Pushing develop branch..."
     git push origin develop
     success "Develop pushed"
-    
+
     echo ""
     success "✅ Pushed to GitHub!"
-    
+
     REMOTE_URL=$(git remote get-url origin 2>/dev/null || echo "")
     if [[ -n "$REMOTE_URL" ]]; then
         REPO_PATH=$(echo "$REMOTE_URL" | sed 's/.*github.com[:/]\(.*\)\.git/\1/' | sed 's/.*github.com[:/]\(.*\)/\1/')
@@ -277,7 +277,7 @@ if [[ "$DO_PUSH" == true ]]; then
         echo "   https://github.com/$REPO_PATH/actions"
         info "📦 View Release:"
         echo "   https://github.com/$REPO_PATH/releases/tag/$PACKAGE@v$NEW_VERSION"
-        
+
         # Check if gh CLI is available for watching workflow
         if command -v gh &>/dev/null; then
             echo ""
@@ -309,7 +309,7 @@ fi
 if [[ "$DO_CLEANUP" == true ]]; then
     header "🧹 STEP 6: Cleanup"
     echo ""
-    
+
     # Delete remote release branch if exists
     if git ls-remote --heads origin "release/$NEW_VERSION" &>/dev/null; then
         git push origin --delete "release/$NEW_VERSION" 2>/dev/null || true

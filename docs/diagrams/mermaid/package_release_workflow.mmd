@@ -1,0 +1,55 @@
+flowchart TB
+    subgraph triggers["Package Release Triggers"]
+        Python[package-a,b,c@v*.*.*]
+        Rust[package-e,i@v*.*.*]
+        Go[package-g@v*.*.*]
+        Cpp[package-d@v*.*.*]
+        Java[package-h@v*.*.*]
+        Swift[package-f@v*.*.*]
+    end
+    
+    subgraph workflows["Reusable Workflows"]
+        direction TB
+        subgraph py["Python Release"]
+            PythonWF[python-package-release.yml]
+            PythonBuild[Build for multiple platforms]
+        end
+        subgraph rs["Rust Release"]
+            RustWF[rust-package-release.yml]
+            RustBuild[Cross-compile for targets]
+        end
+        subgraph go["Go Release"]
+            GoWF[go-package-release.yml]
+            GoBuild[Build binaries]
+        end
+        subgraph cpp["C++ Release"]
+            CppWF[cpp-package-release.yml]
+            CppBuild[CMake build]
+        end
+        subgraph java["Java Release"]
+            JavaWF[java-release.yml]
+            JavaBuild[Maven build]
+        end
+        subgraph swift["Swift Release"]
+            SwiftWF[swift-release.yml]
+            SwiftBuild[SPM build]
+        end
+    end
+    
+    Release[GitHub Release]
+    
+    Python --> PythonWF --> PythonBuild --> Release
+    Rust --> RustWF --> RustBuild --> Release
+    Go --> GoWF --> GoBuild --> Release
+    Cpp --> CppWF --> CppBuild --> Release
+    Java --> JavaWF --> JavaBuild --> Release
+    Swift --> SwiftWF --> SwiftBuild --> Release
+    
+    style triggers fill:#e8f5e9,stroke:#388e3c
+    style workflows fill:#fff3e0,stroke:#f57c00
+    style py fill:#e3f2fd,stroke:#1976d2
+    style rs fill:#fce4ec,stroke:#c2185b
+    style go fill:#e0f2f1,stroke:#00796b
+    style cpp fill:#f3e5f5,stroke:#7b1fa2
+    style java fill:#fff9c4,stroke:#f57f17
+    style swift fill:#ffebee,stroke:#c62828

@@ -1,10 +1,10 @@
 /// Reverse a string
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```
 /// use package_e::reverse_string;
-/// 
+///
 /// let result = reverse_string("hello");
 /// assert_eq!(result, "olleh");
 /// ```
@@ -13,12 +13,12 @@ pub fn reverse_string(s: &str) -> String {
 }
 
 /// Count vowels in a string
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```
 /// use package_e::count_vowels;
-/// 
+///
 /// let count = count_vowels("hello world");
 /// assert_eq!(count, 3);
 /// ```
@@ -29,12 +29,12 @@ pub fn count_vowels(s: &str) -> usize {
 }
 
 /// Check if a string is a palindrome
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```
 /// use package_e::is_palindrome;
-/// 
+///
 /// assert_eq!(is_palindrome("racecar"), true);
 /// assert_eq!(is_palindrome("hello"), false);
 /// ```
@@ -43,7 +43,7 @@ pub fn is_palindrome(s: &str) -> bool {
         .filter(|c| c.is_alphanumeric())
         .map(|c| c.to_ascii_lowercase())
         .collect();
-    
+
     cleaned == cleaned.chars().rev().collect::<String>()
 }
 

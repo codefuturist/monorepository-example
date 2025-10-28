@@ -66,18 +66,18 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
     echo "Installing Build Tools"
     echo "======================================"
     echo ""
-    
+
     # Detect OS
     if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "Platform: macOS"
         echo ""
-        
+
         # Check if Homebrew is installed
         if ! command -v brew &> /dev/null; then
             echo "Installing Homebrew..."
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         fi
-        
+
         # Check if Python3 is installed
         if ! command -v python3 &> /dev/null; then
             echo "Installing Python 3..."
@@ -85,7 +85,7 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
         else
             echo "✓ Python 3 already installed: $(python3 --version)"
         fi
-        
+
         # Check if pip is installed
         if ! command -v pip3 &> /dev/null; then
             echo "Installing pip..."
@@ -93,11 +93,11 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
         else
             echo "✓ pip already installed: $(pip3 --version)"
         fi
-        
+
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         echo "Platform: Linux"
         echo ""
-        
+
         # Detect package manager
         if command -v apt-get &> /dev/null; then
             echo "Using apt (Debian/Ubuntu)..."
@@ -127,11 +127,11 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
         else
             echo "⚠ Unknown package manager. Please install Python 3 manually."
         fi
-        
+
     elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" || "$OSTYPE" == "cygwin" ]]; then
         echo "Platform: Windows"
         echo ""
-        
+
         # Check if Chocolatey is installed
         if ! command -v choco &> /dev/null; then
             echo "⚠ Chocolatey not found."
@@ -148,7 +148,7 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
             fi
         fi
     fi
-    
+
     echo ""
     echo "✓ Build tools check complete"
     echo ""
@@ -162,7 +162,7 @@ if [ "$USE_DOCKER" = "true" ]; then
     echo "Docker Build Mode"
     echo "======================================"
     echo ""
-    
+
     # Source Docker utilities
     DOCKER_UTILS="${SCRIPT_DIR}/docker-build-utils.sh"
     if [ -f "$DOCKER_UTILS" ]; then
@@ -171,12 +171,12 @@ if [ "$USE_DOCKER" = "true" ]; then
         echo "ERROR: Docker utilities not found at $DOCKER_UTILS"
         exit 1
     fi
-    
+
     # Check Docker availability
     if ! check_docker; then
         exit 1
     fi
-    
+
     # Setup cleanup trap
     DOCKER_CONTAINER_NAME="build-python-${PACKAGE_NAME}-$$"
     cleanup_python_docker() {
@@ -188,14 +188,14 @@ if [ "$USE_DOCKER" = "true" ]; then
         echo "✓ Docker cleanup complete"
     }
     trap cleanup_python_docker EXIT INT TERM
-    
+
     # Ensure image is available
     ensure_docker_image "$DOCKER_IMAGE"
-    
+
     echo "Building in Docker container using: $DOCKER_IMAGE"
     echo "Working directory: $(pwd)"
     echo ""
-    
+
     # Build command to run inside Docker
     BUILD_CMD="set -e && \
         apt-get update -qq && apt-get install -y -qq binutils > /dev/null 2>&1 && \
@@ -208,7 +208,7 @@ if [ "$USE_DOCKER" = "true" ]; then
         tar -czf ${PYINSTALLER_NAME}.tar.gz $PYINSTALLER_NAME && \
         sha256sum ${PYINSTALLER_NAME}.tar.gz > ${PYINSTALLER_NAME}.tar.gz.sha256 && \
         sha256sum $PYINSTALLER_NAME > ${PYINSTALLER_NAME}.sha256"
-    
+
     # Run build in Docker
     BUILD_SUCCESS=false
     if docker run --name "$DOCKER_CONTAINER_NAME" --rm \
@@ -218,10 +218,10 @@ if [ "$USE_DOCKER" = "true" ]; then
         sh -c "$BUILD_CMD"; then
         BUILD_SUCCESS=true
     fi
-    
+
     # Cleanup intermediate files
     rm -rf dist build *.spec 2>/dev/null || true
-    
+
     if [ "$BUILD_SUCCESS" = "true" ]; then
         echo ""
         echo "======================================"

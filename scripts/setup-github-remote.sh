@@ -50,12 +50,12 @@ if git remote get-url origin &>/dev/null; then
     REMOTE_URL=$(git remote get-url origin)
     info "Current remote: $REMOTE_URL"
     echo ""
-    
+
     read -p "$(prompt 'Do you want to change it? [y/N]: ')" -n 1 -r
     echo ""
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
         info "Keeping existing remote"
-        
+
         # Check if we should push
         echo ""
         read -p "$(prompt 'Push all branches and tags to GitHub now? [y/N]: ')" -n 1 -r
@@ -63,30 +63,30 @@ if git remote get-url origin &>/dev/null; then
         if [[ $REPLY =~ ^[Yy]$ ]]; then
             echo ""
             info "Pushing to GitHub..."
-            
+
             # Push main
             if git show-ref --verify --quiet refs/heads/main; then
                 info "Pushing main branch..."
                 git push -u origin main --follow-tags || warn "Could not push main"
             fi
-            
+
             # Push develop
             if git show-ref --verify --quiet refs/heads/develop; then
                 info "Pushing develop branch..."
                 git push -u origin develop || warn "Could not push develop"
             fi
-            
+
             # Push all tags
             info "Pushing all tags..."
             git push origin --tags || warn "Could not push tags"
-            
+
             echo ""
             success "Pushed to GitHub!"
         fi
-        
+
         exit 0
     fi
-    
+
     # Remove old remote
     info "Removing old remote..."
     git remote remove origin
@@ -133,17 +133,17 @@ if [[ $REPLY == "1" ]]; then
     echo ""
     info "Using HTTPS connection"
     echo ""
-    
+
     # Get GitHub username
     read -p "$(prompt 'Enter your GitHub username: ')" GITHUB_USER
-    
+
     if [[ -z "$GITHUB_USER" ]]; then
         error "Username cannot be empty"
         exit 1
     fi
-    
+
     REMOTE_URL="https://github.com/${GITHUB_USER}/monorepository-example.git"
-    
+
     echo ""
     info "You'll need a Personal Access Token (PAT) to push"
     echo ""
@@ -152,23 +152,23 @@ if [[ $REPLY == "1" ]]; then
     echo ""
     info "When you push, use the token as your password"
     echo ""
-    
+
 elif [[ $REPLY == "2" ]]; then
     CONNECTION_METHOD="ssh"
     echo ""
     info "Using SSH connection"
     echo ""
-    
+
     # Get GitHub username
     read -p "$(prompt 'Enter your GitHub username: ')" GITHUB_USER
-    
+
     if [[ -z "$GITHUB_USER" ]]; then
         error "Username cannot be empty"
         exit 1
     fi
-    
+
     REMOTE_URL="git@github.com:${GITHUB_USER}/monorepository-example.git"
-    
+
     echo ""
     info "Make sure you have SSH keys configured"
     echo ""
@@ -177,7 +177,7 @@ elif [[ $REPLY == "2" ]]; then
     echo ""
     info "If not set up, see: https://docs.github.com/en/authentication/connecting-to-github-with-ssh"
     echo ""
-    
+
 else
     error "Invalid choice"
     exit 1

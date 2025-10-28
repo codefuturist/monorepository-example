@@ -1,4 +1,4 @@
-# pack-refs with: peeled fully-peeled sorted 
+# pack-refs with: peeled fully-peeled sorted
 40703d7dca7265b90006c112372c90cb91a7912d refs/heads/assets
 7f760711fd0620f4e0f125c629ca85e547113e84 refs/heads/feature/conditional-styling
 f9f513e494d2360d1e7d0a7fc608af4c71a102b6 refs/heads/feature/hsl-color-support

@@ -1,6 +1,6 @@
 # Migration from release-it to Commitizen
 
-**Date:** October 19, 2025  
+**Date:** October 19, 2025
 **Status:** ✅ COMPLETE
 
 ---
@@ -16,16 +16,19 @@ Successfully migrated the monorepo from JavaScript-based `release-it` to Python-
 ### Advantages Over release-it
 
 1. **Native Python Integration**
+
    - Direct integration with `pyproject.toml`
    - Updates Python version files automatically
    - No Node.js required for Python packages
 
 2. **Unified Tooling**
+
    - Single tool for all packages
    - Consistent configuration format
    - Better monorepo support
 
 3. **Enhanced Features**
+
    - Automatic changelog generation (incremental)
    - Version file synchronization
    - Conventional commit enforcement
@@ -70,6 +73,7 @@ dev = [
 ```
 
 #### Removed Files
+
 - ❌ `packages/*/. release-it.json` (deleted)
 
 ---
@@ -79,6 +83,7 @@ dev = [
 #### Root `package.json`
 
 **Before:**
+
 ```json
 {
   "scripts": {
@@ -94,6 +99,7 @@ dev = [
 ```
 
 **After:**
+
 ```json
 {
   "scripts": {
@@ -109,6 +115,7 @@ dev = [
 #### Package `package.json`
 
 **Before:**
+
 ```json
 {
   "scripts": {
@@ -118,6 +125,7 @@ dev = [
 ```
 
 **After:**
+
 ```json
 {
   "scripts": {
@@ -134,11 +142,13 @@ dev = [
 #### `scripts/release-package.sh`
 
 **Changed:**
+
 - Step 2: `release-it` → `cz bump`
 - Removed `npx release-it` command
 - Added commitizen increment logic
 
 **Before:**
+
 ```bash
 npx release-it "$VERSION_BUMP" \
     --ci \
@@ -148,6 +158,7 @@ npx release-it "$VERSION_BUMP" \
 ```
 
 **After:**
+
 ```bash
 case "$VERSION_BUMP" in
     patch|minor|major)
@@ -175,6 +186,7 @@ Similar changes applied to the quick release script.
 ### Installation
 
 #### System-wide (for development)
+
 ```bash
 # Install via pip (in a virtual environment)
 pip install commitizen
@@ -187,6 +199,7 @@ uv tool install commitizen
 ```
 
 #### Project-level
+
 ```bash
 # Node.js (for npm scripts)
 npm install
@@ -201,12 +214,14 @@ uv pip install commitizen  # or pip install commitizen
 ### Basic Commands
 
 #### 1. Check Current Version
+
 ```bash
 cd packages/package-a
 cz version
 ```
 
 #### 2. Bump Version (Automatic)
+
 ```bash
 # Auto-detect version bump based on commits
 cz bump --yes
@@ -218,6 +233,7 @@ cz bump --increment MAJOR --yes
 ```
 
 #### 3. Generate Changelog
+
 ```bash
 # Update changelog only (no version bump)
 cz changelog
@@ -227,12 +243,14 @@ cz bump --yes --changelog
 ```
 
 #### 4. Dry Run
+
 ```bash
 # See what would change without making changes
 cz bump --dry-run
 ```
 
 #### 5. Create Conventional Commit
+
 ```bash
 # Interactive commit prompt
 cz commit
@@ -290,12 +308,12 @@ git push origin package-a@v1.2.9
 
 Commitizen automatically determines the version bump based on conventional commits:
 
-| Commit Type | Version Bump | Example |
-|-------------|--------------|---------|
-| `fix:` | PATCH (0.0.1) | `fix: resolve memory leak` |
-| `feat:` | MINOR (0.1.0) | `feat: add new API endpoint` |
-| `BREAKING CHANGE:` or `feat!:` | MAJOR (1.0.0) | `feat!: redesign API` |
-| `chore:`, `docs:`, etc. | None | `chore: update dependencies` |
+| Commit Type                    | Version Bump  | Example                      |
+| ------------------------------ | ------------- | ---------------------------- |
+| `fix:`                         | PATCH (0.0.1) | `fix: resolve memory leak`   |
+| `feat:`                        | MINOR (0.1.0) | `feat: add new API endpoint` |
+| `BREAKING CHANGE:` or `feat!:` | MAJOR (1.0.0) | `feat!: redesign API`        |
+| `chore:`, `docs:`, etc.        | None          | `chore: update dependencies` |
 
 ### Manual Override
 
@@ -383,17 +401,17 @@ grep __version__ src/__version__.py
 
 ## 🔄 Comparison: release-it vs Commitizen
 
-| Feature | release-it | commitizen | Winner |
-|---------|-----------|------------|--------|
-| **Language** | JavaScript/Node.js | Python | Python (for Python projects) |
-| **Config File** | `.release-it.json` | `pyproject.toml` | Commitizen |
-| **Version Files** | Manual scripts | Auto-sync | Commitizen |
-| **Changelog** | Plugin required | Built-in | Commitizen |
-| **Git Operations** | Automated (opaque) | Transparent | Commitizen |
-| **Learning Curve** | Medium | Low | Commitizen |
-| **Monorepo Support** | Good | Excellent | Commitizen |
-| **Python Integration** | None | Native | Commitizen |
-| **Speed** | Fast | Very Fast | Commitizen |
+| Feature                | release-it         | commitizen       | Winner                       |
+| ---------------------- | ------------------ | ---------------- | ---------------------------- |
+| **Language**           | JavaScript/Node.js | Python           | Python (for Python projects) |
+| **Config File**        | `.release-it.json` | `pyproject.toml` | Commitizen                   |
+| **Version Files**      | Manual scripts     | Auto-sync        | Commitizen                   |
+| **Changelog**          | Plugin required    | Built-in         | Commitizen                   |
+| **Git Operations**     | Automated (opaque) | Transparent      | Commitizen                   |
+| **Learning Curve**     | Medium             | Low              | Commitizen                   |
+| **Monorepo Support**   | Good               | Excellent        | Commitizen                   |
+| **Python Integration** | None               | Native           | Commitizen                   |
+| **Speed**              | Fast               | Very Fast        | Commitizen                   |
 
 ---
 
@@ -402,6 +420,7 @@ grep __version__ src/__version__.py
 ### Issue: "command not found: cz"
 
 **Solution:**
+
 ```bash
 # Install commitizen
 pip install commitizen
@@ -420,6 +439,7 @@ cz --version
 ### Issue: "No pattern found for version"
 
 **Solution:** Ensure `version_files` in `pyproject.toml` matches your file structure:
+
 ```toml
 version_files = [
     "pyproject.toml:version",          # Matches: version = "1.2.3"
@@ -430,6 +450,7 @@ version_files = [
 ### Issue: "No commits found to bump version"
 
 **Solution:** Ensure commits follow conventional format:
+
 ```bash
 # Good commits
 git commit -m "feat: add new feature"
@@ -443,6 +464,7 @@ git commit -m "WIP"
 ### Issue: Git tag already exists
 
 **Solution:**
+
 ```bash
 # Delete the tag locally
 git tag -d package-a@v1.2.8
@@ -485,12 +507,14 @@ cz bump --yes
 ## 🚀 Next Steps
 
 ### Immediate
+
 1. ⏳ Install commitizen in Python virtual environments
 2. ⏳ Test release process with package-a
 3. ⏳ Verify changelog generation
 4. ⏳ Update GitHub Actions workflows if needed
 
 ### Future Enhancements
+
 1. Add pre-commit hooks for conventional commits
 2. Create custom commitizen template
 3. Add version bump automation via GitHub Actions
@@ -501,17 +525,19 @@ cz bump --yes
 ## 📚 Resources
 
 ### Official Documentation
+
 - **Commitizen:** https://commitizen-tools.github.io/commitizen/
 - **Conventional Commits:** https://www.conventionalcommits.org/
 - **Semantic Versioning:** https://semver.org/
 
 ### Related Tools
+
 - **pre-commit:** https://pre-commit.com/ (commit hooks)
 - **semantic-release:** https://semantic-release.gitbook.io/
 - **conventional-changelog:** https://github.com/conventional-changelog
 
 ---
 
-**Migration Completed:** October 19, 2025  
-**Tools Replaced:** release-it → commitizen  
+**Migration Completed:** October 19, 2025
+**Tools Replaced:** release-it → commitizen
 **Next Review:** After first successful release with commitizen

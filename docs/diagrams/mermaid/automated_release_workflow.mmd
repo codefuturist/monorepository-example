@@ -1,0 +1,44 @@
+flowchart LR
+    subgraph feature["feature/* Branch"]
+        A[git flow<br/>feature start]
+        B[Write Code]
+        C[git cz<br/>conventional commits]
+        D[Push & Create PR]
+    end
+    
+    subgraph develop["develop Branch"]
+        E[CI Tests]
+        F[Merge Feature]
+        G[Ready for Release]
+    end
+    
+    subgraph release["release/* Branch"]
+        H[git flow<br/>release start]
+        I[cz bump<br/>auto version]
+        J[Update CHANGELOG<br/>& versions]
+        K[Commit & Tag<br/>v*.*.*]
+    end
+    
+    subgraph main["main Branch"]
+        L[git flow<br/>release finish]
+        M[Push Tag]
+        N[Release Workflow]
+        O[GitHub Release]
+    end
+    
+    subgraph back["Back to develop"]
+        P[Auto-merge<br/>to develop]
+        Q[Release Complete]
+    end
+    
+    A --> B --> C --> D
+    D --> E --> F --> G
+    G --> H --> I --> J --> K
+    K --> L --> M --> N --> O
+    O --> P --> Q
+    
+    style feature fill:#e1f5ff,stroke:#01579b
+    style develop fill:#d4edda,stroke:#155724
+    style release fill:#fff3cd,stroke:#856404
+    style main fill:#f8d7da,stroke:#721c24
+    style back fill:#d1ecf1,stroke:#0c5460

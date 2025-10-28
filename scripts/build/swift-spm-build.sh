@@ -53,29 +53,29 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
     echo "Installing Build Tools"
     echo "======================================"
     echo ""
-    
+
     # Detect OS
     if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "Platform: macOS"
         echo ""
-        
+
         # Check if Swift is installed
         if ! command -v swift &> /dev/null; then
             echo "Swift not found. Installing Xcode Command Line Tools..."
             echo "Note: For full Swift support, install Xcode from the App Store"
             xcode-select --install
-            
+
             echo ""
             echo "⚠ If swift is still not available, please install Xcode from:"
             echo "  https://apps.apple.com/app/xcode/id497799835"
         else
             echo "✓ Swift already installed: $(swift --version | head -1)"
         fi
-        
+
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         echo "Platform: Linux"
         echo ""
-        
+
         if ! command -v swift &> /dev/null; then
             echo "Installing Swift for Linux..."
             echo "Note: This requires manual download and installation"
@@ -85,11 +85,11 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
         else
             echo "✓ Swift already installed: $(swift --version | head -1)"
         fi
-        
+
     elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" || "$OSTYPE" == "cygwin" ]]; then
         echo "Platform: Windows"
         echo ""
-        
+
         if ! command -v swift &> /dev/null; then
             echo "Installing Swift for Windows..."
             echo "Note: Swift on Windows is still experimental"
@@ -100,7 +100,7 @@ if [ "$INSTALL_TOOLS" = "true" ]; then
             echo "✓ Swift already installed"
         fi
     fi
-    
+
     echo ""
     echo "✓ Build tools check complete"
     echo ""
@@ -117,7 +117,7 @@ if [ "$USE_DOCKER" = "true" ]; then
     echo "Note: Docker builds produce Linux binaries only"
     echo "      For macOS binaries, build natively on macOS"
     echo ""
-    
+
     # Source Docker utilities
     DOCKER_UTILS="${SCRIPT_DIR}/docker-build-utils.sh"
     if [ -f "$DOCKER_UTILS" ]; then
@@ -126,15 +126,15 @@ if [ "$USE_DOCKER" = "true" ]; then
         echo "ERROR: Docker utilities not found at $DOCKER_UTILS"
         exit 1
     fi
-    
+
     # Check Docker availability
     if ! check_docker; then
         exit 1
     fi
-    
+
     # Setup cleanup trap
     DOCKER_CONTAINER_NAME="build-swift-${PACKAGE_NAME}-$$"
-    
+
     cleanup_swift_docker() {
         echo ""
         echo "Cleaning up Docker resources..."
@@ -143,16 +143,16 @@ if [ "$USE_DOCKER" = "true" ]; then
         echo "✓ Docker cleanup complete"
     }
     trap cleanup_swift_docker EXIT INT TERM
-    
+
     # Ensure image is available
     ensure_docker_image "$DOCKER_IMAGE"
-    
+
     echo "Building in Docker container using: $DOCKER_IMAGE"
     echo ""
-    
+
     # Create release directory on host
     mkdir -p "$RELEASE_DIR"
-    
+
     # Build command to run inside Docker
     BUILD_CMD="set -e && \
         cd /workspace && \
@@ -164,7 +164,7 @@ if [ "$USE_DOCKER" = "true" ]; then
         tar -czf \${BINARY_NAME}.tar.gz \$BINARY_NAME && \
         sha256sum \${BINARY_NAME}.tar.gz > \${BINARY_NAME}.tar.gz.sha256 && \
         sha256sum \$BINARY_NAME > \${BINARY_NAME}.sha256"
-    
+
     # Run build in Docker
     BUILD_SUCCESS=false
     if docker run --name "$DOCKER_CONTAINER_NAME" --rm \
@@ -174,10 +174,10 @@ if [ "$USE_DOCKER" = "true" ]; then
         sh -c "$BUILD_CMD"; then
         BUILD_SUCCESS=true
     fi
-    
+
     # Clean up intermediate artifacts
     rm -rf .build/ 2>/dev/null || true
-    
+
     if [ "$BUILD_SUCCESS" = "true" ]; then
         echo ""
         echo "======================================"

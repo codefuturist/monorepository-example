@@ -15,12 +15,12 @@ fn print_separator(title: &str) {
 
 fn main() {
     print_separator("Package E - String Manipulation v1.0.0");
-    
+
     // Verify dependencies are loaded
     println!("\n{}", "✓ colored dependency loaded successfully".green());
     println!("{}", "✓ serde_json dependency loaded successfully".green());
     println!("{}\n", "✓ String utilities initialized".green());
-    
+
     // Test strings
     let test_strings = vec![
         "Hello Rust",
@@ -28,25 +28,25 @@ fn main() {
         "A man a plan a canal Panama",
         "Package E",
     ];
-    
+
     let mut results = Vec::new();
-    
+
     println!("{}", "String Manipulation Results:".cyan().bold());
     println!("{}", "-".repeat(60));
-    
+
     for s in &test_strings {
         match run_tests(s) {
             Ok(result) => {
                 println!("\n{}: \"{}\"", "Input".yellow(), s);
                 println!("  {}: {}", "Reversed".cyan(), result.reversed);
                 println!("  {}: {}", "Vowel Count".cyan(), result.vowels);
-                println!("  {}: {}", "Is Palindrome".cyan(), 
-                    if result.is_palindrome { 
-                        "Yes".green() 
-                    } else { 
-                        "No".red() 
+                println!("  {}: {}", "Is Palindrome".cyan(),
+                    if result.is_palindrome {
+                        "Yes".green()
+                    } else {
+                        "No".red()
                     });
-                
+
                 results.push(json!({
                     "original": s,
                     "reversed": result.reversed,
@@ -60,7 +60,7 @@ fn main() {
             }
         }
     }
-    
+
     // Output JSON
     println!("\n{}", "JSON Output:".cyan().bold());
     println!("{}", "-".repeat(60));
@@ -71,7 +71,7 @@ fn main() {
             process::exit(1);
         }
     }
-    
+
     println!();
     print_separator(&"Package E executed successfully!".green().bold().to_string());
     println!();

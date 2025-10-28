@@ -1,7 +1,7 @@
 # Release-it to Commitizen Migration - Summary
 
-**Date:** October 19, 2025  
-**Status:** ✅ COMPLETE  
+**Date:** October 19, 2025
+**Status:** ✅ COMPLETE
 **Commit:** b490936
 
 ---
@@ -17,6 +17,7 @@ Successfully replaced `release-it` (JavaScript) with `commitizen` (Python) for a
 ### Files Modified (19 files)
 
 #### Created (5 files)
+
 1. ✅ `.github/COMMITIZEN_MIGRATION.md` - Complete migration guide
 2. ✅ `packages/package-a/.cz.toml` - Commitizen config for package-a
 3. ✅ `packages/package-b/.cz.toml` - Commitizen config for package-b
@@ -24,11 +25,13 @@ Successfully replaced `release-it` (JavaScript) with `commitizen` (Python) for a
 5. ✅ `.github/COMMITIZEN_MIGRATION_SUMMARY.md` - This file
 
 #### Deleted (3 files)
+
 1. ❌ `packages/package-a/.release-it.json`
 2. ❌ `packages/package-b/.release-it.json`
 3. ❌ `packages/package-c/.release-it.json`
 
 #### Updated (11 files)
+
 1. 📝 `package.json` - Replaced release-it with commitizen
 2. 📝 `package-lock.json` - Updated dependencies
 3. 📝 `packages/package-a/package.json` - Updated scripts
@@ -46,21 +49,25 @@ Successfully replaced `release-it` (JavaScript) with `commitizen` (Python) for a
 ## 🎯 Key Improvements
 
 ### 1. Native Python Integration
+
 - ✅ Configuration in `pyproject.toml` (Python standard)
 - ✅ Automatic version file synchronization
 - ✅ No Node.js dependency for Python releases
 
 ### 2. Better Monorepo Support
+
 - ✅ Per-package configuration
 - ✅ Independent versioning
 - ✅ Package-specific tags (`package-a@v1.2.8`)
 
 ### 3. Enhanced Automation
+
 - ✅ Automatic changelog generation (incremental)
 - ✅ Version detection from commits
 - ✅ Multi-file version updates
 
 ### 4. Simplified Workflow
+
 - ✅ Single command: `cz bump --yes`
 - ✅ Transparent git operations
 - ✅ Easy to debug
@@ -93,6 +100,7 @@ dev = [
 ### Package Scripts
 
 **Old:**
+
 ```json
 {
   "scripts": {
@@ -102,6 +110,7 @@ dev = [
 ```
 
 **New:**
+
 ```json
 {
   "scripts": {
@@ -181,13 +190,16 @@ cz bump --yes --changelog
 ## 📚 Documentation
 
 ### Migration Guide
+
 📖 **`.github/COMMITIZEN_MIGRATION.md`**
+
 - Complete migration details
 - Before/after comparisons
 - Troubleshooting guide
 - Configuration reference
 
 ### Updated Files
+
 - 📖 `README.md` - Updated usage instructions
 - 📖 `DEPENDENCY_REQUIREMENTS.md` - Updated dependencies
 
@@ -195,15 +207,15 @@ cz bump --yes --changelog
 
 ## 🔄 Comparison
 
-| Aspect | release-it | commitizen |
-|--------|-----------|------------|
-| **Language** | JavaScript | Python |
-| **Config** | `.release-it.json` | `pyproject.toml` |
-| **Dependencies** | npm packages | pip/uv packages |
-| **Version Files** | Manual | Automatic sync |
-| **Changelog** | Plugin | Built-in |
-| **Monorepo** | Good | Excellent |
-| **Python Projects** | External tool | Native |
+| Aspect              | release-it         | commitizen       |
+| ------------------- | ------------------ | ---------------- |
+| **Language**        | JavaScript         | Python           |
+| **Config**          | `.release-it.json` | `pyproject.toml` |
+| **Dependencies**    | npm packages       | pip/uv packages  |
+| **Version Files**   | Manual             | Automatic sync   |
+| **Changelog**       | Plugin             | Built-in         |
+| **Monorepo**        | Good               | Excellent        |
+| **Python Projects** | External tool      | Native           |
 
 ---
 
@@ -212,11 +224,13 @@ cz bump --yes --changelog
 ### Immediate (Required)
 
 1. ⏳ **Install commitizen:**
+
    ```bash
    pipx install commitizen
    ```
 
 2. ⏳ **Test on package-a:**
+
    ```bash
    cd packages/package-a
    cz bump --dry-run
@@ -262,15 +276,18 @@ cz bump --yes --changelog
 ## 📊 Impact Summary
 
 ### Lines Changed
+
 - **Insertions:** +1,589 lines
 - **Deletions:** -3,730 lines
 - **Net Change:** -2,141 lines (simplified!)
 
 ### Dependencies
+
 - ❌ Removed: `release-it`, `@release-it/conventional-changelog`
 - ✅ Added: `commitizen` (npm for commits, Python for releases)
 
 ### Developer Experience
+
 - ⏱️ **Faster:** Python-native, no Node.js overhead
 - 🧠 **Simpler:** Single command vs multiple flags
 - 🔍 **Clearer:** Transparent git operations
@@ -278,7 +295,7 @@ cz bump --yes --changelog
 
 ---
 
-**Migration Status:** ✅ COMPLETE  
-**Ready for Use:** ✅ YES  
-**Next Action:** Install commitizen and test release workflow  
+**Migration Status:** ✅ COMPLETE
+**Ready for Use:** ✅ YES
+**Next Action:** Install commitizen and test release workflow
 **Documentation:** See `.github/COMMITIZEN_MIGRATION.md`

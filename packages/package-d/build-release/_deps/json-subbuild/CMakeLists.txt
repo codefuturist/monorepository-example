@@ -38,5 +38,3 @@ ExternalProject_Add(json-populate
                     USES_TERMINAL_UPDATE    YES
                     USES_TERMINAL_PATCH     YES
 )
-
-

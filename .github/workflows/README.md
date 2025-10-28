@@ -19,18 +19,24 @@ These are shared workflow templates that can be called by multiple packages:
 
 These workflows call the reusable templates with package-specific configuration:
 
+> **Note**: Package-specific workflows are being migrated to their respective package directories (e.g., `packages/package-a/.github/workflows/`). This allows each package to manage its own CI/CD independently.
+
 **Rust Packages:**
+
 - **`package-e-release.yml`** - Rust package (uses `rust-package-release.yml`)
 - **`package-i-release.yml`** - Rust package (uses `rust-package-release.yml`)
 
 **Go Packages:**
+
 - **`package-g-release.yml`** - Go package (uses `go-package-release.yml`)
 
 **C++ Packages:**
+
 - **`package-d-release.yml`** - C++ package (uses `cpp-package-release.yml`)
 
 **Python Packages:** ✨ NEW
-- **`package-a-release.yml`** - Python package (uses `python-package-release.yml`)
+
+- **`package-a-release.yml`** - ✅ **MOVED** to `packages/package-a/.github/workflows/release.yml`
 - **`package-b-release.yml`** - Python package (uses `python-package-release.yml`)
 - **`package-c-release.yml`** - Python package (uses `python-package-release.yml`)
 

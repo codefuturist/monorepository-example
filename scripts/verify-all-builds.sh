@@ -81,16 +81,16 @@ LANGUAGES=("Python" "Python" "Python" "C++" "Rust" "Swift" "Go" "Java" "Rust")
 for i in "${!PACKAGES[@]}"; do
     pkg="${PACKAGES[$i]}"
     lang="${LANGUAGES[$i]}"
-    
+
     echo -e "${BLUE}→ Validating ${pkg} (${lang})${NC}"
-    
+
     TOTAL_TESTS=$((TOTAL_TESTS + 1))
     if [ -d "packages/${pkg}/release" ]; then
         file_count=$(find "packages/${pkg}/release" -type f | wc -l | xargs)
         if [ "$file_count" -gt 0 ]; then
             echo -e "  ${GREEN}✓${NC} Release directory exists with $file_count files"
             PASSED_TESTS=$((PASSED_TESTS + 1))
-            
+
             # Check for executables (except Java which produces JARs)
             if [ "$pkg" != "package-h" ]; then
                 binary=$(find "packages/${pkg}/release" -type f ! -name "*.tar.gz" ! -name "*.zip" ! -name "*.sha256" ! -name "*.jar" | head -1)
@@ -98,7 +98,7 @@ for i in "${!PACKAGES[@]}"; do
                     echo -e "  ${GREEN}✓${NC} Executable binary found: $(basename "$binary")"
                 fi
             fi
-            
+
             # Check for checksums
             checksums=$(find "packages/${pkg}/release" -name "*.sha256" | wc -l | xargs)
             if [ "$checksums" -gt 0 ]; then
@@ -175,25 +175,25 @@ ARCH=$(uname -m)
 if [[ "$OSTYPE" == "darwin"* && "$ARCH" == "arm64" ]]; then
     echo -e "${CYAN}Running on ARM64 macOS - testing native binaries${NC}"
     echo ""
-    
+
     for binary in packages/*/release/*aarch64-apple-darwin; do
         # Skip if it's not a file or doesn't exist
         [ -f "$binary" ] || continue
-        
+
         # Skip archives and checksums
         [[ "$binary" == *.tar.gz ]] && continue
         [[ "$binary" == *.sha256 ]] && continue
-        
+
         EXECUTION_TESTS=$((EXECUTION_TESTS + 1))
         package_name=$(basename "$binary" | sed 's/-aarch64-apple-darwin//')
-        
+
         echo -e "${BLUE}→ Testing ${package_name}${NC}"
         echo "  Binary: $binary"
-        
+
         # Try to execute with timeout and capture output
         output=$(timeout 3 "$binary" --help 2>&1 || timeout 3 "$binary" --version 2>&1 || timeout 3 "$binary" 2>&1)
         exit_code=$?
-        
+
         if [ $exit_code -eq 0 ]; then
             echo -e "  ${GREEN}✓ Executed successfully${NC}"
             echo "  Output (first 15 lines):"
@@ -218,7 +218,7 @@ if [[ "$OSTYPE" == "darwin"* && "$ARCH" == "arm64" ]]; then
         fi
         echo ""
     done
-    
+
     if [ $EXECUTION_TESTS -eq 0 ]; then
         echo -e "${YELLOW}⚠ No ARM64 macOS binaries found to test${NC}"
     else
@@ -258,7 +258,7 @@ elif ! docker ps > /dev/null 2>&1; then
 else
     echo -e "${CYAN}Docker is available - testing Linux binaries${NC}"
     echo ""
-    
+
     LINUX_TESTS=0
     LINUX_PASSED=0
     LINUX_FAILED=0
@@ -267,13 +267,13 @@ else
     for binary in packages/*/release/*x86_64-unknown-linux-gnu packages/*/release/*x86_64-linux; do
         # Skip if it's not a file or doesn't exist
         [ -f "$binary" ] || continue
-        
+
         # Skip archives and checksums
         [[ "$binary" == *.tar.gz ]] && continue
         [[ "$binary" == *.sha256 ]] && continue
-        
+
         LINUX_TESTS=$((LINUX_TESTS + 1))
-        
+
         # Extract package name from binary path
         if [[ "$binary" == *"x86_64-unknown-linux-gnu"* ]]; then
             package_name=$(basename "$binary" | sed 's/-x86_64-unknown-linux-gnu//')
@@ -282,30 +282,30 @@ else
         else
             package_name=$(basename "$binary")
         fi
-        
+
         echo -e "${BLUE}→ Testing ${package_name} (Linux x86_64 in Docker)${NC}"
         echo "  Binary: $binary"
-        
+
         # Create a unique container name
         container_name="test-${package_name}-$$-$RANDOM"
-        
+
         # Remove any existing container with this name
         docker rm -f "$container_name" 2>/dev/null || true
         docker rm -f "${container_name}-v" 2>/dev/null || true
-        
+
         DOCKER_CONTAINERS_TO_CLEANUP+=("$container_name")
-        
+
         # Copy binary to a temp location with exec permissions
         temp_binary="/tmp/${package_name}-test-$$"
         cp "$binary" "$temp_binary"
         chmod +x "$temp_binary"
-        
+
         # Run in Alpine Linux container (small and fast)
         echo "  Starting Alpine Linux container..."
-        
+
         # Clear previous output
         > /tmp/docker-output-$$.txt
-        
+
         # Try --help flag first
         if docker run --name "$container_name" --rm \
             -v "$temp_binary:/app/binary:ro" \
@@ -315,7 +315,7 @@ else
         else
             result1=$?
         fi
-        
+
         # If --help failed, try --version
         if [ $result1 -ne 0 ]; then
             > /tmp/docker-output-$$.txt
@@ -330,7 +330,7 @@ else
         else
             result2=0
         fi
-        
+
         if [ $result1 -eq 0 ] || [ $result2 -eq 0 ]; then
             echo -e "  ${GREEN}✓ Executed successfully in Docker${NC}"
             echo "  Output (first 15 lines):"
@@ -357,7 +357,7 @@ else
                 LINUX_FAILED=$((LINUX_FAILED + 1))
             fi
         fi
-        
+
         # Cleanup temp files
         rm -f "$temp_binary" /tmp/docker-output-$$.txt
         echo ""
